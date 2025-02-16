@@ -1,6 +1,6 @@
 # Präsentation für Embedded Chess Pieces Projekt
 
-In diesem Repository sind die Folien für das Kolloquium zum Projekt *Embedded Chess Pieces* enthalten. Das zugehörige Projekt kann unter [nicosrm/24-emb-chess](https://github.com/nicosrm/24-emb-chess/) eingesehen werden.
+In diesem Repository sind die Dokumentation sowie die Folien für das Kolloquium zum Projekt *Embedded Chess Pieces* enthalten. Das zugehörige Projekt kann unter [nicosrm/24-emb-chess](https://github.com/nicosrm/24-emb-chess/) eingesehen werden.
 
 
 ## Kontext
@@ -9,7 +9,7 @@ In diesem Repository sind die Folien für das Kolloquium zum Projekt *Embedded C
 |----------|-------------------------------------------------------------------------------------|
 | Projekt  | [nicosrm/24-emb-chess](https://github.com/nicosrm/24-emb-chess/)                    |
 | Team     | [@irooori](https://github.com/irooori), [@nicosrm](https://github.com/nicosrm)      |
-| Modul    | C377.2 Prinzipien von Programmiersprachen                                           |
+| Modul    | C999.1 Software Development for Embedded Systems                                    |
 | Dozenten | Prof. Dr. rer. nat. Jens Wagner, M. Eng. Marian Ulbricht                            |
 | Institut | Hochschule für Technik, Wirtschaft und Kultur Leipzig                               |
 | Semester | Wintersemester 2024/25                                                              |

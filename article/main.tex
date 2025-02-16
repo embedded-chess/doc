@@ -1,0 +1,20 @@
+% !TeX root = main.tex
+
+\input{header/header.tex}
+
+\begin{document}
+
+\input{content/title_page.tex}
+
+\pagenumbering{gobble}
+\tableofcontents
+
+\newpage
+
+\pagenumbering{arabic}
+\input{content/intro.tex}
+\input{content/conclusion.tex}
+
+\printbibliography[heading=bibintoc]
+
+\end{document}
