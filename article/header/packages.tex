@@ -3,6 +3,7 @@
 \usepackage[top=3cm, bottom=3cm, left=3.5cm, right=3.5cm]{geometry}
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
 
 \usepackage[T1,hyphens]{url}
@@ -25,12 +26,26 @@
 
 \usepackage{fancyhdr}
 
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+\captionsetup{width=0.9\textwidth}
+
+% vertical padding in tables
+\renewcommand{\arraystretch}{1.2}
+
 % Fix overfull hbox in references
 % https://tex.stackexchange.com/questions/171999/overfull-hbox-in-biblatex#comment397014_171999
 \usepackage[final]{microtype}
 
 \usepackage{hyperref}
+\addto\extrasngerman{
+    \let\subsectionautorefname\sectionautorefname
+    \let\subsubsectionautorefname\sectionautorefname
+}
+
 \usepackage{ccicons}
+\usepackage{amsmath, amssymb}
+\newcommand{\degree}{\ensuremath{^\circ}}
 
 \usepackage{stmaryrd}
 \usepackage{centernot}

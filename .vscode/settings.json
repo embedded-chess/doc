@@ -1,6 +1,11 @@
 {
     "cSpell.enabled": true,
     "cSpell.language": "en-GB,de-DE",
+    "cSpell.words": [
+        "Dezibot"
+    ],
+
+    "editor.wordWrap": "on",
 
     // LATEX WORKSHOP
     "latex-workshop.latex.autoBuild.run": "never",
