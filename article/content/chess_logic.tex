@@ -3,7 +3,75 @@
 \section{Schachstrukturen und -logik}
 \label{sec:chess-logic}
 
+Im folgenden Abschnitt werden Gedanken zu den zugrundeliegenden Schachstrukturen sowie zur allgemeinen Logik erläutert. Dabei wird besonders die Validierung möglicher Züge der simulierten Schachfiguren eingegangen.
+
+Wie bereits in \autoref{sec:final-project-structure} genannt, befindet sich die Schach"=spezifische Business Logic unter \texttt{example/""Embedded"-Chess"-Pieces}. Somit findet eine klare Trennung zur \texttt{dezibot}"=Library statt, welche nur erweitert oder verändert wurde, um allgemein nützliche Funktionalitäten hinzuzufügen.
+
+Die eigentliche Business Logic befindet sich dabei im \texttt{src/}"=Verzeichnis, welches wie folgt unterteilt ist:
+
 \begin{itemize}
-    \item implementierte Klassen etc., ggf. vereinfachtes Klassendiagramm
-    \item Schachlogik, v.a. Zug-Validierung, LED-Anzeige
+    \item \texttt{ECPChessLogic}: notwendige Schach"=Logik, wie Figuren, Felder und die Zug"=Validierung;
+    \item \texttt{ECPMovement}: physikalische Bewegung des Dezibots auf dem Schachbrett (vgl. \autoref{sec:movement});
+    \item \texttt{ECPColorDetection}: Erkennung, ob Dezibot auf weißem oder schwarzem Feld steht;
+    \item \texttt{ECPSignalDetection}: Bestimmung eines Beacon"=Signales, auf welchem die Bewegung basiert (vgl. \autoref{sec:angle-determination}).
 \end{itemize}
+
+In den folgenden Abschnitten wird zunächst auf die allgemeine Struktur und anschließend auf die Zug"=Validierung eingegangen.
+
+
+\subsection{Schachstrukturen}
+
+% ECPChessPiece
+
+Den Grundpfeiler stellt die in \autoref{code:ecp-chess-piece} vereinfacht dargestellte \texttt{ECP"-Chess"-Piece}"=Klasse dar, welche als Basis"=Klasse für die konkreten, simulierten Schachfiguren (Bauer, Königin, etc.) agiert. Sie implementiert eine allgemeine \texttt{move}"=Funktion, welche den Dezibot auf dem Schachbrett bewegt. Diese wird in \autoref{sec:general-move-function} genauer erläutert.
+
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPChessPiece.cpp}
+    \caption{Definition von \texttt{ECP"-Chess"-Piece} (vereinfacht)}
+    \label{code:ecp-chess-piece}
+\end{listing}
+
+
+Außerdem definiert sie die \texttt{isMove"-Valid}"=Funktion, welche einen Zug vom aktuellen zu einem übergebenen, neuen Feld validiert. Da diese vom konkreten Schachfigurtyp abhängt -- beispielsweise bewegt sich ein Bauer anders als eine Königin -- ist dieses abstrakt und muss in den konkreten, abgeleiteten Klassen implementiert werden. Diese Funktion wird in \autoref{sec:move-validation} kurz beleuchtet.
+
+Weiterhin definiert die Klasse die \texttt{draw"-Figure"-To"-Display}"=Funktion, welche eine ASCII"=Art"=Repräsentation der Figur auf das Display des Dezibots druckt. Dies ist vorteilhaft um verschiedene Dezibots, die verschiedene Schachfiguren simulieren, auseinanderzuhalten. Eine weiße Figure wird dabei in schwarzer Schrift auf weißem Hintergrund angezeigt und eine schwarze Figure vice versa. Da die Repräsentation vom jeweiligen Schachfigurtypen abhängt, ist diese ebenfalls abstrakt und muss von den konkreten, abgeleiteten Klassen implementiert werden.
+
+% ECPMovement
+
+In \autoref{code:ecp-chess-piece} ist außerdem zu sehen, dass die \texttt{ECP"-Chess"-Piece}"=Klasse eine Referenz auf eine Instanz der \texttt{ECP"-Move"-ment}"=Klasse erhält. In dieser sind alle Funktionen zur physikalischen Bewegung des Dezibots auf dem Schachbrett enthalten. Somit ist diese abgekapselt von \texttt{ECP"-Chess"-Piece}, um die Lesbarkeit und Übersichtlichkeit zu erhöhen. Außerdem wird hiermit dem Vorbild der \texttt{Dezi"-bot}"=Klasse gefolgt, welche dieses Prinzip ebenfalls anwendet. Ein vereinfachter Code"=Ausschnitt zur Definition von \texttt{ECP"-Move"-ment} ist in \autoref{code:ecp-movement} dargestellt.
+
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPMovement.cpp}
+    \caption{Vereinfachter Code"=Ausschnitt zur \texttt{ECP"-Move"-ment}"=Klasse}
+    \label{code:ecp-movement}
+\end{listing}
+
+Im Konstruktor erhält die Klasse einen Dezibot, den sie bewegen soll, sowie ein \texttt{movement"-Calibration}"=Parameter. Letzterer stellt eine Einstellungsmöglichkeit für den individuellen Dezibot dar, um die Vorwärtsbewegung zu verbessern. Weiterhin wird eine \texttt{move}"=Funktion implementiert, welchen den Dezibot um eine angegebene Anzahl an Feldern auf dem Schachbrett geradeaus laufen lässt. Weiterhin werden zwei Funktionen zur Rotation des Dezibots um 90° implementiert -- \texttt{turn"=Left} und \texttt{turn"=Right}. Die Funktionen werden in \autoref{sec:movement} genauer erläutert.
+
+% ECPColorDetection
+
+Die \texttt{ECP"-Move"-ment}"=Klasse erstellt im Konstruktor eine Instanz von \texttt{ECP"-Color"-Detec"-tion}, welche in \autoref{code:ecp-color-detection} vereinfacht dargestellt ist. Diese dient zur Bestimmung, ob der Dezibot sich aktuell auf einem weißem oder schwarzem Feld befindet. Zur Unterstützung von dunklen Umgebungen wurden zwei Funktionen zum An- und Abschalten eines \emph{Color Correction Lights} implementiert, welche die untere LED des Dezibots an- bzw. ausschaltet. Details dazu werden in \autoref{sec:move-straight-turn} gegeben.
+
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPColorDetection.cpp}
+    \caption{Vereinfachter Code"=Ausschnitt zur \texttt{ECP"-Color"-Detec"-tion}"=Klasse}
+    \label{code:ecp-color-detection}
+\end{listing}
+
+% ECPSignalDetection
+
+Weiterhin erzeugt der \texttt{ECP"-Move"-ment}"=Konstruktor eine Instanz von \texttt{ECP"-Signal"-Detec"-tion}, welche in \autoref{code:ecp-signal-detection} vereinfacht dargestellt ist. Diese misst in \texttt{measure"-Signal"-Angle} ein Beacons"=Signal (aktuell Infrarot) und berechnet daraus den eintreffenden Winkel. Außerdem kann aus dieser die Ausrichtung des Dezibots in Relation zum Beacon"=Signal berechnet werden. Dafür dient die \texttt{measure"-Dezi"-bot"-Angle}"=Funktion. Diese Funktionalitäten werden in \autoref{sec:movement-ir} ausführlich beleuchtet.
+
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPSignalDetection.cpp}
+    \caption{Vereinfachter Code"=Ausschnitt zur \texttt{ECP"-Signal"-Detec"-tion}"=Klasse}
+    \label{code:ecp-signal-detection}
+\end{listing}
+
+
+\subsection{Allgemeine \texttt{move}"=Funktion}
+\label{sec:general-move-function}
+
+
+\subsection{Zug"=Validierung}
+\label{sec:move-validation}
