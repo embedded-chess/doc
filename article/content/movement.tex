@@ -42,7 +42,7 @@ Dieser Ansatz in einer zusätzlichen Signalquelle, welcher beispielsweise von ei
 
 Dafür wird ein Dezibot platziert, welcher ein Infrarot"=Signal aussendet, neben das Schachbrett platziert, welches ungefähr in die Mitte des Schachbretts schaut. Dafür wurde das Programm \href{https://github.com/nicosrm/24-emb-chess/blob/feature/31-rotation-infrared/example/EmbeddedChessPieces/examples/ir_sensors/ir_emitter/ir_emitter.ino}{\texttt{ir\_emitter.ino}} geschrieben, welches ebenjene Funktion erfüllt.
 
-Dieses Signal wird von \verb|ECPSignalDetection::measureSignalAngle()| gemessen. Dabei werden der Werte von allen vier Infrarot"=Sensoren gelesen und verrechnet. Aus dem gemessenen Winkel des Beacon"=Signals wird der Winkel berechnet, in den der Dezibot in Relation zum Beacon ausgerichtet ist (vgl. \texttt{ECPSignal"-Detection::"-measure"-Dezi"-bot"-Angle}). Die beiden Winkel sind in \autoref{fig:signal-dezibot-angle} verdeutlicht. Die Bestimmung der Winkel wird in \autoref{sec:angle-determination} genauer erläutert.
+Dieses Signal wird von \texttt{ECP"-Signal"-Detection::""measure"-Signal"-Angle()} gemessen. Dabei werden der Werte von allen vier Infrarot"=Sensoren gelesen und verrechnet. Aus dem gemessenen Winkel des Beacon"=Signals wird der Winkel berechnet, in den der Dezibot in Relation zum Beacon ausgerichtet ist (vgl. \texttt{ECPSignal"-Detection::""measure"-Dezi"-bot"-Angle}). Die beiden Winkel sind in \autoref{fig:signal-dezibot-angle} verdeutlicht. Die Bestimmung der Winkel wird in \autoref{sec:angle-determination} genauer erläutert.
 
 \begin{figure}[h]
     \centering
@@ -87,7 +87,7 @@ Dementsprechend wird die approximierte Rotationszeit geringer, je kleiner die no
 
 Anschließend wird entsprechend der linke oder rechte Motor des Dezibots -- je nach kürzester bestimmter Rotationsrichtung -- für $t_{\text{rot}}$ aktiviert, wodurch der Dezibot in die jeweils entgegengesetzte Richtung rotiert.
 
-Nach dem Rotationsinkrement wird der neue relative Winkel des Dezibots erneut gemessen, d.h. $\alpha$ aktualisiert, und die Iteration von vorn durchgeführt. Die Rotationsrichtung und "=zeit werden erneut berechnet, wodurch ein Gegensteuern möglich ist, falls sich der Dezibot zu weit bewegt hat. Eine Rotation wird außerdem als erfolgreich bewertet, wenn der neue Winkel $\alpha$ innerhalb einer festgelegten Toleranz -- aktuell 3° -- befindet. Diese Toleranz ist in \texttt{ECPMove"-ment::"-ROTA"-TION\_TOLER"-ANCE} definiert.
+Nach dem Rotationsinkrement wird der neue relative Winkel des Dezibots erneut gemessen, d.h. $\alpha$ aktualisiert, und die Iteration von vorn durchgeführt. Die Rotationsrichtung und "=zeit werden erneut berechnet, wodurch ein Gegensteuern möglich ist, falls sich der Dezibot zu weit bewegt hat. Eine Rotation wird außerdem als erfolgreich bewertet, wenn der neue Winkel $\alpha$ innerhalb einer festgelegten Toleranz -- aktuell 3° -- befindet. Diese Toleranz ist in \texttt{ECPMove"-ment::""ROTA"-TION\_TOLER"-ANCE} definiert.
 
 Falls innerhalb von 20 Iterationen der Ziel"=Winkel nicht erreicht werden konnte, wird eine entsprechende Meldung auf das Display gedruckt. Diese fordert den Nutzenden auf, den Dezibot am entsprechenden Ziel"=Winkel auszurichten. Dies trat bei den Tests insignifikant wenig auf und ist als \emph{Fallback} gedacht.
 
@@ -119,7 +119,7 @@ Eine Veranschaulichung der Resultanten, des Ergebnisvektors sowie des Winkels~$\
     \label{fig:angle-determination-beacon}
 \end{figure}
 
-Anschließend wird in \texttt{ECPSignal"-Detec"-tion::"-measure"-Dezi"-bot"-Angle} der Winkel~$\alpha$ bestimmt, in den der Dezibot relativ zum Beacon ausgerichtet ist (vgl.~\autoref{fig:signal-dezibot-angle}).
+Anschließend wird in \texttt{ECPSignal"-Detec"-tion::""measure"-Dezi"-bot"-Angle} der Winkel~$\alpha$ bestimmt, in den der Dezibot relativ zum Beacon ausgerichtet ist (vgl.~\autoref{fig:signal-dezibot-angle}).
 
 \vspace{-1em}
 
@@ -154,7 +154,7 @@ Basierend auf $\Delta\theta_{\text{norm}}$ kann wie folgt entschieden werden, in
 \end{aligned}
 \end{equation*}
 
-Diese Gedanken werden in \texttt{ECPMove"-ment::"-rotate"-To"-Angle} verwendet.
+Diese Gedanken werden in \texttt{ECPMove"-ment::""rotate"-To"-Angle} verwendet.
 
 
 \subsubsection{Auftretende Probleme}
