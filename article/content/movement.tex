@@ -15,7 +15,43 @@
 \subsubsection{Experimente}
 
 
-\subsection{Iteration 2: Allgemeine Move-Methode}
+\subsection{Iteration 2: Allgemeine Move"=Funktion}
+\label{sec:general-move-function}
+
+Das Ziel der nächsten Iteration bestand darin, dem Dezibot nur ein Feld zu übergeben, auf das er sich bewegen soll. Somit entfällt die manuelle Berechnung, wie sich der Dezibot von seinem ursprünglichen auf ein gewünschtes Feld bewegt. Diese Funktion wurde in der \texttt{ECP"-Chess"-Piece::""move(ECP"-Chess"-Field new"-Field)}"=Funktion implementiert. Sie bewegt den Dezibot vom aktuellen Feld zum übergebenen \texttt{new"-Field}.
+
+Dabei wird zunächst mit der \texttt{is"-Move"-Valid}"=Funktion überprüft, ob der gewünschte Zug gültig ist (vgl. \autoref{sec:move-validation}). Falls dem nicht so ist, werden die LEDs des Dezibots für eine bestimmte Zeit auf rot gestellt und \texttt{false} vorzeitig zurückgegeben. Hierbei wird der Dezibot also nicht bewegt. Andernfalls wird die Validität durch das Schalten der LEDs auf grün angezeigt und die notwendigen Bewegungen berechnet.
+
+% Contraints: zurück rotieren
+
+Dabei haben wir die folgenden Constraints aufgestellt: der Dezibot soll stets nach einem abgeschlossenen Zug in dieselbe Richtung schauen. Weiße Figuren schauen dabei stets in den Norden, schwarze in den Süden. Dies ist in orange in \autoref{fig:move-function-sketch} angedeutet.
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth]{../assets/move_function_sketch.drawio.pdf}
+    \caption{Veranschaulichung der Funktionalität von \texttt{move}. In orange ist die Ausrichtung des Dezibots, in rot die Differenz zwischen dem aktuellen und Zielfeld dargestellt.}
+    \label{fig:move-function-sketch}
+\end{figure}
+
+% Zusammensetzung der Bewegung
+
+Zunächst bewegt sich der Dezibot horizontal in die korrekte Spalte und anschließend vertikal in die richtige Zeile. Dafür wird die Spalten"= bzw. Zeilen"=Differenz vom aktuellen Feld zum neuen Feld berechnet.
+
+\begin{equation*}
+    \begin{aligned}
+        \Delta\text{col} &= \text{col}_{\text{current}} - \text{col}_{\text{new}} \\
+        \Delta\text{row} &= \text{row}_{\text{current}} - \text{row}_{\text{new}}
+    \end{aligned}
+\end{equation*}
+
+Anschließend wird die horizontale Bewegung ausgeführt, falls $\Delta\text{col} \ne 0$ gilt. Entsprechend des Vorzeichens wird die neue Richtung bestimmt, d.h. ob der Dezibot sich nach Osten oder Westen drehen muss. Basierend auf der aktuellen Richtung des Dezibots, welche in \texttt{ECP"-Chess"-Pieces::""current"-Direction} gespeichert ist, wird berechnet, in welche Richtung sich der Dezibot rotieren muss. Anschließend bewegt sich der Dezibot um $\vert \Delta\text{col} \vert$ viele Felder vorwärts.
+
+Ähnlich funktioniert die vertikale Bewegung. Die basiert auf der Zeilen"=Differenz $\Delta\text{row}$ sowie der Nord"=Süd"=Achse. Erneut wird berechnet, wie rotiert werden muss. Danach folgt die Vorwärtsbewegung um $\vert \Delta\text{row} \vert$ Felder.
+
+Nachdem der Dezibot auf dem korrekten Feld steht, dreht sich der Dezibot zurück in die initiale Richtung. Somit drehen sich weiße Figuren wieder nach Norden; schwarze Figuren nach Süden. Somit ist die Bewegung zum gewünschten Feld abgeschlossen.
+
+% Diskussion / Probleme
+
+Insgesamt ergibt sich aus dem oben genannten Constraintsystem folgende Überlegungen. Es ergibt sich der Nachteil, dass sich die Rotationsfehler, auf welche in \autoref{sec:plausibility-check-rotation} genauer eingegangen wird, addieren. Allerdings ist das Display nach einem abgeschlossenen Zug stets gleich zur spielenden Person ausgerichtet. Dadurch sieht das Schachbrett optisch einheitlich aus, da alle Figuren derselben Farbe in dieselbe Richtung schauen, wodurch die Optik mehr einem echten Schachbrett entspricht. Weiterhin werden Display"=Ausgaben korrekt und nicht kopfüber dargestellt, wodurch diese einfacher durch die entsprechende spielende Person abzulesen sind. Ein weiterer Vorteil besteht in der darin, dass sich die Züge stets aus einer einheitlichen Bewegungs"- und Rotationsreihenfolge zusammensetzt, wodurch diese vorhersehbar ist. Somit überwiegen die Vorteile des Contraintsystems, besonders wenn das Probleme der Rotationsfehler behoben ist.
 
 
 \subsection{Iteration 3: Plausibilitätsprüfung der Rotation}
