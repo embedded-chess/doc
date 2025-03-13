@@ -72,11 +72,9 @@ Weiterhin erzeugt der \texttt{ECP"-Move"-ment}"=Konstruktor eine Instanz von \te
 \subsection{Zug"=Validierung}
 \label{sec:move-validation}
 
-% in konkreten Figuren implementiert, nennen
-% basierend auf Differenzen von Zeilen und Spalten, ggf. Farbe (Pawn)
-% besetztes Feld aktuell nicht berücksichtigt, da out of scope (erst mal nur ein Dezibot)
-
 Die konkrete Zug"=Validierung ist in den konkreten, abgeleiteten Klassen von \texttt{ECP"-Chess"-Piece} in der \texttt{is"-Move"-Valid}"-Funktion enthalten. Dabei wird basierend auf dem gespeicherten aktuellen Feld \texttt{current"-Field} geprüft, ob das übergebene neue Feld \texttt{new"-Field}, auf dem der Dezibot nach dem erfolgreichen Zug stehen soll, dem Figurtypen entsprechend erlaubt ist. Das Vorgehen wird im weiteren beispielhaft anhand des Springers (\emph{Knight}) erklärt.
+
+% Beispiel: Springer
 
 Ein Springer darf sich wie folgt bewegen: entweder zwei Felder horizontal und ein Feld vertikal oder ein Feld horizontale und zwei Felder vertikal. Dabei darf er über andere Figuren, egal ob eigene oder gegnerische, springen~\cite{justUSChessFederations2019}. Entsprechend wird zu nächst die Spalten"-Differenz $\Delta\text{col}$ und Zeilen"-Differenz $\Delta\text{row}$ berechnet. Ein valider Zug ergibt sich somit wie folgt:
 
@@ -98,6 +96,14 @@ Falls diese Formel erfüllt ist, gibt die Funktion \texttt{true} zurück; andern
     \label{code:ecp-knight-is-move-valid}
 \end{listing}
 
+% Beispiel: Bauer
+
 Am kompliziertesten verhält sich der Bauer (\emph{Pawn}), da die Validität von Zügen einerseits von der Farbe, andererseits von der aktuellen Zeile befindet. So dürfen Bauern sich nur vorwärts bewegen, wobei die Vorwärtsrichtung von der Farbe der Figur abhängt. Dabei dürfen sie sich jeweils nur um ein Feld nach vorne bewegen, außer es handelt sich um den ersten Zug der Figur, bei der es auch zwei Felder sein dürfen. Außerdem dürfen Bauern ihre Spalte nur in die benachbarte verlassen, wenn diese eine gegnerische Figur (stets diagonal) schlagen~\cite{justUSChessFederations2019}. Dementsprechend handelt es sich hierbei um die längste der jeweils implementierten \texttt{is"-Move"-Valid}"=Funktionen.
 
-Insgesamt bringt jeder Figurtyp ihre individuellen Überlegungen und Implementierungen mit sich. Diese basieren auf den Feld"-Differenzen sowie, falls notwendig, der Farbe.
+% Zusammenfassung
+
+Insgesamt bringt jeder Figurtyp ihre individuellen Überlegungen und Implementierungen mit sich. Diese basieren auf den Feld"=Differenzen sowie, falls notwendig, der Farbe.
+
+% Anmerkung Scope: ein Dezibot
+
+Dabei ist anzumerken, dass der Fokus dieses Projekt sich auf \emph{einen} Dezibot beschränkt, welcher eine Schachfigur simuliert. Daher wurde die Logik für ein komplettes Schachbrett bzw. Schachspiel nicht implementiert. Entsprechend werden Züge, die nur gültig sind, wenn mit diesem eine gegnerische Figur geschlagen werden kann -- bspw. Bauer schlägt diagonal, darf sonst jedoch nur geradeaus laufen~\cite{justUSChessFederations2019} --, stets als gültig akzeptiert. Hier bietet sich ein Ansatzpunkt für eine folgende Projektarbeit.
