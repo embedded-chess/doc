@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0" version="26.1.0">
+  <diagram name="Page-1" id="_Wj45D6j_6Lownco0yWg">
+    <mxGraphModel dx="510" dy="334" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="94" y="640" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-2" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="174" y="640" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-3" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="254" y="640" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-9" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="174" y="560" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-10" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="254" y="560" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-16" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="94" y="560" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-17" value="A" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="119" y="720" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-18" value="B" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="199" y="720" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-19" value="C" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="278" y="720" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-25" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="94" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-26" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="174" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-27" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="254" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-73" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="64" y="665" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-74" value="2" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="64" y="585" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-75" value="3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;" vertex="1" parent="1">
+          <mxGeometry x="64" y="505" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-129" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#FF8000;strokeColor=none;width=5.360824742268042;endSize=2.711340206185567;endWidth=9.59719417578914;" edge="1" parent="1" source="PIm96Pzr4CZIuBN8KXAN-127">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="132" y="111" as="sourcePoint" />
+            <mxPoint x="103" y="715" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-130" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="63" y="721" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-126" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;strokeWidth=2;" vertex="1" parent="PIm96Pzr4CZIuBN8KXAN-130">
+          <mxGeometry width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-127" value="B" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fontStyle=2" vertex="1" parent="PIm96Pzr4CZIuBN8KXAN-130">
+          <mxGeometry x="4" y="6" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-131" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#FF8000;strokeColor=none;width=5.360824742268042;endSize=2.711340206185567;endWidth=9.59719417578914;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="213.76999999999998" y="671" as="sourcePoint" />
+            <mxPoint x="213.76999999999998" y="651" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-124" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="194" y="664.5" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-117" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;strokeWidth=2;" vertex="1" parent="PIm96Pzr4CZIuBN8KXAN-124">
+          <mxGeometry width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-118" value="D" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fontStyle=2" vertex="1" parent="PIm96Pzr4CZIuBN8KXAN-124">
+          <mxGeometry x="5" y="8" width="27" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-135" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=#FFFFFF;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="273" y="664.5" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-137" value="" style="triangle;whiteSpace=wrap;html=1;rotation=-90;fillColor=#FFFFFF;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="286.5" y="673" width="13" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-142" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="279.5" y="643" width="27" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-143" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="287.5" y="671.5" width="11" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-144" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#FF8000;strokeColor=none;width=5.360824742268042;endSize=2.711340206185567;endWidth=9.59719417578914;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="213.89" y="507" as="sourcePoint" />
+            <mxPoint x="214.12" y="553" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-145" value="" style="group;fillColor=default;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="194" y="500" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-146" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;strokeWidth=2;fillColor=#000000;" vertex="1" parent="PIm96Pzr4CZIuBN8KXAN-145">
+          <mxGeometry width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PIm96Pzr4CZIuBN8KXAN-147" value="D" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=CMU Serif;fontSource=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fbitmaks%2Fcm-web-fonts%40latest%2Ffont%2FSerif%2Fcmunrm.woff;fontStyle=2;fontColor=#FFFFFF;" vertex="1" parent="PIm96Pzr4CZIuBN8KXAN-145">
+          <mxGeometry x="5" y="8" width="27" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
