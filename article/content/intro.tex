@@ -10,4 +10,28 @@ Dabei können verschiedene Züge angegeben werden, welcher der Dezibot nach eine
 
 Das entstandene Projekt kann unter \url{https://github.com/nicosrm/24-emb-chess/} eingesehen werden.
 
-In den folgenden Kapiteln gehen wir genau auf die Projektstruktur und die Schachstrukturen sowie die entsprechende Logik ein. Im nächsten Kapitel beleuchten wir die Bewegung des Roboters genauer, in dem wir die einzelnen Iterationen darlegen. Schlussendlich folgt ein Fazit sowie ein Ausblick, wie dieses Projekt weiterentwickelt werden kann.
+
+\subsection{Rahmen}
+
+Im Rahmen dieses Projekts liegt der Schwerpunkt auf \emph{einem} Dezibot, der eine einzelne Schachfigur simuliert. Die Interaktion mit anderen Dezibots zur Durchführung eines vollständigen Schachspiels ist dabei bewusst ausgeschlossen. Stattdessen konzentriert sich dieses Projekt auf die Grundlagen einer einzelnen Schachfigur. Die Schachlogik für die Bewegung und Zug"=Validierung der verschiedenen Figurtypen, wie König, Dame, Turm etc., steht im Fokus. Darüber hinaus soll sich der Dezibot gemäß einer vorgegebenen Feld"=Reihenfolge auf einem (modifizierten) Schachbrett bewegen.
+
+% ein Dezibot: Logik komplettes Schachbrett, Schlagen, vom Brett Bewegen
+
+Da sich auf jeweils ein Dezibot gleichzeitig auf dem Schachbrett fokussiert wird, sind in diesem Projekt folgende Sachverhalte nicht enthalten. Es muss keine Logik für ein komplettes Schachbrett implementiert werden. Somit wird nicht gespeichert, wo sich alle Figuren zu jeder gegebenen Zeit positioniert sind. Somit kann ein Dezibot nicht geschlagen werden und muss sich entsprechend nicht vom Schachbrett bewegen. Vielmehr ist die Funktion, die aktuell simulierte Figur zu schlagen, nicht im Rahmen des Projektes enthalten.
+
+% ein Dezibot: Gültigkeit von Schlag-Zügen
+
+Daraus ergibt sich ebenfalls, dass der Dezibot auch keine anderen Figuren schlagen kann. Somit wird ein Zug, der nach den Spielregeln nur gültig wäre, wenn auf dem Ziel"=Feld eine gegnerische Figur steht, stets als gültig bewertet. So darf bspw. ein Bauer, welcher sich nur um ein Feld vorwärts diagonal bewegen darf, wenn dort eine gegnerische Figur geschlagen werden kann~\cite{justUSChessFederations2019}, sich stets um ein Feld vorwärts diagonal bewegen.
+
+% keine Kommunikation mit anderen Dezibots
+
+Ferner ergibt sich, dass ein Dezibot nicht mit anderen Dezibots kommunizieren können muss, um ein Schachspiel zu orchestrieren. Dieses Problem bedarf eines gesonderten Projektes, welches im Rahmen dieses Moduls denkbar wäre. Nach erfolgreicher Abgabe eines solchen Projektes, kann das vorgelegte Projekt entsprechend ergänzt werden.
+
+% Kontaktlose Verbindung zur Nutzer:in für Züge
+
+Außerhalb des Projektrahmens ist außerdem eine kontaktlose Verbindung zu den Spielenden, um den jeweils aktuellen, gewünschten Zug zu ermitteln. Daher ergibt sich, dass die Züge, welche ein Dezibot ausführen soll, bei der Installierung der Software vordefiniert werden muss. Wünschenswert ist eine Schnittstelle, bspw. über WLAN oder Bluetooth zu einem zentralen Server, worüber die Züge zur Laufzeit an den entsprechenden Dezibot übermittelt werden könnten. Dies erfordert jedoch ein weiteres Projekt, welches in dieses Projekt integriert werden könnte.
+
+
+\subsection{Aufbau der Arbeit}
+
+In den folgenden Kapiteln wird auf die Projektstruktur und die Schachstrukturen sowie die entsprechende Logik eingegangen. Im nächsten Kapitel wird die Bewegung des Roboters genauer beleuchtet, in dem die einzelnen Iterationen darlegt werden. Schlussendlich folgt ein Fazit sowie ein Ausblick, wie dieses Projekt weiterentwickelt werden kann.
