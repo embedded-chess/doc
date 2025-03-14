@@ -14,6 +14,13 @@
 \SetupFloatingEnvironment{listing}{name=Quellcode}
 \renewcommand*{\listlistingname}{Quellcodeverzeichnis}
 
+% define cminted environment
+% https://tex.stackexchange.com/questions/161124/161128#161128
+\usepackage{xpatch,letltxmacro}
+\LetLtxMacro{\cminted}{\minted}
+\let\endcminted\endminted
+\xpretocmd{\cminted}{\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}}{}{}
+
 \usepackage{csquotes}
 \usepackage[skip=12pt plus1pt]{parskip}
 

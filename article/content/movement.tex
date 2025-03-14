@@ -64,11 +64,37 @@ Insgesamt ergibt sich aus dem oben genannten Constraintsystem folgende Überlegu
 \subsection{Iteration 3: Plausibilitätsprüfung der Rotation}
 \label{sec:plausibility-check-rotation}
 
+Wie bereits in \autoref{sec:move-straight-turn} erwähnt, ist die Rotation nach einer fest definierten Zeit aufgrund von unvorhersehbaren äußeren Einflüssen unzuverlässig und führt meist nicht zum gewünschten Ergebnis. Weiterhin rotiert der Dezibot nicht auf einem \enquote{Fleck}, sondern bewegt sich an eine andere, nicht vorhersehbare Position. Dabei kann es passieren, dass der Dezibot, der ursprünglich auf einem weißen Feld stand, anschließend auf einem schwarzem steht (vgl. \autoref{fig:dezibot-rotation-position-offset}) oder vice versa. Daher wurde eine Plausibilitätsprüfung für die Rotation als Verbesserung eingeführt, welche überprüft, ob die Farbe des initialen Feldes dieselbe ist, wie die jenes Feldes, welches nach einer Rotation erreicht wurde.
+
+Bei einer Rotation wird zunächst mit der in \autoref{sec:move-straight-turn} erwähnten \texttt{ECP"-Color"-Detection::""is"-White"-Field}"=Funktion gemessen, ob der Dezibot ursprünglich auf einem weißen oder schwarzem Feld steht. Nach einer Rotation wird dies erneut gemessen und mit dem ursprünglichen Wert verglichen. Wenn die Farben übereinstimmen, wird die Rotation als erfolgreich gewertet. Andernfalls wird eine Nachricht auf dem Display des Dezibots angezeigt, welche eine manuelle Korrektur anfordert. Dabei wird das gewünschte Feld sowie die Richtung, nach der der Dezibot ausgerichtet werden soll, ausgegeben. Eine Beispiel"=Ausgabe ist in \autoref{fig:display-rotation-correction-request} dargestellt.
+
+\begin{figure}[h]
+\centering
+\begin{cminted}{text}
++----------------+
+|Faulty rotation |
+|Please correct  |
+|my position in  |
+|10 seconds to   |
+|                |
+|> A1 NORTH      |
+|                |
+|Thank you!      |
++----------------+
+\end{cminted}
+\caption{Beispiel für Aufforderung zur Korrektur einer fehlgeschlagenen Rotation. Gewünscht ist Feld \texttt{A1} mit Ausrichtung Norden.}
+\label{fig:display-rotation-correction-request}
+\end{figure}
+
+Somit können fehlerhafte Rotationen, welche den Dezibot unerwünscht auf ein anderes Feld bewegen, von der nutzenden Person korrigiert werden. Dabei gilt jedoch die Einschränkung, dass der Dezibot auf ein Feld einer anderen Farbe rotieren muss, damit die Korrektur funktioniert. Falls bspw. von einem schwarzen auf ein anderes schwarzes Feld rotiert wird, kann dies mit diesem Ansatz nicht erkannt werden. Erfahrungsgemäß ist dies jedoch selten der Fall, da ein Dezibot sich sonst über zwei Felder (von schwarz zu weiß zu schwarz) bewegen müsste.
+
+Mit dieser Verbesserung kann ebenfalls nicht überprüft werden, ob eine intendierte 90°"=Drehung den Dezibot auch tatsächlich um 90° dreht. Dieses Problem wurde in der folgenden Iteration thematisiert.
+
 
 \subsection{Iteration 4: Infrarot"=basierte Rotation}
 \label{sec:movement-ir}
 
-Zur Verbesserung der Rotation wogen wir einige Ideen ab. Einerseits bauten wir bereits die im vorherigen erläuterte Plausibilitätsprüfung der Rotation ein. Eine zusätzliche Idee war es, ein Regelsystem für die Rotation zu entwerfen und zu implementieren. Dafür hatten wir verschiedene Ideen. Die Farbe bzw. das Licht vom Untergrund wird bereits die Plausibilitätsprüfung betrachtet. Insgesamt war der Wunsch, eine zweite physikalisch Größen einzubeziehen.
+Zur Verbesserung der Rotation wogen wir einige Ideen ab. Einerseits bauten wir bereits die im vorherigen Abschnitt erläuterte Plausibilitätsprüfung der Rotation ein. Eine zusätzliche Idee war es, ein Regelsystem für die Rotation zu entwerfen und zu implementieren. Dafür hatten wir verschiedene Ideen. Die Farbe bzw. das Licht vom Untergrund wird bereits die Plausibilitätsprüfung betrachtet. Insgesamt war der Wunsch, eine zweite physikalisch Größen einzubeziehen.
 
 Der Beschleunigungssensor (\emph{Inertial Measurement Unit}, IMU) entfiel dabei als mögliche Option, da diese aktuell nur im Ansatz von der existierenden \texttt{dezibot}"=Library unterstützt wird und viel Low"=Level"=Code notwendig wäre. Außerdem hörten wir Berichte anderer Kommiliton:innen, welche eher negativ ausfielen.
 
