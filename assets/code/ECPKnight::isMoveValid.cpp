@@ -6,7 +6,7 @@ bool ECPKnight::isMoveValid(ECPChessField newField) {
         abs((int) newField.row - (int) currentField.row);
 
     if (columnDiff == 2 && rowDiff == 1) {
-        // two field horizontally and one vertically
+        // two fields horizontally and one vertically
         return true;
     }
     if (columnDiff == 1 && rowDiff == 2) {
