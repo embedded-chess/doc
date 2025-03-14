@@ -16,7 +16,7 @@ Die eigentliche Business Logic befindet sich dabei im \texttt{src/}"=Verzeichnis
     \item \texttt{ECPSignalDetection}: Bestimmung eines Beacon"=Signales, auf welchem die Bewegung basiert (vgl. \autoref{sec:angle-determination}).
 \end{itemize}
 
-Diese werden im folgenden Abschnitt genauer betrachtet. Anschließend wird die Zug"=Validierung erläutert.
+Diese werden im folgenden Abschnitt genauer betrachtet. Anschließend wird die Zug"=Validierung sowie die Repräsentation der Figuren auf dem Dezibot"=Displays erläutert.
 
 
 \subsection{Schachstrukturen}
@@ -107,3 +107,7 @@ Insgesamt bringt jeder Figurtyp ihre individuellen Überlegungen und Implementie
 % Anmerkung Scope: ein Dezibot
 
 Dabei ist anzumerken, dass der Fokus dieses Projekt sich auf \emph{einen} Dezibot beschränkt, welcher eine Schachfigur simuliert. Daher wurde die Logik für ein komplettes Schachbrett bzw. Schachspiel nicht implementiert. Entsprechend werden Züge, die nur gültig sind, wenn mit diesem eine gegnerische Figur geschlagen werden kann -- bspw. Bauer schlägt diagonal, darf sonst jedoch nur geradeaus laufen~\cite{justUSChessFederations2019} --, stets als gültig akzeptiert. Hier bietet sich ein Ansatzpunkt für eine folgende Projektarbeit.
+
+
+\subsection{Darstellung der Figur}
+\label{sec:display-representation}
