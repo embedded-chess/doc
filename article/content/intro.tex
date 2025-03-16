@@ -4,9 +4,9 @@
 
 Im Modul \emph{Software Entwicklung für Eingebettete Systeme} arbeiten Studierende mit dem Lehr- und Lernroboter \emph{Dezibot 4}~\cite{dezibotteamDezibotDezibot2025}. Dafür soll jedes Team ein eigenes Projekt erarbeiten.
 
-In unserem Projekt -- \emph{Embedded Chess Pieces} -- soll zunächst ein Dezibot auf ein Schachbrett gesetzt werden, welches sich wie eine bestimmte Schachfigur verhält. Dabei kann aus allen gängigen Schachfiguren ausgewählt werden, welche der Dezibot anschließend simuliert. Die ausgewählte Figur wird anschließend auf dem Display zur Identifikation angezeigt.
+In unserem Projekt -- \emph{Embedded Chess Pieces} -- soll zunächst ein Dezibot auf ein Schachbrett gesetzt werden, welcher sich wie eine bestimmte Schachfigur verhält. Dabei kann aus allen gängigen Schachfiguren ausgewählt werden, welche der Dezibot anschließend simuliert. Die ausgewählte Figur wird anschließend auf dem Display zur Identifikation angezeigt.
 
-Dabei können verschiedene Züge angegeben werden, welcher der Dezibot nach einer Validierung auf dem Feld durchführt. Falls der angegebene Zug gegen die Regeln der jeweiligen Figur verstößt, wird dies über die eingebauten LEDs angezeigt.
+Dabei können verschiedene Züge angegeben werden, welcher der Dezibot nach einer Validierung auf dem Feld durchführt. Die Gültigkeit des angegebenen Zuges wird zudem über die eingebauten LEDs angezeigt.
 
 Das entstandene Projekt kann unter \url{https://github.com/nicosrm/24-emb-chess/} eingesehen werden.
 
@@ -17,7 +17,7 @@ Im Rahmen dieses Projekts liegt der Schwerpunkt auf \emph{einem} Dezibot, der ei
 
 % ein Dezibot: Logik komplettes Schachbrett, Schlagen, vom Brett Bewegen
 
-Da sich auf jeweils ein Dezibot gleichzeitig auf dem Schachbrett fokussiert wird, sind in diesem Projekt folgende Sachverhalte nicht enthalten. Es muss keine Logik für ein komplettes Schachbrett implementiert werden. Somit wird nicht gespeichert, wo sich alle Figuren zu jeder gegebenen Zeit positioniert sind. Somit kann ein Dezibot nicht geschlagen werden und muss sich entsprechend nicht vom Schachbrett bewegen. Vielmehr ist die Funktion, die aktuell simulierte Figur zu schlagen, nicht im Rahmen des Projektes enthalten.
+Da sich auf einen Dezibot auf dem Schachbrett fokussiert wird, sind in diesem Projekt folgende Sachverhalte nicht enthalten. Es muss keine Logik für ein komplettes Schachbrett implementiert werden. Somit wird nicht gespeichert, wo sich alle Figuren zu jeder gegebenen Zeit positioniert sind. Ein Dezibot kann demnach nicht geschlagen werden und muss sich entsprechend nicht vom Schachbrett bewegen. Vielmehr ist die Funktion, die aktuell simulierte Figur zu schlagen, nicht im Rahmen des Projektes enthalten.
 
 % ein Dezibot: Gültigkeit von Schlag-Zügen
 
@@ -34,4 +34,4 @@ Außerhalb des Projektrahmens ist außerdem eine kontaktlose Verbindung zu den S
 
 \subsection{Aufbau der Arbeit}
 
-In den folgenden Kapiteln wird auf die Projektstruktur und die Schachstrukturen sowie die entsprechende Logik eingegangen. Im nächsten Kapitel wird die Bewegung des Roboters genauer beleuchtet, in dem die einzelnen Iterationen darlegt werden. Schlussendlich folgt ein Fazit sowie ein Ausblick, wie dieses Projekt weiterentwickelt werden kann.
+In den folgenden Kapiteln wird auf die Projektstruktur und die Schachstrukturen sowie die entsprechende Logik eingegangen. Anschließend wird die Bewegung des Roboters genauer beleuchtet, in dem die einzelnen Iterationen darlegt werden. Schlussendlich folgt ein Fazit sowie ein Ausblick, wie dieses Projekt weiterentwickelt werden kann.
