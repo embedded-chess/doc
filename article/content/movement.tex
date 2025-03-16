@@ -52,9 +52,9 @@ Diese Lösung erfordert weitere Anpassungen im laufe des Projekts, da zunächst 
 \subsection{Iteration 2: Allgemeine Move"=Funktion}
 \label{sec:general-move-function}
 
-Das Ziel der nächsten Iteration bestand darin, dem Dezibot nur ein Feld zu übergeben, auf das er sich bewegen soll. Somit entfällt die manuelle Berechnung, wie sich der Dezibot von seinem ursprünglichen auf ein gewünschtes Feld bewegt. Diese Funktion wurde in der \texttt{ECP"-Chess"-Piece::""move(ECP"-Chess"-Field new"-Field)}"=Funktion implementiert. Sie bewegt den Dezibot vom aktuellen Feld zum übergebenen \texttt{new"-Field}.
+Das Ziel der nächsten Iteration bestand darin, dem Dezibot nur ein Feld zu übergeben, auf das er sich bewegen soll. Diese Funktion wurde in der \texttt{ECP"-Chess"-Piece::""move(ECP"-Chess"-Field new"-Field)}"=Funktion implementiert. Sie bewegt den Dezibot vom aktuellen Feld zum übergebenen \texttt{new"-Field}.
 
-Dabei wird zunächst mit der \texttt{is"-Move"-Valid}"=Funktion überprüft, ob der gewünschte Zug gültig ist (vgl. \autoref{sec:move-validation}). Falls dem nicht so ist, werden die LEDs des Dezibots für eine bestimmte Zeit auf rot gestellt und \texttt{false} vorzeitig zurückgegeben. Hierbei wird der Dezibot also nicht bewegt. Andernfalls wird die Validität durch das Schalten der LEDs auf grün angezeigt und die notwendigen Bewegungen berechnet.
+Dabei wird zunächst mit der \texttt{is"-Move"-Valid}"=Funktion überprüft, ob der gewünschte Zug gültig ist (vgl. \autoref{sec:move-validation}). Die Gültigkeit wird vor einer Bewegung über die LEDs des Dezibots dargestellt. Falls der Zug gültig ist, wird dies durch grünes Licht angezeigt. Andernfalls zeigt der Dezibot rotes Licht und beendet vorzeitig durch die Rückgabe von \texttt{false}, ohne sich zu bewegen.
 
 % Contraints: zurück rotieren
 
@@ -68,7 +68,7 @@ Dabei haben wir die folgenden Constraints aufgestellt: der Dezibot soll stets na
 
 % Zusammensetzung der Bewegung
 
-Zunächst bewegt sich der Dezibot horizontal in die korrekte Spalte und anschließend vertikal in die richtige Zeile. Dafür wird die Spalten"= bzw. Zeilen"=Differenz vom aktuellen Feld zum neuen Feld berechnet.
+Eine Bewegung setzt wie folgt zusammen: Zunächst bewegt sich der Dezibot horizontal in die korrekte Spalte und anschließend vertikal in die richtige Zeile. Dafür wird die Spalten"= bzw. Zeilen"=Differenz vom aktuellen Feld zum neuen Feld berechnet.
 
 \begin{equation*}
     \begin{aligned}
@@ -77,23 +77,23 @@ Zunächst bewegt sich der Dezibot horizontal in die korrekte Spalte und anschlie
     \end{aligned}
 \end{equation*}
 
-Anschließend wird die horizontale Bewegung ausgeführt, falls $\Delta\text{col} \ne 0$ gilt. Entsprechend des Vorzeichens wird die neue Richtung bestimmt, d.h. ob der Dezibot sich nach Osten oder Westen drehen muss. Basierend auf der aktuellen Richtung des Dezibots, welche in \texttt{ECP"-Chess"-Pieces::""current"-Direction} gespeichert ist, wird berechnet, in welche Richtung sich der Dezibot rotieren muss. Anschließend bewegt sich der Dezibot um $\vert \Delta\text{col} \vert$ viele Felder vorwärts.
+Anschließend wird die horizontale Bewegung ausgeführt, falls $\Delta\text{col} \ne 0$ gilt. Entsprechend des Vorzeichens wird die neue Richtung bestimmt, d.h. ob der Dezibot sich nach Osten oder Westen drehen muss. Basierend auf der aktuellen Richtung des Dezibots, welche in \texttt{ECP"-Chess"-Pieces::""current"-Direction} gespeichert ist, wird berechnet, in welche Richtung sich der Dezibot rotieren muss. Anschließend bewegt sich der Dezibot um $\vert \Delta\text{col} \vert$ Felder vorwärts.
 
 Ähnlich funktioniert die vertikale Bewegung. Die basiert auf der Zeilen"=Differenz $\Delta\text{row}$ sowie der Nord"=Süd"=Achse. Erneut wird berechnet, wie rotiert werden muss. Danach folgt die Vorwärtsbewegung um $\vert \Delta\text{row} \vert$ Felder.
 
-Nachdem der Dezibot auf dem korrekten Feld steht, dreht sich der Dezibot zurück in die initiale Richtung. Somit drehen sich weiße Figuren wieder nach Norden; schwarze Figuren nach Süden. Somit ist die Bewegung zum gewünschten Feld abgeschlossen.
+Nachdem der Dezibot auf dem korrekten Feld steht, dreht sich der Dezibot bei Bedarf zurück in die initiale Richtung. Somit drehen sich weiße Figuren wieder nach Norden; schwarze Figuren nach Süden. Dies beendet die Bewegung zum gewünschten Feld.
 
 % Diskussion / Probleme
 
-Insgesamt ergibt sich aus dem oben genannten Constraintsystem folgende Überlegungen. Es ergibt sich der Nachteil, dass sich die Rotationsfehler, auf welche in \autoref{sec:plausibility-check-rotation} genauer eingegangen wird, addieren. Allerdings ist das Display nach einem abgeschlossenen Zug stets gleich zur spielenden Person ausgerichtet. Dadurch sieht das Schachbrett optisch einheitlich aus, da alle Figuren derselben Farbe in dieselbe Richtung schauen, wodurch die Optik mehr einem echten Schachbrett entspricht. Weiterhin werden Display"=Ausgaben korrekt und nicht kopfüber dargestellt, wodurch diese einfacher durch die entsprechende spielende Person abzulesen sind. Ein weiterer Vorteil besteht in der darin, dass sich die Züge stets aus einer einheitlichen Bewegungs"- und Rotationsreihenfolge zusammensetzt, wodurch diese vorhersehbar ist. Somit überwiegen die Vorteile des Contraintsystems, besonders wenn das Probleme der Rotationsfehler behoben ist.
+Insgesamt ergibt sich aus dem oben genannten Constraintsystem folgende Überlegungen. Es ergibt sich der Nachteil, dass sich Rotationsfehler, auf welche in \autoref{sec:plausibility-check-rotation} genauer eingegangen wird, addieren. Allerdings ist das Display nach einem abgeschlossenen Zug stets gleich zur spielenden Person ausgerichtet. Dadurch sieht das Schachbrett optisch einheitlich aus, da alle Figuren derselben Farbe in dieselbe Richtung schauen, wodurch die Optik mehr einem echten Schachbrett entspricht und die Übersichtlichkeit unterstützt. Weiterhin werden Display"=Ausgaben korrekt und nicht kopfüber dargestellt, wodurch diese einfacher durch die entsprechende spielende Person abzulesen sind. Ein weiterer Vorteil besteht darin, dass sich die Züge stets aus einer einheitlichen Bewegungs"= und Rotationsreihenfolge zusammensetzen, wodurch diese vorhersehbar ist. Somit überwiegen die Vorteile des Contraintsystems, besonders wenn die Probleme der Rotationsfehler behandelt werden.
 
 
 \subsection{Iteration 3: Plausibilitätsprüfung der Rotation}
 \label{sec:plausibility-check-rotation}
 
-Wie bereits in \autoref{sec:move-straight-turn} erwähnt, ist die Rotation nach einer fest definierten Zeit aufgrund von unvorhersehbaren äußeren Einflüssen unzuverlässig und führt meist nicht zum gewünschten Ergebnis. Weiterhin rotiert der Dezibot nicht auf einem \enquote{Fleck}, sondern bewegt sich an eine andere, nicht vorhersehbare Position. Dabei kann es passieren, dass der Dezibot, der ursprünglich auf einem weißen Feld stand, anschließend auf einem schwarzem steht (vgl. \autoref{fig:dezibot-rotation-position-offset}) oder vice versa. Daher wurde eine Plausibilitätsprüfung für die Rotation als Verbesserung eingeführt, welche überprüft, ob die Farbe des initialen Feldes dieselbe ist, wie die jenes Feldes, welches nach einer Rotation erreicht wurde.
+Wie bereits in \autoref{sec:move-straight-turn} erwähnt, ist die Rotation nach einer fest definierten Zeit aufgrund von unvorhersehbaren äußeren Einflüssen unzuverlässig und führt meist nicht zum gewünschten Ergebnis. Weiterhin rotiert der Dezibot nicht auf einem \enquote{Fleck}, sondern bewegt sich an eine andere, nicht deterministische Position. Dabei kann es passieren, dass der Dezibot, der ursprünglich auf einem weißen Feld stand, anschließend auf einem schwarzem steht (vgl. \autoref{fig:dezibot-rotation-position-offset}) oder vice versa. Daher wurde eine Plausibilitätsprüfung für die Rotation als Verbesserung eingeführt, welche überprüft, ob die Farbe des initialen Feldes dieselbe ist, wie die jenes Feldes, welches nach einer Rotation erreicht wurde.
 
-Bei einer Rotation wird zunächst mit der in \autoref{sec:move-straight-turn} erwähnten \texttt{ECP"-Color"-Detection::""is"-White"-Field}"=Funktion gemessen, ob der Dezibot ursprünglich auf einem weißen oder schwarzem Feld steht. Nach einer Rotation wird dies erneut gemessen und mit dem ursprünglichen Wert verglichen. Wenn die Farben übereinstimmen, wird die Rotation als erfolgreich gewertet. Andernfalls wird eine Nachricht auf dem Display des Dezibots angezeigt, welche eine manuelle Korrektur anfordert. Dabei wird das gewünschte Feld sowie die Richtung, nach der der Dezibot ausgerichtet werden soll, ausgegeben. Eine Beispiel"=Ausgabe ist in \autoref{fig:display-rotation-correction-request} dargestellt.
+Bei einer Rotation wird zunächst mit der in \autoref{sec:move-straight-turn} erwähnten \texttt{ECP"-Color"-Detection::""is"-White"-Field}"=Funktion gemessen, ob der Dezibot ursprünglich auf einem weißen oder schwarzem Feld steht. Nach einer Rotation wird dies erneut gemessen und mit dem ursprünglichen Wert verglichen. Wenn die Farben übereinstimmen, wird die Rotation als plausibel gewertet. Andernfalls wird eine Nachricht auf dem Display des Dezibots angezeigt, welche eine manuelle Korrektur anfordert. Dabei wird das gewünschte Feld sowie die Richtung, nach der der Dezibot ausgerichtet werden soll, ausgegeben. Eine Beispiel"=Ausgabe ist in \autoref{fig:display-rotation-correction-request} dargestellt.
 
 \begin{figure}[h]
 \centering
@@ -109,11 +109,11 @@ Bei einer Rotation wird zunächst mit der in \autoref{sec:move-straight-turn} er
 |Thank you!      |
 +----------------+
 \end{cminted}
-\caption{Beispiel für Aufforderung zur Korrektur einer fehlgeschlagenen Rotation. Gewünscht ist Feld \texttt{A1} mit Ausrichtung Norden.}
+\caption{Beispiel für Aufforderung zur Korrektur einer fehlgeschlagenen Rotation. Gewünscht ist Feld \texttt{A1} mit Ausrichtung \texttt{NORTH}.}
 \label{fig:display-rotation-correction-request}
 \end{figure}
 
-Somit können fehlerhafte Rotationen, welche den Dezibot unerwünscht auf ein anderes Feld bewegen, von der nutzenden Person korrigiert werden. Dabei gilt jedoch die Einschränkung, dass der Dezibot auf ein Feld einer anderen Farbe rotieren muss, damit die Korrektur funktioniert. Falls bspw. von einem schwarzen auf ein anderes schwarzes Feld rotiert wird, kann dies mit diesem Ansatz nicht erkannt werden. Erfahrungsgemäß ist dies jedoch selten der Fall, da ein Dezibot sich sonst über zwei Felder (von schwarz zu weiß zu schwarz) bewegen müsste.
+Somit können fehlerhafte Rotationen, welche den Dezibot unerwünscht auf ein anderes Feld bewegen, von den Spielenden korrigiert werden. Starke Abweichungen, d.h. Rotation auf ein anderes Feld derselben Farbe, können dabei jedoch nicht erkannt werden. Dies ist jedoch selten der Fall.
 
 Mit dieser Verbesserung kann ebenfalls nicht überprüft werden, ob eine intendierte 90°"=Drehung den Dezibot auch tatsächlich um 90° dreht. Dieses Problem wurde in der folgenden Iteration thematisiert.
 
@@ -121,13 +121,13 @@ Mit dieser Verbesserung kann ebenfalls nicht überprüft werden, ob eine intendi
 \subsection{Iteration 4: Infrarot"=basierte Rotation}
 \label{sec:movement-ir}
 
-Zur Verbesserung der Rotation wogen wir einige Ideen ab. Einerseits bauten wir bereits die im vorherigen Abschnitt erläuterte Plausibilitätsprüfung der Rotation ein. Eine zusätzliche Idee war es, ein Regelsystem für die Rotation zu entwerfen und zu implementieren. Dafür hatten wir verschiedene Ideen. Die Farbe bzw. das Licht vom Untergrund wird bereits die Plausibilitätsprüfung betrachtet. Insgesamt war der Wunsch, eine zweite physikalisch Größen einzubeziehen.
+Zur Verbesserung der Rotation wogen wir einige Ideen ab. Einerseits bauten wir bereits die im vorherigen Abschnitt erläuterte Plausibilitätsprüfung der Rotation ein. Eine zusätzliche Idee war es, ein Regelsystem für die Rotation zu entwerfen und zu implementieren. Die Farbe bzw. das Licht vom Untergrund wird bereits die Plausibilitätsprüfung betrachtet. Insgesamt war der Wunsch, eine zweite physikalisch Größen einzubeziehen.
 
-Der Beschleunigungssensor (\emph{Inertial Measurement Unit}, IMU) entfiel dabei als mögliche Option, da diese aktuell nur im Ansatz von der existierenden \texttt{dezibot}"=Library unterstützt wird und viel Low"=Level"=Code notwendig wäre. Außerdem hörten wir Berichte anderer Kommiliton:innen, welche eher negativ ausfielen.
+Der Beschleunigungssensor (\emph{Inertial Measurement Unit}, IMU) entfiel dabei als mögliche Option, da dieser aktuell nur im Ansatz von der existierenden \texttt{dezibot}"=Library unterstützt wird und viel Low"=Level"=Code notwendig wäre. Während den Lehrveranstaltungen wurde jedoch von große Problemen mit der Genauigkeit beschrieben.
 
-Eine weitere Idee war es, Linien auf dem Schachbrett zu zeichnen und an andere Projekte anzuknüpfen, welche eine Linienverfolgung beinhalten. Dieser Ansatz wird im \autoref{sec:perspective} zum Ausblick noch einmal aufgegriffen. Da die entsprechenden Projekte damals allerdings noch nicht fertiggestellt waren und wir die Projekte nicht doppeln wollten, entschieden wir uns für den folgenden, anderen Ansatz.
+Eine weitere Idee war es, Linien auf dem Schachbrett zu zeichnen und an andere Projekte anzuknüpfen, welche eine Linienverfolgung beinhalten, wie bspw.~\cite{antonovSnskorpion2DezibotLabyrinthSolver2025}. Im Gespräch mit den Dozenten wurde diese Idee jedoch aufgrund von zu starker Änderung des Schachbretts und daraus resultierendem Verlust des Wiedererkennungswertes abgelehnt. Daher wurde sich für den folgenden, anderen Ansatz entschieden.
 
-Dieser Ansatz in einer zusätzlichen Signalquelle, welcher beispielsweise von einem weiteren Dezibot ausgesendet wird, und Trigonometrie. Vorstellbar sind hier WLAN- oder Bluetooth"=Signale, oder auch Infrarot"=Licht. Schlussendlich entschieden wir uns durch die Abwägung von Kosten und Nutzen für eine Infrarot"=LED als \emph{Beacon} sowie die seitlichen "=Sensoren zur Messung. Diese sind in \autoref{fig:dezibot-bottom} hervorgehoben.
+Diese basiert auf einer zusätzlichen Signalquelle (\emph{Beacon}), aus welcher die relative Ausrichtung des Dezibots trigonometrisch approximiert werden kann. Vorstellbar sind hier WLAN- oder Bluetooth"=Signale, oder auch Infrarot"=Licht. Schlussendlich entschieden wir uns durch die Abwägung von Kosten und Nutzen für die Infrarot"=LED eines Dezibots als Beacon sowie die seitlichen "=Sensoren zur Messung. Diese sind in \autoref{fig:dezibot-bottom} hervorgehoben.
 
 \begin{figure}[h]
     \centering
@@ -136,9 +136,9 @@ Dieser Ansatz in einer zusätzlichen Signalquelle, welcher beispielsweise von ei
     \label{fig:dezibot-bottom}
 \end{figure}
 
-Dafür wird ein Dezibot platziert, welcher ein Infrarot"=Signal aussendet, neben das Schachbrett platziert, welches ungefähr in die Mitte des Schachbretts schaut. Dafür wurde das Programm \href{https://github.com/nicosrm/24-emb-chess/blob/feature/31-rotation-infrared/example/EmbeddedChessPieces/examples/ir_sensors/ir_emitter/ir_emitter.ino}{\texttt{ir\_emitter.ino}} geschrieben, welches ebenjene Funktion erfüllt.
+Dafür wird ein Dezibot, welcher ein Infrarot"=Signal aussendet, neben dem Schachbrett platziert, welches ungefähr in die Mitte des Schachbretts schaut. Dafür wurde das Programm {\texttt{ir\_emitter.ino} geschrieben, welches ebenjene Funktion erfüllt.
 
-Dieses Signal wird von \texttt{ECP"-Signal"-Detection::""measure"-Signal"-Angle()} gemessen. Dabei werden der Werte von allen vier Infrarot"=Sensoren gelesen und verrechnet. Aus dem gemessenen Winkel des Beacon"=Signals wird der Winkel berechnet, in den der Dezibot in Relation zum Beacon ausgerichtet ist (vgl. \texttt{ECPSignal"-Detection::""measure"-Dezi"-bot"-Angle}). Die beiden Winkel sind in \autoref{fig:signal-dezibot-angle} verdeutlicht. Die Bestimmung der Winkel wird in \autoref{sec:angle-determination} genauer erläutert.
+Dieses Signal wird von \texttt{ECP"-Signal"-Detection::""measure"-Signal"-Angle} gemessen. Dabei werden der Werte von allen vier Infrarot"=Sensoren gelesen und verrechnet. Aus dem gemessenen Winkel des Beacon"=Signals wird der Winkel berechnet, in den der Dezibot in Relation zum Beacon ausgerichtet ist (vgl. \texttt{ECPSignal"-Detection::""measure"-Dezi"-bot"-Angle}). Die beiden Winkel sind in \autoref{fig:signal-dezibot-angle} verdeutlicht. Die Bestimmung der Winkel wird in \autoref{sec:angle-determination} genauer erläutert.
 
 \begin{figure}[h]
     \centering
@@ -165,40 +165,38 @@ An diesem Punkt sind die zwei wichtigen Größen bekannt: einerseits der initial
     \label{fig:dezibot-rotation-angles}
 \end{figure}
 
-Mit diesen beiden Werten wird die \texttt{ECPMove"-ment"-::"-rotate"-To"-Angle}"=Funktion aufgerufen. Diese rotiert den Dezibot inkrementell vom übergebenen initialen Winkel zum Ziel"=Winkel. Dabei wird innerhalb einer Schleife basierend auf der normalisierten Differenz $\Delta\theta_{\text{norm}}$ bestimmt, ob der Dezibot am effizientesten nach links oder rechts rotieren muss, um $\alpha'$ zu erreichen. Dies wird in \autoref{sec:rotation-direction-determination} genauer erläutert. Anschließend wird benötigte die Rotationszeit approximiert.
+Mit diesen beiden Werten wird die \texttt{ECPMove"-ment"-::"-rotate"-To"-Angle}"=Funktion aufgerufen. Diese rotiert den Dezibot inkrementell vom übergebenen initialen Winkel zum Ziel"=Winkel. Dabei wird innerhalb einer Schleife basierend auf der normalisierten Differenz $\Delta\theta_{\text{norm}}$ bestimmt, ob der Dezibot am effizientesten nach links oder rechts rotieren muss, um $\alpha'$ zu erreichen. Dies wird in \autoref{sec:rotation-direction-determination} genauer erläutert. Anschließend wird die benötigte Rotationszeit approximiert.
 
-Die Approximation basiert auf empirischen Werten, welche ergeben haben, dass eine Rotation um 180° in etwa 5 Sekunden benötigen. Basierend auf der absoluten normalisiert Differenz $\vert\Delta\theta_{\text{norm}}\vert$ wird der folgende angenommene Approximation verwendet:
+Die Approximation basiert auf Experimenten aus \autoref{sec:move-straight-turn}, welche ergeben haben, dass eine Rotation um 180° etwa 5 Sekunden benötigt. Basierend auf der absoluten normalisiert Differenz $\vert\Delta\theta_{\text{norm}}\vert$ wird der folgende angenommene Approximation verwendet:
 
 \begin{equation*}
     180\degree \cdot 28~\frac{\text{ms}}{\degree} = 5040~\text{ms} \approx 5000~\text{ms}
 \end{equation*}
 
-Dementsprechend ergibt sich die approximierte Rotationszeit $t_{\text{rot}}$ wie folgt:
+Dementsprechend ergibt sich die approximierte Rotationszeit $t_{\text{r}}$ wie folgt:
 
 \begin{equation*}
-    t_{\text{rot}} \approx \vert\Delta\theta{\text{norm}}\vert \cdot 28~\frac{\text{ms}}{\degree}
+    t_{\text{r}} \approx \vert\Delta\theta{\text{norm}}\vert \cdot 28~\frac{\text{ms}}{\degree}
 \end{equation*}
 
-Dementsprechend wird die approximierte Rotationszeit geringer, je kleiner die normalisierte Differenz wird. Das heißt, je näher sich der Dezibot am gewünschten Ziel"=Winkel $\alpha'$ ausgerichtet ist, desto kürzer wird rotiert.
+Dementsprechend wird die approximierte Rotationszeit geringer, je kleiner die normalisierte Differenz wird. Das heißt, je näher sich der Dezibot am gewünschten Ziel"=Winkel $\alpha'$ ausgerichtet ist, desto kürzer wird rotiert. Anschließend wird der Dezibot, je nach kürzester Rotationsrichtung, in die entsprechende Richtung für $t_{\text{r}}$ rotiert.
 
-Anschließend wird entsprechend der linke oder rechte Motor des Dezibots -- je nach kürzester bestimmter Rotationsrichtung -- für $t_{\text{rot}}$ aktiviert, wodurch der Dezibot in die jeweils entgegengesetzte Richtung rotiert.
+Nach dem Rotationsinkrement wird der neue relative Winkel des Dezibots erneut gemessen, d.h. $\alpha$ aktualisiert, und das Verfahren von vorn durchgeführt. Die Rotationsrichtung und "=zeit werden erneut berechnet, wodurch ein Gegensteuern möglich ist, falls sich der Dezibot zu weit bewegt hat. Eine Rotation wird außerdem als erfolgreich bewertet, wenn der neue Winkel $\alpha$ innerhalb einer festgelegten Toleranz -- aktuell 3° -- befindet. Diese Toleranz ist in der Konstante \texttt{ECPMove"-ment::""ROTA"-TION\_TOLER"-ANCE} definiert.
 
-Nach dem Rotationsinkrement wird der neue relative Winkel des Dezibots erneut gemessen, d.h. $\alpha$ aktualisiert, und die Iteration von vorn durchgeführt. Die Rotationsrichtung und "=zeit werden erneut berechnet, wodurch ein Gegensteuern möglich ist, falls sich der Dezibot zu weit bewegt hat. Eine Rotation wird außerdem als erfolgreich bewertet, wenn der neue Winkel $\alpha$ innerhalb einer festgelegten Toleranz -- aktuell 3° -- befindet. Diese Toleranz ist in \texttt{ECPMove"-ment::""ROTA"-TION\_TOLER"-ANCE} definiert.
-
-Falls innerhalb von 20 Iterationen der Ziel"=Winkel nicht erreicht werden konnte, wird eine entsprechende Meldung auf das Display gedruckt. Diese fordert den Nutzenden auf, den Dezibot am entsprechenden Ziel"=Winkel auszurichten. Dies trat bei den Tests insignifikant wenig auf und ist als \emph{Fallback} gedacht.
+Falls innerhalb von 20 Iterationen der Ziel"=Winkel nicht erreicht werden konnte, wird analog zu \autoref{sec:plausibility-check-rotation} eine Aufforderung zur manuellen Korrektur durch die Spielenden aufgefordert.
 
 
 \subsubsection{Bestimmung der Winkel}
 \label{sec:angle-determination}
 
-In diesem Abschnitt wird die Bestimmung des Winkels, in dem das Infrarot"=Signal beim Dezibot eintrifft, $\varphi$ sowie wie der Dezibot in Relation dazu ausgerichtet ist $\alpha$ bestimmt wird. Diese Funktionalitäten entsprechen den Funktionen \texttt{measure"-Signal"-Angle} sowie \texttt{measure"-Dezi"-bot"-Angle} aus \texttt{ECPSig"-nal"-Detec"-tion} Die Winkel sind in \autoref{fig:dezibot-rotation-angles} skizziert.
+In diesem Abschnitt wird die Bestimmung des Winkels $\varphi$, in dem das Infrarot"=Signal beim Dezibot eintrifft, sowie wie der Dezibot in Relation dazu ausgerichtet ist $\alpha$ bestimmt wird. Diese Funktionalitäten entsprechen den Funktionen \texttt{measure"-Signal"-Angle} sowie \texttt{measure"-Dezi"-bot"-Angle} aus der Klasse \texttt{ECPSig"-nal"-Detec"-tion}. Die Winkel sind in \autoref{fig:signal-dezibot-angle} skizziert.
+ 
+Zunächst werden die vier Werte der seitlichen Infrarot"=Sensoren gelesen. Dabei werden jeweils drei Messungen mit einem Abstand von jeweils einer Millisekunde gemittelt, um die Ergebnisse zu verbessern. Die Ergebnisse liegen auf einer Skala von $[0,4095]$ vor, welche zunächst auf $[0,1] \subset \mathbb{R}$ normalisiert werden, um eine leichtere Weiterverarbeitung zu ermöglichen. Anschließend wird überprüft, ob mindestens ein Messwert über einem festgelegten Schwellwert (0.1, d.h. 10~Prozent) liegt, um eine gewisse Signalstärke vorauszusetzen. Falls dies nicht der Fall ist, wird eine entsprechende Warnung auf das Display gedruckt. Nach einer Sekunde wird erneut versucht, einen gültigen Wert zu lesen. Dies geschieht solange, bis ein signifikanter Wert gemessen werden kann.
 
-Zunächst werden die vier Werte der seitlichen Infrarot"=Sensoren gelesen. Dabei werden jeweils drei Messungen mit einem Abstand von jeweils einer Millisekunde gemittelt, um die Ergebnisse zu verbessern. Die Ergebnisse liegen auf einer Skala von $[0,4095]$ vor, welche zunächst auf $[0,1] \subset \mathbb{R}$ normalisiert wird, um eine leichtere Weiterverarbeitung zu ermöglichen. Anschließend wird überprüft, ob mindestens ein Messwert über einem festgelegten Schwellwert -- aktuell 0.1, d.h. 10 Prozent -- liegt, um eine gewisse Signalstärke vorauszusetzen. Falls dies nicht der Fall ist, wird eine entsprechende Warnung auf das Display gedruckt. Nach einer Sekunde wird erneut versucht, einen gültigen Wert zu lesen. Dies geschieht solange, bis ein signifikanter Wert gemessen werden kann.
-
-Nachdem hinreichende Signalmessungen vorliegen, kann der Winkel Beacon"=Signals berechnet werden. Dazu werden die Nord"=Süd"? $r_{N,S}$ sowie Ost"=West"=Resultanten $R_{E,W}$ berechnet. Dabei sind $n,s,e$ und $w$ jeweils die Signalmessungen aus dem Infrarot"=Sensor aus Nord"=, Süd"=, West"= bzw. Ost"=Richtung.
+Nachdem hinreichende Signalmessungen vorliegen, kann der Winkel Beacon"=Signals berechnet werden. Dazu werden die Nord"=Süd"= $r_{N,S}$ sowie Ost"=West"=Resultanten $r_{E,W}$ berechnet. Dabei sind $n,s,e$ und $w$ jeweils die Signalmessungen aus dem Infrarot"=Sensor aus Nord"=, Süd"=, Ost"= bzw. West"=Richtung.
 
 \begin{equation*}
-    r_{N,S} = n - s \qquad r_{E,W} = e - w
+    r_{N,S} = n - s, \qquad r_{E,W} = e - w
 \end{equation*}
 
 Aus diesen Resultanten wird der Winkel $\varphi$ vom Ergebnisvektor berechnet.
@@ -227,8 +225,6 @@ Anschließend wird in \texttt{ECPSignal"-Detec"-tion::""measure"-Dezi"-bot"-Angl
 \subsubsection{Bestimmung der Rotationsrichtung}
 \label{sec:rotation-direction-determination}
 
-Im folgenden Abschnitt wird erläutert, wie ausgehend vom initialen Dezibot"=Winkel~$\alpha$ sowie dem Ziel"=Winkel~$\alpha'$, jene Rotationsrichtung, welche am kürzesten ist, um $\alpha'$ zu erreichen, bestimmt wird.
-
 Im folgenden Abschnitt wird erläutert, wie der kürzeste Weg, um den gewünschten Ziel"=Winkel~$\alpha'$ vom initialen Dezibot"=Winkel $\alpha$ zu erreichen, errechnet wird -- das heißt, ob es effizienter ist, den Dezibot nach links oder rechts zu rotieren. Dafür wird zunächst die Differenz beider Winkel~$\Delta\theta$ gebildet und normiert zu~$\Delta\theta_{\text{norm}}$.
 
 \vspace{-1em}
@@ -250,7 +246,7 @@ Basierend auf $\Delta\theta_{\text{norm}}$ kann wie folgt entschieden werden, in
 \end{aligned}
 \end{equation*}
 
-Diese Gedanken werden in \texttt{ECPMove"-ment::""rotate"-To"-Angle} verwendet.
+Diese Gedanken werden in \texttt{ECPMove"-ment::""rotate"-To"-Angle} umgesetzt.
 
 
 \subsubsection{Auftretende Probleme}
@@ -261,11 +257,11 @@ Dennoch sind einige Probleme aufgetreten, die im folgenden erläutert werden.
 
 % Problem: Unterschiede in IR-Sensoren
 
-Es kann problematisch sein, dass die Messungen je nach Infrarot"=Sensor (herstellungsbedingt) abweichen. Dies kann beispielsweise durch äußere Einflüsse, wie Beschmutzungen der Sensoren, entstehen. Außerdem ist der Nord"=Sensor neben einem Bein platziert, wodurch das Blickfeld verkleinert wird und ggf. Reflexionen entstehen. Ungenauigkeiten, die bei der Herstellung entstehen, können ggf. Messungenauigkeiten verursachen.
+Es ist problematisch, wenn die Messungen je nach Infrarot"=Sensor (herstellungsbedingt) abweichen. Dies kann beispielsweise durch äußere Einflüsse, wie Beschmutzungen der Sensoren, entstehen. Außerdem ist der Nord"=Sensor (vgl. \autoref{fig:dezibot-bottom}) neben einem Bein platziert, wodurch das Blickfeld verkleinert wird und ggf. Reflexionen entstehen. Ungenauigkeiten, die bei der Herstellung entstehen, können ggf. Messungenauigkeiten verursachen.
 
 % Problem: IR-Sensoren nicht auf 90° platziert, off-axis
 
-Weiterhin ist in \autoref{fig:dezibot-bottom} zu erkennen, dass die magenta umrandeten Infrarot"=Sensoren nicht exakt auf der (virtuellen) $x$"= bzw. $y$"=Achse platziert sind, sondern \emph{off-axis}. Daher ist die Berechnung des Signal"=Winkels (vgl. \autoref{sec:angle-determination}) nicht exakt, da dort davon ausgegangen wird, dass diese exakt auf der jeweiligen Achse in gleichem Abstand zum Mittelpunkt des Dezibots (virtueller Koordinatenursprung) liegen. Da dies allerdings nicht der Fall ist, ist die Berechnung ungenau. Je nach Ursprungsrichtung des Infrarot"=Signales weicht die Differenz bei einigen Richtungen des Dezibots unterschiedlich stark ab. Ein Beispiel ist in \autoref{tab:rotation-ir-deviations} dargestellt, wobei der Beacon im Norden bzw. bei 0° bezüglich des Dezibots positioniert war.
+Weiterhin ist in \autoref{fig:dezibot-bottom} zu erkennen, dass die magenta umrandeten Infrarot"=Sensoren nicht exakt auf der (virtuellen) $x$"= bzw. $y$"=Achse platziert sind. Daher ist die Berechnung des Signal"=Winkels (vgl. \autoref{sec:angle-determination}) nicht exakt, da dort davon ausgegangen wird, dass diese exakt auf der jeweiligen Achse in gleichem Abstand zum Mittelpunkt des Dezibots (virtueller Koordinatenursprung) liegen. Da dies allerdings nicht der Fall ist, ist die Berechnung ungenau. Je nach Ursprungsrichtung des Infrarot"=Signales weicht die Differenz bei einigen Richtungen des Dezibots unterschiedlich stark ab. Ein Beispiel ist in \autoref{tab:rotation-ir-deviations} dargestellt, wobei der Beacon im Norden bzw. bei 0° bezüglich des Dezibots positioniert war.
 
 \begin{table}[h]
 \centering
@@ -280,11 +276,11 @@ $\theta_{\text{real}}$ & $\theta_{\text{meas}}$ & $\Delta\theta$ \\ \hline\hline
 \label{tab:rotation-ir-deviations}
 \end{table}
 
-Als Lösungsansatz für dieses Problem wäre hier denkbar, die Abweichungen in die Berechnung einfließen zu lassen. Dies könnte durch Anpassung der zugrundeliegenden Trigonometrie geschehen. Weiterhin könnten die Fehler durch eine Messstudie mit einem hinreichend großen Stichprobenumfang messen und auswerten, um gemessenen Werte anzupassen.
+Als Lösungsansatz für dieses Problem wäre hier denkbar, die Abweichungen in die Berechnung einfließen zu lassen. Dies könnte durch Anpassung der zugrundeliegenden Trigonometrie geschehen. Weiterhin könnten die Fehler durch eine Messstudie mit einem hinreichend großen Stichprobenumfang gemessen und ausgewertet werden, um die Bestimmung zu generalisieren.
 
 % Problem: andere IR-Quellen
 
-Ein anderes Problem stellen zusätzliche Infrarot"=Quellen dar, wie beispielsweise die Sonne oder beliebige Reflexionen. Diese verschieben die Messungen, da die Berechnung des Beacon"=Winkels $\varphi$ auf den Vektoren der Nord"=Süd"= und Ost"=West"=Resultanten basiert. Wenn beispielsweise das Beacon"=Signal aus dem Norden kommt und die Sonne aus dem Süden strahlt, wird die Messung entsprechend nach Süden verschoben. So ist es denkbar, dass die Sonne den Beacon sogar vollständig überstrahlt, da die Sonne eine viel stärkere Infrarot"=Quelle ist als das Beacon.
+Ein anderes Problem stellen zusätzliche Infrarot"=Quellen dar, wie beispielsweise die Sonne oder beliebige Reflexionen. Diese verschieben die Messungen, da die Berechnung des Beacon"=Winkels $\varphi$ auf den Vektoren der Nord"=Süd"= und Ost"=West"=Resultanten basiert. Wenn beispielsweise das Beacon"=Signal aus dem Norden kommt und die Sonne aus dem Süden strahlt, wird die Messung entsprechend nach Süden verschoben. So ist es denkbar, dass die Sonne den Beacon sogar vollständig überstrahlt, da die Sonne eine viel stärkere Infrarot"=Quelle ist, als das Beacon.
 
 Zur Lösung wäre eine initiale Kalibrierung der Infrarot"=Messung denkbar. Falls die fremd"=einwirkenden, ungewünschten Infrarot"=Signale jedoch zu stark sind und die des Beacons überstrahlen, hilft dieser Ansatz nicht weiter. Daher ist eine Abdunkelung der Umgebung effektiver, um diesem Problem vollständig entgegenzuwirken.
 
@@ -323,10 +319,10 @@ Ein weiteres Problem besteht darin, dass sich der Dezibot bei der Rotation vom u
     \label{fig:dezibot_signal_moving_problem}
 \end{figure}
 
-Dabei ist dargestellt, wie sich der Beacon"=Winkel $\alpha$ zu $\beta$ verändert, wenn dieser die Position ändert, allerdings sich nicht rotiert, d.h. immer noch in die gleiche Richtung ausgerichtet ist. Dieser Fehler ist nicht trivial lösbar. Hierfür wäre eine Art Selbstortung des Dezibots notwendig, beispielsweise durch eine Triangulation mit einem zweiten Beacon. Dabei müssten die beiden Beacon unterschiedliche Frequenzen aussenden, damit sie unterscheidbar sind (vgl. erwähnter Ansatz oben).
+Dabei ist dargestellt, wie sich der Beacon"=Winkel $\alpha$ zu $\beta$ verändert, wenn der Dezibot die Position ändert, sich allerdings nicht rotiert, d.h. immer noch in die gleiche Richtung ausgerichtet ist. Dieser Fehler ist nicht trivial lösbar. Hierfür wäre eine Art Selbstortung des Dezibots notwendig, beispielsweise durch eine Triangulation mit einem zweiten Beacon. Dabei müssten die beiden Beacon unterschiedliche Frequenzen aussenden, damit sie unterscheidbar sind (vgl. erwähnter Ansatz oben).
 
-Eine Selbstortung wäre durch mindestens drei weitere Beacon"=Dezibots denkbar, welche jeweils ein WLAN"=Signal aussenden. Durch die Messung der jeweiligen \emph{Wi-Fi Round Trip Time} (Wi-Fi RTT) wäre eine Triangulation der Position auf dem Schachbrett möglich. Ein ähnlicher Implementierungsansatz ist beispielhaft unter~\cite{espressifsystemsshanghaico.ltdFTMExample2024} einsehbar. Diese Methode setzt jedoch eine sehr genaue Zeitmessung voraus, welche mit dem Dezibot nicht unbedingt gegeben ist. Folglich stellt sich die Frage, ob diese Methode die notwendige Präzision erreichen kann.
+Eine Selbstortung wäre durch mindestens drei weitere Beacon"=Dezibots denkbar, welche jeweils ein WLAN"=Signal aussenden. Durch die Messung der jeweiligen \emph{Wi-Fi Round Trip Time} (Wi-Fi RTT) wäre eine Triangulation der Position auf dem Schachbrett möglich. Ein ähnlicher Implementierungsansatz ist beispielhaft unter~\cite{espressifsystemsshanghaico.ltdFTMExample2024} einsehbar. Diese Methode setzt jedoch eine sehr genaue Zeitmessung (im Nanosekundenbereich) voraus, welche mit dem Dezibot nicht gegeben ist. Folglich stellt sich die Frage, ob diese Methode die notwendige Präzision erreichen kann.
 
 % Zusammenfassung
 
-Zusammenfassend unterscheiden sich die genannten Ansätze in ihrer Komplexität. In der begrenzten Projektzeit war es nicht möglich, diese weiter zu verfolgen, weshalb sie Forschungsgegenstand zukünftiger Projekte darstellen könnten.
+Zusammenfassend unterscheiden sich die genannten Ansätze in ihrer Komplexität. In der begrenzten Projektzeit war es nicht möglich, diese weiter zu verfolgen, weshalb sie Forschungsgegenstand zukünftiger Projekte sein könnten.

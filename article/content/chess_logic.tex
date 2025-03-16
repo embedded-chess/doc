@@ -5,21 +5,19 @@
 
 Im folgenden Abschnitt werden Gedanken zu den zugrundeliegenden Schachstrukturen sowie zur allgemeinen Logik erläutert. Dabei wird besonders die Validierung möglicher Züge der simulierten Schachfiguren eingegangen.
 
-Wie bereits in \autoref{sec:final-project-structure} genannt, befindet sich die Schach"=spezifische Business Logic unter \texttt{example/""Embedded"-Chess"-Pieces}. Somit findet eine klare Trennung zur \texttt{dezibot}"=Library statt, welche nur erweitert oder verändert wurde, um allgemein nützliche Funktionalitäten hinzuzufügen.
-
-Die eigentliche Business Logic befindet sich dabei im \texttt{src/}"=Verzeichnis, welches wie folgt unterteilt ist:
+Wie bereits in \autoref{sec:final-project-structure} genannt, befindet sich die Schach"=spezifische Business Logic unter \texttt{example/""Embedded"-Chess"-Pieces/""src}. Somit findet eine klare Trennung zur \texttt{dezibot}"=Library statt, welche nur erweitert oder verändert wurde, um allgemein nützliche Funktionalitäten hinzuzufügen. Dabei wird wie folgt unterteilt:
 
 \begin{itemize}
     \item \texttt{ECPChessLogic}: notwendige Schach"=Logik, wie Figuren, Felder und die Zug"=Validierung;
     \item \texttt{ECPMovement}: physikalische Bewegung des Dezibots auf dem Schachbrett (vgl. \autoref{sec:movement});
-    \item \texttt{ECPColorDetection}: Erkennung, ob Dezibot auf weißem oder schwarzem Feld steht;
-    \item \texttt{ECPSignalDetection}: Bestimmung eines Beacon"=Signales, auf welchem die Bewegung basiert (vgl. \autoref{sec:angle-determination}).
+    \item \texttt{ECPColorDetection}: Erkennung, ob Dezibot auf weißem oder schwarzem Feld steht (vgl. \autoref{sec:color-detection});
+    \item \texttt{ECPSignalDetection}: Bestimmung eines Beacon"=Signales, auf welchem die Rotation basiert (vgl. \autoref{sec:angle-determination}).
 \end{itemize}
 
 Diese werden im folgenden Abschnitt genauer betrachtet. Anschließend wird die Zug"=Validierung sowie die Repräsentation der Figuren auf dem Dezibot"=Displays erläutert.
 
 
-\subsection{Schachstrukturen}
+\subsection{Strukturen}
 
 % ECPChessPiece
 
@@ -32,7 +30,7 @@ Den Grundpfeiler stellt die in \autoref{code:ecp-chess-piece} vereinfacht darges
 \end{listing}
 
 
-Außerdem definiert sie die \texttt{isMove"-Valid}"=Funktion, welche einen Zug vom aktuellen zu einem übergebenen, neuen Feld validiert. Da diese vom konkreten Schachfigurtyp abhängt -- beispielsweise bewegt sich ein Bauer anders als eine Königin -- ist dieses abstrakt und muss in den konkreten, abgeleiteten Klassen implementiert werden. Diese Funktion wird in \autoref{sec:move-validation} kurz beleuchtet.
+Außerdem definiert sie die \texttt{isMove"-Valid}"=Funktion, welche einen Zug vom aktuellen zu einem übergebenen neuen Feld validiert. Da diese vom konkreten Schachfigurtyp abhängt -- beispielsweise bewegt sich ein Bauer anders als eine Königin -- ist dieses abstrakt und muss in den konkreten, abgeleiteten Klassen implementiert werden. Diese Funktion wird in \autoref{sec:move-validation} kurz beleuchtet.
 
 Weiterhin definiert die Klasse die \texttt{draw"-Figure"-To"-Display}"=Funktion, welche eine ASCII"=Art"=Repräsentation der Figur auf das Display des Dezibots druckt. Dies ist vorteilhaft um verschiedene Dezibots, die verschiedene Schachfiguren simulieren, auseinanderzuhalten. Eine weiße Figure wird dabei in schwarzer Schrift auf weißem Hintergrund angezeigt und eine schwarze Figure vice versa. Da die Repräsentation vom jeweiligen Schachfigurtypen abhängt, ist diese ebenfalls abstrakt und muss von den konkreten, abgeleiteten Klassen implementiert werden.
 
@@ -46,7 +44,7 @@ In \autoref{code:ecp-chess-piece} ist außerdem zu sehen, dass die \texttt{ECP"-
     \label{code:ecp-movement}
 \end{listing}
 
-Im Konstruktor erhält die Klasse einen Dezibot, den sie bewegen soll, sowie ein \texttt{movement"-Calibration}"=Parameter. Letzterer stellt eine Einstellungsmöglichkeit für den individuellen Dezibot dar, um die Vorwärtsbewegung zu verbessern. Weiterhin wird eine \texttt{move}"=Funktion implementiert, welchen den Dezibot um eine angegebene Anzahl an Feldern auf dem Schachbrett geradeaus laufen lässt. Weiterhin werden zwei Funktionen zur Rotation des Dezibots um 90° implementiert -- \texttt{turn"=Left} und \texttt{turn"=Right}. Die Funktionen werden in \autoref{sec:movement} genauer erläutert.
+Im Konstruktor erhält die \texttt{ECP"-Move"-ment}"=Klasse einen Dezibot, den sie bewegen soll, sowie ein \texttt{movement"-Calibration}"=Parameter. Letzterer stellt eine Einstellungsmöglichkeit für den individuellen Dezibot dar, um die Bewegung zu verbessern. Weiterhin wird eine \texttt{move}"=Funktion implementiert, welchen den Dezibot um eine angegebene Anzahl an Feldern auf dem Schachbrett geradeaus laufen lässt. Ferner werden zwei Funktionen zur Rotation des Dezibots um 90° implementiert -- \texttt{turn"-Left} und \texttt{turn"-Right}. Die Funktionen werden in \autoref{sec:movement} genauer erläutert.
 
 % ECPColorDetection
 
@@ -72,11 +70,11 @@ Weiterhin erzeugt der \texttt{ECP"-Move"-ment}"=Konstruktor eine Instanz von \te
 \subsection{Zug"=Validierung}
 \label{sec:move-validation}
 
-Die konkrete Zug"=Validierung ist in den konkreten, abgeleiteten Klassen von \texttt{ECP"-Chess"-Piece} in der \texttt{is"-Move"-Valid}"-Funktion enthalten. Dabei wird basierend auf dem gespeicherten aktuellen Feld \texttt{current"-Field} geprüft, ob das übergebene neue Feld \texttt{new"-Field}, auf dem der Dezibot nach dem erfolgreichen Zug stehen soll, dem Figurtypen entsprechend erlaubt ist. Das Vorgehen wird im weiteren beispielhaft anhand des Springers (\emph{Knight}) erklärt.
+Die konkrete Zug"=Validierung ist in den konkreten, abgeleiteten Klassen von \texttt{ECP"-Chess"-Piece} in der \texttt{is"-Move"-Valid}"=Funktion enthalten. Dabei wird basierend auf dem gespeicherten aktuellen Feld \texttt{current"-Field} geprüft, ob das übergebene neue Feld \texttt{new"-Field}, auf dem der Dezibot nach dem erfolgreichen Zug stehen soll, dem Figurtypen entsprechend erlaubt ist. Das Vorgehen wird im weiteren beispielhaft anhand des Springers (\emph{Knight}) erklärt.
 
 % Beispiel: Springer
 
-Ein Springer darf sich wie folgt bewegen: entweder zwei Felder horizontal und ein Feld vertikal oder ein Feld horizontale und zwei Felder vertikal. Dabei darf er über andere Figuren, egal ob eigene oder gegnerische, springen~\cite{justUSChessFederations2019}. Entsprechend wird zu nächst die Spalten"-Differenz $\Delta\text{col}$ und Zeilen"-Differenz $\Delta\text{row}$ berechnet. Ein valider Zug ergibt sich somit wie folgt:
+Ein Springer darf sich wie folgt bewegen: entweder zwei Felder horizontal und ein Feld vertikal oder ein Feld horizontal und zwei Felder vertikal. Dabei darf er über andere Figuren, egal ob eigene oder gegnerische, springen~\cite{justUSChessFederations2019}. Entsprechend wird zu nächst die Spalten"=Differenz $\Delta\text{col}$ und Zeilen"=Differenz $\Delta\text{row}$ berechnet. Ein valider Zug ergibt sich somit wie folgt:
 
 \vspace{-1em}
 \begin{gather*}
@@ -98,16 +96,17 @@ Falls diese Formel erfüllt ist, gibt die Funktion \texttt{true} zurück; andern
 
 % Beispiel: Bauer
 
-Am kompliziertesten verhält sich der Bauer (\emph{Pawn}), da die Validität von Zügen einerseits von der Farbe, andererseits von der aktuellen Zeile befindet. So dürfen Bauern sich nur vorwärts bewegen, wobei die Vorwärtsrichtung von der Farbe der Figur abhängt. Dabei dürfen sie sich jeweils nur um ein Feld nach vorne bewegen, außer es handelt sich um den ersten Zug der Figur, bei der es auch zwei Felder sein dürfen. Außerdem dürfen Bauern ihre Spalte nur in die benachbarte verlassen, wenn diese eine gegnerische Figur (stets diagonal) schlagen~\cite{justUSChessFederations2019}. Dementsprechend handelt es sich hierbei um die längste der jeweils implementierten \texttt{is"-Move"-Valid}"=Funktionen.
+Am kompliziertesten verhält sich der Bauer (\emph{Pawn}), da die Validität von Zügen einerseits von der Farbe, andererseits von der aktuellen Zeile abhängt. So dürfen Bauern sich nur vorwärts bewegen, wobei die Vorwärtsrichtung von der Farbe der Figur abhängt. Dabei dürfen sie sich jeweils nur um ein Feld nach vorne bewegen, außer es handelt sich um den ersten Zug der Figur, bei der es auch zwei Felder sein dürfen. Außerdem dürfen Bauern ihre Spalte nur in die benachbarte verlassen, wenn diese eine gegnerische Figur (stets diagonal) schlagen~\cite{justUSChessFederations2019}. Dementsprechend handelt es sich hierbei um die längste der jeweils implementierten \texttt{is"-Move"-Valid}"=Funktionen.
 
 % Zusammenfassung
 
-Insgesamt bringt jeder Figurtyp ihre individuellen Überlegungen und Implementierungen mit sich. Diese basieren auf den Feld"=Differenzen sowie, falls notwendig, der Farbe.
+Insgesamt bringt jeder Figurtyp individuelle Überlegungen und Implementierungen mit sich. Diese basieren auf den Feld"=Differenzen sowie, falls notwendig, der Farbe.
 
 % Anmerkung Scope: ein Dezibot
 
-Dabei ist anzumerken, dass der Fokus dieses Projekt sich auf \emph{einen} Dezibot beschränkt, welcher eine Schachfigur simuliert. Daher wurde die Logik für ein komplettes Schachbrett bzw. Schachspiel nicht implementiert. Entsprechend werden Züge, die nur gültig sind, wenn mit diesem eine gegnerische Figur geschlagen werden kann -- bspw. Bauer schlägt diagonal, darf sonst jedoch nur geradeaus laufen~\cite{justUSChessFederations2019} --, stets als gültig akzeptiert. Hier bietet sich ein Ansatzpunkt für eine folgende Projektarbeit.
+Dabei ist anzumerken, dass der Fokus dieses Projekt sich auf \emph{einen} Dezibot beschränkt, welcher eine Schachfigur simuliert. Daher wurde die Logik für ein komplettes Schachbrett bzw. Schachspiel nicht implementiert. Entsprechend werden Züge, die nur gültig sind, wenn mit diesem eine gegnerische Figur geschlagen werden kann, stets als gültig akzeptiert -- bspw. schlägt ein Bauer diagonal, darf sonst jedoch nur geradeaus laufen~\cite{justUSChessFederations2019}. Hier bietet sich ein Ansatzpunkt für eine folgende Projektarbeit.
 
+% TODO: keine Board-Logik, Figuren überspringen bzw. Platz einnehmen / eigene Figuren schlagen
 
 \subsection{Darstellung der Figur}
 \label{sec:display-representation}

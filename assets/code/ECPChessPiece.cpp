@@ -1,6 +1,6 @@
 class ECPChessPiece {
     ECPChessPiece(
-        Dezibot &d,
+        Dezibot &dezibot,
         ECPMovement &ECPMovement,
         ECPChessField initialField,
         bool isWhite,

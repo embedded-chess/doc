@@ -1,5 +1,5 @@
 class ECPColorDetection {
-    ECPColorDetection(Dezibot &d);
+    ECPColorDetection(Dezibot &dezibot);
 
     bool isWhiteField();
     void turnOnColorCorrectionLight();

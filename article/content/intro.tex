@@ -4,20 +4,21 @@
 
 Im Modul \emph{Software Entwicklung für Eingebettete Systeme} arbeiten Studierende mit dem Lehr- und Lernroboter \emph{Dezibot 4}~\cite{dezibotteamDezibotDezibot2025}. Dafür soll jedes Team ein eigenes Projekt erarbeiten.
 
-In unserem Projekt -- \emph{Embedded Chess Pieces} -- soll zunächst ein Dezibot auf ein Schachbrett gesetzt werden, welcher sich wie eine bestimmte Schachfigur verhält. Dabei kann aus allen gängigen Schachfiguren ausgewählt werden, welche der Dezibot anschließend simuliert. Die ausgewählte Figur wird anschließend auf dem Display zur Identifikation angezeigt.
+In unserem Projekt -- \emph{Embedded Chess Pieces} -- soll zunächst ein Dezibot auf ein Schachbrett gesetzt werden, welcher sich wie eine bestimmte Schachfigur verhält. Dabei können alle gängigen Schachfiguren vom Dezibot simuliert werden. Die gewählte Figur wird anschließend auf dem Display zur Identifikation angezeigt.
 
 Dabei können verschiedene Züge angegeben werden, welcher der Dezibot nach einer Validierung auf dem Feld durchführt. Die Gültigkeit des angegebenen Zuges wird zudem über die eingebauten LEDs angezeigt.
 
-Das entstandene Projekt kann unter \url{https://github.com/nicosrm/24-emb-chess/} eingesehen werden.
+% TODO: URL überprüfen
+Das entstandene Projekt kann unter \url{https://github.com/embedded-chess/24-emb-chess/} eingesehen werden.
 
 
 \subsection{Rahmen}
 
-Im Rahmen dieses Projekts liegt der Schwerpunkt auf \emph{einem} Dezibot, der eine einzelne Schachfigur simuliert. Die Interaktion mit anderen Dezibots zur Durchführung eines vollständigen Schachspiels ist dabei bewusst ausgeschlossen. Stattdessen konzentriert sich dieses Projekt auf die Grundlagen einer einzelnen Schachfigur. Die Schachlogik für die Bewegung und Zug"=Validierung der verschiedenen Figurtypen, wie König, Dame, Turm etc., steht im Fokus. Darüber hinaus soll sich der Dezibot gemäß einer vorgegebenen Feld"=Reihenfolge auf einem (modifizierten) Schachbrett bewegen.
+Im Rahmen dieses Projekts liegt der Schwerpunkt auf \emph{einem} Dezibot, der eine einzelne Schachfigur simuliert. Die Interaktion mit anderen Dezibots zur Durchführung eines vollständigen Schachspiels ist dabei bewusst ausgeschlossen. Stattdessen konzentriert sich dieses Projekt auf die Grundlagen einer einzelnen Schachfigur. Die Schachlogik für die Bewegung und Zug"=Validierung der verschiedenen Figurtypen, wie König, Dame, Turm etc., steht im Fokus. Darüber hinaus soll sich der Dezibot gemäß einer vorgegebenen Feld"=Reihenfolge auf einem Schachbrett bewegen.
 
 % ein Dezibot: Logik komplettes Schachbrett, Schlagen, vom Brett Bewegen
 
-Da sich auf einen Dezibot auf dem Schachbrett fokussiert wird, sind in diesem Projekt folgende Sachverhalte nicht enthalten. Es muss keine Logik für ein komplettes Schachbrett implementiert werden. Somit wird nicht gespeichert, wo sich alle Figuren zu jeder gegebenen Zeit positioniert sind. Ein Dezibot kann demnach nicht geschlagen werden und muss sich entsprechend nicht vom Schachbrett bewegen. Vielmehr ist die Funktion, die aktuell simulierte Figur zu schlagen, nicht im Rahmen des Projektes enthalten.
+Da sich auf einen Dezibot auf dem Schachbrett fokussiert wird, sind in diesem Projekt folgende Sachverhalte nicht enthalten. Es muss keine Logik für ein komplettes Schachbrett implementiert werden. Somit wird nicht gespeichert, wo sich alle Figuren zu jeder gegebenen Zeit positioniert sind. Ein Dezibot kann demnach nicht geschlagen werden und muss sich entsprechend nicht vom Schachbrett bewegen. Daher ist die Funktion, die aktuell simulierte Figur zu schlagen, nicht im Rahmen des Projektes enthalten.
 
 % ein Dezibot: Gültigkeit von Schlag-Zügen
 
@@ -25,11 +26,11 @@ Daraus ergibt sich ebenfalls, dass der Dezibot auch keine anderen Figuren schlag
 
 % keine Kommunikation mit anderen Dezibots
 
-Ferner ergibt sich, dass ein Dezibot nicht mit anderen Dezibots kommunizieren können muss, um ein Schachspiel zu orchestrieren. Dieses Problem bedarf eines gesonderten Projektes, welches im Rahmen dieses Moduls denkbar wäre. Nach erfolgreicher Abgabe eines solchen Projektes, kann das vorgelegte Projekt entsprechend ergänzt werden.
+Ferner ergibt sich, dass ein Dezibot nicht mit anderen Dezibots kommunizieren können muss, um ein Schachspiel zu orchestrieren. Dieses Problem bedarf eines gesonderten Projektes, welches im Rahmen eines zukünftigen Projektes dieses Moduls denkbar wäre. Nach erfolgreicher Abgabe eines solchen Projektes, kann das vorgelegte Projekt entsprechend ergänzt werden.
 
 % Kontaktlose Verbindung zur Nutzer:in für Züge
 
-Außerhalb des Projektrahmens ist außerdem eine kontaktlose Verbindung zu den Spielenden, um den jeweils aktuellen, gewünschten Zug zu ermitteln. Daher ergibt sich, dass die Züge, welche ein Dezibot ausführen soll, bei der Installierung der Software vordefiniert werden muss. Wünschenswert ist eine Schnittstelle, bspw. über WLAN oder Bluetooth zu einem zentralen Server, worüber die Züge zur Laufzeit an den entsprechenden Dezibot übermittelt werden könnten. Dies erfordert jedoch ein weiteres Projekt, welches in dieses Projekt integriert werden könnte.
+Außerhalb des Projektrahmens ist außerdem eine kontaktlose Verbindung zu den Spielenden, um den jeweils aktuellen, gewünschten Zug zu ermitteln. Daher ergibt sich, dass die Züge, welche ein Dezibot ausführen soll, bei der Installierung der Software vordefiniert werden muss. Wünschenswert ist eine Schnittstelle, bspw. über WLAN oder Bluetooth zu einem zentralen Server, worüber die Züge zur Laufzeit an den entsprechenden Dezibot übermittelt werden könnten. Es bietet sich an, in einem weiteren Projekt umzusetzen, welches in dieses integriert werden kann.
 
 
 \subsection{Aufbau der Arbeit}
