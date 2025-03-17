@@ -28,11 +28,11 @@ Relevant für die Erkennung eines Feldes ist die Unterscheidung zwischen einem w
 
 Da es bei der Farbmessung weiterhin Schwierigkeiten gerade bei schwachen Lichtverhältnissen gab, wurde der Idee nachgegangen die LED auf der Unterseite des Dezibots anzuschalten um so möglichst gleichbleibendes Umgebungslicht bereitzustellen. Dies brachte deutliche Verbesserungen bei den Experimenten.
 
-Für die Unterscheidung zwischen hellem und dunklem Untergrund wurde die Helligkeit mit den normalisierten Farbwerten approximiert\footnote{Algorithmus vorgeschlagen in \url{https://www.w3.org/TR/AERT/\#color-contrast}}. Dazu wurde in der Funktion \texttt{Color"-Sensor::""calculate"-Brightness} die Farbwerte jeweils mit einem Faktor verrechnet. Anhand der Helligkeit wurde mit einem festgelegtem Schwellwerts zwischen einem weißen und schwarzen Feld unterschieden. Zusammengefasst wurde die Operation in der Funktion \texttt{ECP"-Color"-Detection::""is"-White"-Field} bei der \texttt{false} zurückgegeben wurde wenn die Helligkeit unter dem Schwellwert liegt und \texttt{true} sonst. Die konkrete Implementierung ist in \autoref{code:is-white-field} dargestellt.
+Für die Unterscheidung zwischen hellem und dunklem Untergrund wurde die Helligkeit mit den normalisierten Farbwerten approximiert\footnote{Algorithmus vorgeschlagen in \url{https://www.w3.org/TR/AERT/\#color-contrast}}. Dazu wurde in der Funktion \texttt{Color"-Sensor::""calculate"-Brightness} die Farbwerte jeweils mit einem Faktor verrechnet. Anhand der Helligkeit wurde mit einem festgelegtem Schwellwerts zwischen einem weißen und schwarzen Feld unterschieden. Zusammengefasst wurde die Operation in der Funktion \texttt{ECP"-Color"-Detection::""is"-White"-Field} bei der \texttt{false} zurückgegeben wurde wenn die Helligkeit unter dem Schwellwert liegt und \texttt{true} sonst. Die vereinfachte Implementierung ist in \autoref{code:is-white-field} dargestellt.
 
 \begin{listing}[h]
     \inputminted{cpp}{../assets/code/ECPColorDetection-isWhiteField.cpp}
-    \caption{Code"=Ausschnitt zur \texttt{ECP"-Color"-Detection::""is"-White"-Field}"=Funktion}
+    \caption{Vereinfachter Code"=Ausschnitt zur \texttt{ECP"-Color"-Detection::""is"-White"-Field}"=Funktion.}
     \label{code:is-white-field}
 \end{listing}
 
@@ -52,7 +52,7 @@ Zunächst wird für das Laufen eines Feldes die Farbe des aktuellen Feldes mit d
 
 \begin{listing}[h]
     \inputminted{cpp}{../assets/code/ECPMovement-moveToNextField.cpp}
-    \caption{Code"=Ausschnitt zur \texttt{ECP"-Movement::""move"-To"-Next"-Field}"=Funktion}
+    \caption{Code"=Ausschnitt zur \texttt{ECP"-Movement::""move"-To"-Next"-Field}"=Funktion.}
     \label{code:move-to-next-field}
 \end{listing}
 

@@ -1,5 +1,6 @@
 void ECPMovement::moveToNextField() {
-    const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
+    const bool hasStartedOnWhite = 
+        ecpColorDetection.isWhiteField();
     bool isCurrentlyOnWhite = hasStartedOnWhite;
 
     while (isCurrentlyOnWhite == hasStartedOnWhite) {
