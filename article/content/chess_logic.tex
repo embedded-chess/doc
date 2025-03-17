@@ -32,7 +32,7 @@ Den Grundpfeiler stellt die in \autoref{code:ecp-chess-piece} vereinfacht darges
 
 Außerdem definiert sie die \texttt{isMove"-Valid}"=Funktion, welche einen Zug vom aktuellen zu einem übergebenen neuen Feld validiert. Da diese vom konkreten Schachfigurtyp abhängt -- beispielsweise bewegt sich ein Bauer anders als eine Königin -- ist dieses abstrakt und muss in den konkreten, abgeleiteten Klassen implementiert werden. Diese Funktion wird in \autoref{sec:move-validation} kurz beleuchtet.
 
-Weiterhin definiert die Klasse die \texttt{draw"-Figure"-To"-Display}"=Funktion, welche eine ASCII"=Art"=Repräsentation der Figur auf das Display des Dezibots druckt. Dies ist vorteilhaft um verschiedene Dezibots, die verschiedene Schachfiguren simulieren, auseinanderzuhalten. Eine weiße Figure wird dabei in schwarzer Schrift auf weißem Hintergrund angezeigt und eine schwarze Figure vice versa. Da die Repräsentation vom jeweiligen Schachfigurtypen abhängt, ist diese ebenfalls abstrakt und muss von den konkreten, abgeleiteten Klassen implementiert werden.
+Weiterhin definiert die Klasse die \texttt{draw"-Figure"-To"-Display}"=Funktion, welche eine ASCII"=Art"=Repräsentation der Figur auf das Display des Dezibots druckt. Dies ist vorteilhaft um verschiedene Dezibots, die verschiedene Schachfiguren simulieren, auseinanderzuhalten. Eine weiße Figure wird dabei in schwarzer Schrift auf weißem Hintergrund angezeigt und eine schwarze Figure vice versa (vgl. \autoref{sec:display-representation}). Da die Repräsentation vom jeweiligen Schachfigurtypen abhängt, ist diese ebenfalls abstrakt und muss von den konkreten, abgeleiteten Klassen implementiert werden.
 
 % ECPMovement
 
@@ -110,3 +110,59 @@ Dabei ist anzumerken, dass der Fokus dieses Projekt sich auf \emph{einen} Dezibo
 
 \subsection{Darstellung der Figur}
 \label{sec:display-representation}
+
+Damit sichtbar ist welche Schachfigur ein Dezibot simuliert, wird diese auf dem Display dargestellt. Der Dezibot besitzt ein OLED-Display auf dem $16 \times 8$ Zeichen abgebildet werden können. Wir haben uns dazu entschieden die Figuren bildlich mit ASCII-Zeichen darzustellen, um visuell einem üblichen Schachspiel zu gleichen. Damit die Figuren ausreichend mit genügend Varietät abgebildet werden können, wurden sie horizontal auf das Display gezeichnet. So sind sie zudem von beiden Spielenden erkennbar. Exemplarisch sind in \autoref{fig:display-queen-knight-bishop} die Darstellungen von einer Dame, einem Springer und einem Läufer abgebildet.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[c]{0.3\textwidth}   
+        \begin{cminted}{text}
++----------------+
+| __        __   |
+||  n____  /  >o |
+||  |    |#  <   |
+||  |    |#   >o |
+||  |    |#  <   |
+||  |    |#   >o |
+||  |____|#  <   |
+||__u      \__>o |
++----------------+
+        \end{cminted}
+    \end{subfigure}
+    \hspace{1em}
+    \begin{subfigure}[c]{0.3\textwidth}
+        \begin{cminted}{text}
++----------------+
+| _   \\\\\\\    |
+|| n___\\\\\\\   |
+|| |     \\\\\>  |
+|| |          |> |
+|| |_____|  @ |  |
+||_u     )   /   |
+|       (   /    |
+|       `__/     |
++----------------+
+        \end{cminted}
+    \end{subfigure}
+    \hspace{1em}
+    \begin{subfigure}[c]{0.3\textwidth}
+        \begin{cminted}{text}
++----------------+
+| _        __    |
+|| n_____ /  \   |
+|| |     ||   \  |
+|| |     ||  + |O|
+|| |_____||   /  |
+||_u      \__/   |
+|                |
+|                |
++----------------+
+        \end{cminted}
+    \end{subfigure}
+    \caption{Beispiele für die Darstellungen von Schachfiguren. Von links nach rechts: eine Dame, eine Springer und eine Läufer.}
+    \label{fig:display-queen-knight-bishop}
+\end{figure}
+
+Um die Farben der Spielfiguren zu unterschieden wird das Display für weiße Figuren mit der Funktion \texttt{display.invert"-Color} invertiert, sodass die Zeichen und Schrift schwarz auf weiß angezeigt wird. Invertiert wird das Display bei der Konstruktion einer Schachfigur, wobei dessen Notwendigkeit mit Hilfe der Flag \texttt{display::colorInverted} überprüft wird.
+
+Da die Figur möglichst immer angezeigt werden soll, wird die Funktion \texttt{ECP"-Chess"-Piece::""draw"-Figure"-To"-Display} immer aufgerufen, nachdem möglicherweise das Display überschrieben wurde (vgl. \autoref{sec:plausibility-check-rotation}).
