@@ -1,4 +1,4 @@
-# Präsentation für Embedded Chess Pieces Projekt
+# Dokumentation für Embedded Chess Pieces Projekt
 
 In diesem Repository sind die Dokumentation sowie die Folien für das Kolloquium zum Projekt *Embedded Chess Pieces* enthalten. Das zugehörige Projekt kann unter [nicosrm/24-emb-chess](https://github.com/nicosrm/24-emb-chess/) eingesehen werden.
 
