@@ -1,15 +1,11 @@
 bool ECPColorDetection::isWhiteField() {
-    double ambient = 
-        dezibot.colorSensor.getNormalizedAmbientValue();
-    double red = 
-        dezibot.colorSensor.getNormalizedColorValue(/* ... */);
-    double green = 
-        dezibot.colorSensor.getNormalizedColorValue(/* ... */);
-    double blue = 
-        dezibot.colorSensor.getNormalizedColorValue(/* ... */);
+    ColorSensor cs = dezibot.colorSensor; // (verkürzt)
 
-    double brightness = 
-        dezibot.colorSensor.calculateBrightness(red, green, blue);
+    double a = cs.getNormalizedAmbientValue();
+    double r = cs.getNormalizedColorValue(ColorSensor::RED, a);
+    double g = cs.getNormalizedColorValue(ColorSensor::GREEN, a);
+    double b = cs.getNormalizedColorValue(ColorSensor::BLUE, a);
+    double brightness = cs.calculateBrightness(r, g, b);
 
     return brightness >= IS_WHITE_FIELD_THRESHOLD;
 };

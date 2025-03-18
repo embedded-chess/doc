@@ -111,12 +111,12 @@ Dabei ist anzumerken, dass der Fokus dieses Projekt sich auf \emph{einen} Dezibo
 \subsection{Darstellung der Figur}
 \label{sec:display-representation}
 
-Damit sichtbar ist welche Schachfigur ein Dezibot simuliert, wird diese auf dem Display dargestellt. Der Dezibot besitzt ein OLED-Display auf dem $16 \times 8$ Zeichen abgebildet werden können. Wir haben uns dazu entschieden die Figuren bildlich mit ASCII-Zeichen darzustellen, um visuell einem üblichen Schachspiel zu gleichen. Damit die Figuren ausreichend mit genügend Varietät abgebildet werden können, wurden sie horizontal auf das Display gezeichnet. So sind sie zudem von beiden Spielenden erkennbar. Exemplarisch sind in \autoref{fig:display-queen-knight-bishop} die Darstellungen von einer Dame, einem Springer und einem Läufer abgebildet.
+Damit sichtbar ist, welche Schachfigur ein Dezibot simuliert, wird diese auf dem Display dargestellt. Der Dezibot besitzt ein OLED-Display auf dem $16 \times 8$ Zeichen abgebildet werden können. Wir haben uns dazu entschieden, die Figuren bildlich mit ASCII-Zeichen darzustellen, um visuell einem üblichen Schachspiel zu gleichen. Damit die Figuren ausreichend mit genügend Varietät abgebildet werden können, wurden sie horizontal auf das Display gezeichnet. So sind sie zudem von beiden Spielenden erkennbar. Exemplarisch sind in \autoref{fig:display-queen-knight-bishop} die Darstellungen von einer Dame, einem Springer und einem Läufer abgebildet.
 
 \begin{figure}[h]
-    \centering
-    \begin{subfigure}[c]{0.3\textwidth}   
-        \begin{cminted}{text}
+\centering
+\begin{subfigure}[c]{0.3\textwidth}   
+    \begin{cminted}{text}
 +----------------+
 | __        __   |
 ||  n____  /  >o |
@@ -127,11 +127,11 @@ Damit sichtbar ist welche Schachfigur ein Dezibot simuliert, wird diese auf dem 
 ||  |____|#  <   |
 ||__u      \__>o |
 +----------------+
-        \end{cminted}
-    \end{subfigure}
-    \hspace{1em}
-    \begin{subfigure}[c]{0.3\textwidth}
-        \begin{cminted}{text}
+\end{cminted}
+\end{subfigure}
+\hspace{1em}
+\begin{subfigure}[c]{0.3\textwidth}
+\begin{cminted}{text}
 +----------------+
 | _   \\\\\\\    |
 || n___\\\\\\\   |
@@ -142,11 +142,11 @@ Damit sichtbar ist welche Schachfigur ein Dezibot simuliert, wird diese auf dem 
 |       (   /    |
 |       `__/     |
 +----------------+
-        \end{cminted}
-    \end{subfigure}
-    \hspace{1em}
-    \begin{subfigure}[c]{0.3\textwidth}
-        \begin{cminted}{text}
+\end{cminted}
+\end{subfigure}
+\hspace{1em}
+\begin{subfigure}[c]{0.3\textwidth}
+\begin{cminted}{text}
 +----------------+
 | _        __    |
 || n_____ /  \   |
@@ -157,12 +157,12 @@ Damit sichtbar ist welche Schachfigur ein Dezibot simuliert, wird diese auf dem 
 |                |
 |                |
 +----------------+
-        \end{cminted}
-    \end{subfigure}
-    \caption{Beispiele für die Darstellungen von Schachfiguren. Von links nach rechts: eine Dame, eine Springer und eine Läufer.}
-    \label{fig:display-queen-knight-bishop}
+\end{cminted}
+\end{subfigure}
+\caption{Beispiele für die Darstellungen von Schachfiguren. Von links nach rechts: Dame, Springer und Läufer.}
+\label{fig:display-queen-knight-bishop}
 \end{figure}
 
-Um die Farben der Spielfiguren zu unterschieden wird das Display für weiße Figuren mit der Funktion \texttt{display::""invert"-Color} invertiert, sodass die Zeichen und Schrift schwarz auf weiß angezeigt wird. Invertiert wird das Display bei der Konstruktion einer Schachfigur, wobei dessen Notwendigkeit mit Hilfe der Flag \texttt{display::""color"-Inverted} überprüft wird.
+Um die Farben der Spielfiguren zu unterscheiden, wird das Display für weiße Figuren mit der Funktion \texttt{Display::""invert"-Color} invertiert, sodass die Zeichen und Schrift schwarz auf weiß angezeigt werden. Bei der Konstruktion einer Schachfigur wird das Display, falls notwendig, invertiert. Dabei wird mit Hilfe von \texttt{Display::""color"-Inverted} überprüft, ob das Display bereits invertiert ist.
 
-Da die Figur möglichst immer angezeigt werden soll, wird die Funktion \texttt{ECP"-Chess"-Piece::""draw"-Figure"-To"-Display} immer aufgerufen, nachdem möglicherweise das Display überschrieben wurde (vgl. \autoref{sec:plausibility-check-rotation}).
+Da die Figur möglichst dauerhaft angezeigt werden soll, wird die Funktion \texttt{ECP"-Chess"-Piece::""draw"-Figure"-To"-Display} aufgerufen, nachdem möglicherweise das Display überschrieben wurde (vgl. \autoref{sec:plausibility-check-rotation}).
