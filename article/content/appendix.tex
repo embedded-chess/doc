@@ -1,0 +1,24 @@
+% !TeX root = ../main.tex
+
+\section{Messungen Winkel}
+\label{sec:measurements-dezibot-angle}
+
+Um die in \autoref{tab:measurements-dezibot-angle} aufgelisteten Werte so genau wie möglich zu messen, wurde ein eigenes 3D\hyphen gedrucktes Modell entworfen. Dies vereinfacht das Ablesen der Winkel und verstärkt die Präzision.
+
+\begin{table}[h!]
+    \centering
+    \input{../assets/measurements/measurements-dezibot-angle.tex}
+    \caption{Signal-Messungen von \texttt{ECP\-Signal\-Detection::measure\-Dezibot\-Angle} (vgl. \autoref{sec:angle-determination}). $\varphi_B$ bzw. $\varphi_B$ sind Winkel, in denen Beacon bzw. Dezibot stehen. $\Delta\varphi=\varphi_D - \varphi_B$.}
+    \label{tab:measurements-dezibot-angle}
+\end{table}
+
+
+\section{Messungen Infrarot-Rotation}
+\label{sec:measurements-ir-rotation}
+
+\begin{table}[h!]
+    \centering
+    \input{../assets/measurements/rotation_measurements.tex}
+    \caption{Messungen der Infrarot-basierten Rotation (vgl. \autoref{sec:movement-ir}). $\varphi_{\text{initial}}$: initialer Winkel, in dem Dezibot ausgerichtet ist. $\varphi_{\text{goal}}$: Ziel-Winkel, in dem Dezibot nach erfolgreicher Rotation ausgerichtet sein sollte. $\varphi_{\text{end}}$: Winkel, in dem Dezibot nach Rotation tatsächlich ausgerichtet war. $\Delta\varphi = \vert\varphi_{\text{end}}-\varphi_{\text{goal}}\vert$.}
+    \label{tab:measurements-ir-rotation}
+\end{table}

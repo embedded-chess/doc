@@ -297,19 +297,17 @@ Es ist problematisch, wenn die Messungen je nach Infrarot"=Sensor (herstellungsb
 
 % Problem: IR-Sensoren nicht auf 90° platziert, off-axis
 
-Weiterhin ist in \autoref{fig:dezibot-bottom} zu erkennen, dass die magenta umrandeten Infrarot"=Sensoren nicht exakt auf der (virtuellen) $x$"= bzw. $y$"=Achse platziert sind. Daher ist die Berechnung des Signal"=Winkels (vgl. \autoref{sec:angle-determination}) nicht exakt, da dort davon ausgegangen wird, dass diese exakt auf der jeweiligen Achse in gleichem Abstand zum Mittelpunkt des Dezibots (virtueller Koordinatenursprung) liegen. Da dies allerdings nicht der Fall ist, ist die Berechnung ungenau. Je nach Ursprungsrichtung des Infrarot"=Signales weicht die Differenz bei einigen Richtungen des Dezibots unterschiedlich stark ab. Ein Beispiel ist in \autoref{tab:rotation-ir-deviations} dargestellt, wobei der Beacon im Norden bzw. bei 0° bezüglich des Dezibots positioniert war.
+Weiterhin ist in \autoref{fig:dezibot-bottom} zu erkennen, dass die magenta umrandeten Infrarot"=Sensoren nicht exakt auf der (virtuellen) $x$"= bzw. $y$"=Achse platziert sind. Daher ist die Berechnung des Signal"=Winkels (vgl. \autoref{sec:angle-determination}) nicht exakt, da dort davon ausgegangen wird, dass diese exakt auf der jeweiligen Achse in gleichem Abstand zum Mittelpunkt des Dezibots (virtueller Koordinatenursprung) liegen. Da dies allerdings nicht der Fall ist, ist die Berechnung ungenau. Je nach Ursprungsrichtung des Infrarot"=Signales weicht die Differenz bei einigen Richtungen des Dezibots unterschiedlich stark ab.
+
+Dazu wurden zwei kleine, begrenzte Messstudien durchgeführt, die diese Tatsache verdeutlichen. Ein Beacon wurde dafür im Norden bzw. 0° bezüglich des messenden Dezibots positioniert. In der ersten Studie wurden die Ergebnisse der Signal"=Messungen von \texttt{ECP"-Signal"-Detection::""measure"-Dezibot"-Angle} in verschiedenen Winkeln gemessen. Die Ergebnisse sind in \autoref{tab:measurements-dezibot-angle} in \autoref{sec:measurements-dezibot-angle} dargestellt.
+
+In der zweiten Messstudie wurde eine Infrarot"=basierte Links"= bzw. Rechts"=Rotation vom Dezibot durchgeführt. Dabei wurde der Dezibot in die vier verschiedenen Himmelsrichtungen ausgerichtet. Insgesamt wurden jeweils fünf Versuche durchgeführt. Die Messwerte sind in \autoref{tab:measurements-dezibot-angle} in \autoref{sec:measurements-ir-rotation} aufgelistet. Die daraus resultierenden durchschnittlichen Differenzen zwischen dem Ziel"= und dem tatsächlich erreichten Winkel sowie die Standardabweichungen der Messungen pro Rotationsart sind in \autoref{tab:measurements-dezibot-angle-avg-dev} dargestellt.
 
 \begin{table}[h]
-\centering
-\begin{tabular}{l|l|l}
-$\theta_{\text{real}}$ & $\theta_{\text{meas}}$ & $\Delta\theta$ \\ \hline\hline
-0° (Nord)              & 357°                   & 3°             \\
-90° (Ost)              & 77°                    & 13°            \\
-180° (Süd)             & 186°                   & 6°             \\
-270° (West)            & 262°                   & 8°                     
-\end{tabular}
-\caption{Ungenauigkeiten der inkrementellen, geregelten, Infrarot"=basierten Rotation, wobei gilt $\Delta\theta = \vert \theta_{\text{real}} - \theta_{\text{meas}} \vert$.}
-\label{tab:rotation-ir-deviations}
+    \centering
+    \input{../assets/measurements/rotation_measurements_avg_dev.tex}
+    \caption{Durchschnittliche Differenzen vom Ziel"= und dem tatsächlich erreichten Winkel sowie Standardabweichungen der Messungen pro Rotationsart von Links"= (L) und Rechts"=Rotationen (R) basierend auf \autoref{tab:measurements-dezibot-angle}.}
+    \label{tab:measurements-dezibot-angle-avg-dev}
 \end{table}
 
 Als Lösungsansatz für dieses Problem wäre hier denkbar, die Abweichungen in die Berechnung einfließen zu lassen. Dies könnte durch Anpassung der zugrundeliegenden Trigonometrie geschehen. Weiterhin könnten die Fehler durch eine Messstudie mit einem hinreichend großen Stichprobenumfang gemessen und ausgewertet werden, um die Bestimmung zu generalisieren.
