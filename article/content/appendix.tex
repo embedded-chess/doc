@@ -3,14 +3,23 @@
 \section{Messungen Winkel}
 \label{sec:measurements-dezibot-angle}
 
-Um die in \autoref{tab:measurements-dezibot-angle} aufgelisteten Werte so genau wie möglich zu messen, wurde ein eigenes 3D\hyphen gedrucktes Modell entworfen. Dies vereinfacht das Ablesen der Winkel und verstärkt die Präzision.
+Um die in \autoref{tab:measurements-dezibot-angle} aufgelisteten Werte so genau wie möglich zu messen, wurde ein eigenes 3D\hyphen gedrucktes Modell~\cite{felttipDezibotAlignmentPointer2025} entworfen. Dies vereinfacht das Ablesen der Winkel und verstärkt die Präzision.
+
+Die gemessenen Rohdaten (einzelne Sensorwerte sowie Winkel) können auf GitHub\footnote{\url{https://raw.githubusercontent.com/embedded-chess/doc/refs/heads/main/assets/measurements/angle_measurements.csv}} eingesehen werden. Die Winkel sind in \autoref{tab:measurements-dezibot-angle} tabellarisch sowie in \autoref{fig:measurements-dezibot-angle} grafisch dargestellt. Außerdem sind die Differenzen $\Delta\alpha$ sind in \autoref{fig:ir-signal-diff} grafisch aufbereitet.
 
 \begin{table}[h!]
     \centering
-    \input{../assets/measurements/measurements-dezibot-angle.tex}
-    \caption{Signal-Messungen von \texttt{ECP\-Signal\-Detection::measure\-Dezibot\-Angle} (vgl. \autoref{sec:angle-determination}). $\varphi_B$ bzw. $\varphi_B$ sind Winkel, in denen Beacon bzw. Dezibot stehen. $\Delta\varphi=\varphi_D - \varphi_B$.}
+    \input{../assets/measurements/angle_measurements.tex}
+    \caption{Signal-Messungen von \texttt{ECP\-Signal\-Detection::measure\-Dezibot\-Angle} (vgl. \autoref{sec:angle-determination}). $\alpha_r$ ist realer Winkel, in dem Dezibot in Relation zum Beacon steht. $\alpha_m$ ist Winkel, welcher vom Dezibot gemessen wurde. Daraus folgt $\Delta\alpha=\alpha_m - \alpha_r$.}
     \label{tab:measurements-dezibot-angle}
 \end{table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../plot/ir_signal_comparison.pdf}
+    \caption{Darstellung der Daten aus \autoref{tab:measurements-dezibot-angle}.}
+    \label{fig:measurements-dezibot-angle}
+\end{figure}
 
 
 \section{Messungen Infrarot-Rotation}
@@ -22,3 +31,98 @@ Um die in \autoref{tab:measurements-dezibot-angle} aufgelisteten Werte so genau 
     \caption{Messungen der Infrarot-basierten Rotation (vgl. \autoref{sec:movement-ir}). $\varphi_{\text{initial}}$: initialer Winkel, in dem Dezibot ausgerichtet ist. $\varphi_{\text{goal}}$: Ziel-Winkel, in dem Dezibot nach erfolgreicher Rotation ausgerichtet sein sollte. $\varphi_{\text{end}}$: Winkel, in dem Dezibot nach Rotation tatsächlich ausgerichtet war. $\Delta\varphi = \vert\varphi_{\text{end}}-\varphi_{\text{goal}}\vert$.}
     \label{tab:measurements-ir-rotation}
 \end{table}
+
+
+\section{Anpassung der Winkel-Trigonometrie}
+\label{sec:angle-determination-adjustment}
+
+Im folgenden Abschnitt soll der Ansatz zur Anpassung der Trigonometrie, welche zur Bestimmung des Signal\hyphen Winkels (vgl. \autoref{sec:angle-determination}) verwendet werden könnte, kurz beleuchtet werden.
+
+Insgesamt ist aus \autoref{fig:angle-determination-adjustment} ersichtlich, dass die Nord- und Süd\hyphen Sensoren nicht auf der $y$-Achse liegen, sondern um 10° bzw. 28° verschoben sind. Daher sollen die Vektoren so transformiert werden, dass sie so scheinen, als würden sie aus der entsprechenden Richtung kommen.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[c]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../assets/angle_determination_adjustment.pdf}
+    \end{subfigure}
+    \begin{subfigure}[c]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../assets/angle_determination_adjustment_south_angle.pdf}
+    \end{subfigure}
+    \caption{Links: Darstellung der Transformation der Nord- und Südsignale sowie der Winkel. In gelb sind die Infrarot\hyphen Sensoren hervorgehoben. Rechts: Verlängerte Funktion des Südsignals zur Bestimmung des Winkels zur $x$-Achse zur weiteren Berechnung.}
+    \label{fig:angle-determination-adjustment}
+\end{figure}
+
+Daher werden die beiden Funktionen $f_n(x)=m_n\cdot x$ und $f_s(x)=m_s\cdot x$ für die Richtung der Nord- bzw. Süd\hyphen Signale aufgestellt, auf der die transformierten Werte liegen sollen. Da der Winkel zur $x$-Achse in der Rechnung verwendet wird, dürfen nicht 28° für das Süd-Signal verwendet werden, sondern der Winkel der verlängerten Funktion, d.h. 118° (siehe \autoref{fig:angle-determination-adjustment} rechts). Insgesamt ergeben sich somit folgende Anstiege und Funktionen:
+
+\vspace{-1cm}
+\begin{gather*}
+    m_n = \tan(100\degree) \approx -5,671 \implies f_n(x) = -5,671x \\
+    m_s = \tan(118\degree) \approx -2,901 \implies f_s(x) = -2,901x
+\end{gather*}
+\vspace{-1cm}
+
+Die Distanz der Punkte, die die ursprünglichen Messwerte $n$ bzw. $s$ repräsentieren, $N=(0,n)$ bzw. $S=(0,-s)$ zum Koordinatenursprung, d.h. der Mitte des Dezibots, sei nun $d$. Die Distanz soll nach der Transformation erhalten bleiben, um die Stärke des Signals nicht zu verfälschen. Somit ergeben sich folgende Überlegung zur Bestimmung der transformierten Punkte.
+
+\begin{gather*}
+    ~\\[-1.25cm]
+    \begin{aligned}
+        d^2 &= x^2 + y^2 \\
+        \implies d &= \sqrt{x^2 + y^2} = \sqrt{x^2 + f(x)^2} = \sqrt{x^2 + (mx)^2} \\
+        \implies d &= \sqrt{x^2 (1 + m^2)} = |x| \cdot \sqrt{1+m^2} \\
+        \implies |x| &= \frac{d}{\sqrt{1+m^2}} \\
+        \implies x_{1,2} &= \pm \frac{d}{\sqrt{1+m^2}} \\
+        \implies f(x_1) &= \underbrace{+ \frac{d}{\sqrt{1+m^2}}}_{=~x_1} \cdot m, \quad
+    f(x_2) = \underbrace{- \frac{d}{\sqrt{1+m^2}}}_{=~x_2} \cdot m \\
+    \end{aligned} \\
+    %
+    \implies P_1=\left(+ \frac{d}{\sqrt{1+m^2}}; + \frac{dm}{\sqrt{1+m^2}}\right), \quad
+    P_2=\left(-\frac{d}{\sqrt{1+m^2}}; -\frac{dm}{\sqrt{1+m^2}}\right)
+\end{gather*}
+\vspace{-0.5cm}
+
+Insgesamt ergeben sich zwei mögliche Lösungen $P_1$ und $P_2$. Aufgrund der Anordnung von Nord und Süd folgt:
+
+\vspace{-0.75cm}
+\begin{gather*}
+    \begin{aligned}
+        N' &\approx \left(-\frac{n}{\sqrt{1+(-5,6713)^2}}; -\frac{-5,6713n}{\sqrt{1+(-5,6713)^2}}\right) \approx \left(-0,174n; 0,985n\right) \\[0.2cm]
+        %
+        S' &\approx \left(+ \frac{s}{\sqrt{1+(-2,901)^2}}; + \frac{-2,901s}{\sqrt{1+(-2,901)^2}}\right) \approx \left( 0,469s; -0,883s \right)
+    \end{aligned}
+\end{gather*}
+\vspace{-0.5cm}
+
+Ein Beispiel für die Transformation ist in \autoref{fig:angle-determination-adjustment-example} dargestellt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../plot/angle_adjustment/trigonometry.pdf}
+    \caption{Beispiel für die Transformation vom ursprünglichen Nord- $N$ und Süd\hyphen Signal $S'$ zu $N'$ bzw $S'$.}
+    \label{fig:angle-determination-adjustment-example}
+\end{figure}
+
+Zur Berechnung der Winkel muss das Verfahren zur Berechnung der Resultanten aus \autoref{sec:angle-determination} wie folgt angepasst werden:
+
+\vspace{-0.75cm}
+\begin{gather*}
+    \begin{aligned}
+        r_x &= -0,174n + e + 0,469s - w \\
+        r_y &= 0,985n - 0,883s
+    \end{aligned}
+\end{gather*}
+\vspace{-0.5cm}
+
+Eine Beispiel\hyphen Rechnung sieht wie folgt aus:
+
+\vspace{-0.75cm}
+\begin{gather*}
+    n=0,5, ~e=0,2, ~s=0,2, ~w=1,0  \\
+    \begin{aligned}
+        \text{alt:}~~ &R = \begin{pmatrix} 0,8000 \\ 0,3000 \end{pmatrix} &\Rightarrow \varphi=291\degree \\
+        \text{neu:}~~ &R = \begin{pmatrix} -0,7928 \\ 0,3158 \end{pmatrix} &\Rightarrow \varphi=292\degree
+    \end{aligned}
+\end{gather*}
+\vspace{-0.5cm}
+
+Beim Testen fiel jedoch auf, dass der Ansatz keine große Verbesserung brachte. Die Differenz zu den tatsächlichen Werten schwankte nun teilweise weitaus mehr -- bis zu 30° bei Ausrichtung nach Süden. Dies ist nachvollziehbar, da die Infrarot\hyphen Sensoren nicht in die transformierte Richtung ausgerichtet sind, sonder nur verschoben. Daher wurde dieser Ansatz verworfen.

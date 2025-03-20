@@ -229,16 +229,16 @@ In diesem Abschnitt wird die Bestimmung des Winkels $\varphi$, in dem das Infrar
  
 Zunächst werden die vier Werte der seitlichen Infrarot"=Sensoren gelesen. Dabei werden jeweils drei Messungen mit einem Abstand von jeweils einer Millisekunde gemittelt, um die Ergebnisse zu verbessern. Die Ergebnisse liegen auf einer Skala von $[0,4095]$ vor, welche zunächst auf $[0,1] \subset \mathbb{R}$ normalisiert werden, um eine leichtere Weiterverarbeitung zu ermöglichen. Anschließend wird überprüft, ob mindestens ein Messwert über einem festgelegten Schwellwert (0.1, d.h. 10~Prozent) liegt, um eine gewisse Signalstärke vorauszusetzen. Falls dies nicht der Fall ist, wird eine entsprechende Warnung auf das Display gedruckt. Nach einer Sekunde wird erneut versucht, einen gültigen Wert zu lesen. Dies geschieht solange, bis ein signifikanter Wert gemessen werden kann.
 
-Nachdem hinreichende Signalmessungen vorliegen, kann der Winkel Beacon"=Signals berechnet werden. Dazu werden die Nord"=Süd"= $r_{N,S}$ sowie Ost"=West"=Resultanten $r_{E,W}$ berechnet. Dabei sind $n,s,e$ und $w$ jeweils die Signalmessungen aus dem Infrarot"=Sensor aus Nord"=, Süd"=, Ost"= bzw. West"=Richtung.
+Nachdem hinreichende Signalmessungen vorliegen, kann der Winkel Beacon"=Signals berechnet werden. Dazu werden die Nord"=Süd"= $r_{y}$ sowie Ost"=West"=Resultanten $r_{x}$ des Ergebnisvektors $R$ berechnet. Dabei sind $n,s,e$ und $w$ jeweils die Signalmessungen aus Nord"=, Süd"=, Ost"= bzw. West"=Richtung.
 
 \begin{equation*}
-    r_{N,S} = n - s, \qquad r_{E,W} = e - w
+    r_{x} = e - w, \quad r_{y} = n - s, \quad R = (r_x~r_y)^T
 \end{equation*}
 
-Aus diesen Resultanten wird der Winkel $\varphi$ vom Ergebnisvektor berechnet.
+Aus den Resultanten wird der Winkel $\varphi$ vom Ergebnisvektor $R$ berechnet.
 
 \begin{equation*}
-    \varphi = \arctan_2(r_{E,W}, r_{N,S}) \cdot \frac{180\degree}{\pi}
+    \varphi = \arctan_2(r_{x}, r_{y}) \cdot \frac{180\degree}{\pi}
 \end{equation*}
 
 Eine Veranschaulichung der Resultanten, des Ergebnisvektors sowie des Winkels~$\varphi$ sind anhand von Beispiel"=Daten in \autoref{fig:angle-determination-beacon} abgebildet.
@@ -252,7 +252,6 @@ Eine Veranschaulichung der Resultanten, des Ergebnisvektors sowie des Winkels~$\
 Anschließend wird in \texttt{ECPSignal"-Detec"-tion::""measure"-Dezi"-bot"-Angle} der Winkel~$\alpha$ bestimmt, in den der Dezibot relativ zum Beacon ausgerichtet ist (vgl.~\autoref{fig:signal-dezibot-angle}).
 
 \vspace{-1em}
-
 \begin{equation*}
     \alpha = (360\degree - \varphi) \operatorname{mod} 360\degree
 \end{equation*}
@@ -297,9 +296,16 @@ Es ist problematisch, wenn die Messungen je nach Infrarot"=Sensor (herstellungsb
 
 % Problem: IR-Sensoren nicht auf 90° platziert, off-axis
 
-Weiterhin ist in \autoref{fig:dezibot-bottom} zu erkennen, dass die magenta umrandeten Infrarot"=Sensoren nicht exakt auf der (virtuellen) $x$"= bzw. $y$"=Achse platziert sind. Daher ist die Berechnung des Signal"=Winkels (vgl. \autoref{sec:angle-determination}) nicht exakt, da dort davon ausgegangen wird, dass diese exakt auf der jeweiligen Achse in gleichem Abstand zum Mittelpunkt des Dezibots (virtueller Koordinatenursprung) liegen. Da dies allerdings nicht der Fall ist, ist die Berechnung ungenau. Je nach Ursprungsrichtung des Infrarot"=Signales weicht die Differenz bei einigen Richtungen des Dezibots unterschiedlich stark ab.
+Weiterhin ist in \autoref{fig:dezibot-bottom} zu erkennen, dass die magenta umrandeten Infrarot"=Sensoren nicht exakt auf der (virtuellen) $x$"= bzw. $y$"=Achse platziert sind. Daher ist die Berechnung des Signal"=Winkels (vgl. \autoref{sec:angle-determination}) nicht exakt, da dort davon ausgegangen wird, dass diese exakt auf der jeweiligen Achse in gleichem Abstand zum Mittelpunkt des Dezibots (virtueller Koordinatenursprung) liegen. Da dies allerdings nicht der Fall ist, ist die Berechnung ungenau. Je nach Ursprungsrichtung des Infrarot"=Signales weicht die Differenz bei einigen Richtungen des Dezibots unterschiedlich stark ab. Weiterhin behindern die Beine des Dezibots die Messungen, da diese das Sichtfeld beeinträchtigen.
 
-Dazu wurden zwei kleine, begrenzte Messstudien durchgeführt, die diese Tatsache verdeutlichen. Ein Beacon wurde dafür im Norden bzw. 0° bezüglich des messenden Dezibots positioniert. In der ersten Studie wurden die Ergebnisse der Signal"=Messungen von \texttt{ECP"-Signal"-Detection::""measure"-Dezibot"-Angle} in verschiedenen Winkeln gemessen. Die Ergebnisse sind in \autoref{tab:measurements-dezibot-angle} in \autoref{sec:measurements-dezibot-angle} dargestellt.
+Dazu wurden zwei kleine, begrenzte Messstudien durchgeführt, die diese Tatsache verdeutlichen. Ein Beacon wurde dafür im Norden bzw. 0° bezüglich des messenden Dezibots positioniert. In der ersten Studie wurden die Ergebnisse der Signal"=Messungen von \texttt{ECP"-Signal"-Detection::""measure"-Dezibot"-Angle} in verschiedenen Winkeln gemessen. Die Ergebnisse sind in \autoref{tab:measurements-dezibot-angle} in \autoref{sec:measurements-dezibot-angle} dargestellt. Die Differenzen der Messungen zu den eigentlichen Signal"=Winkeln in in \autoref{fig:ir-signal-diff} dargestellt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../plot/ir_signal_diff.pdf}
+    \caption{Diagramm der Differenz der Signal"=Messungen bezüglich des echten Winkels. Die Daten basieren auf \autoref{tab:measurements-dezibot-angle}.}
+    \label{fig:ir-signal-diff}
+\end{figure}
 
 In der zweiten Messstudie wurde eine Infrarot"=basierte Links"= bzw. Rechts"=Rotation vom Dezibot durchgeführt. Dabei wurde der Dezibot in die vier verschiedenen Himmelsrichtungen ausgerichtet. Insgesamt wurden jeweils fünf Versuche durchgeführt. Die Messwerte sind in \autoref{tab:measurements-dezibot-angle} in \autoref{sec:measurements-ir-rotation} aufgelistet. Die daraus resultierenden durchschnittlichen Differenzen zwischen dem Ziel"= und dem tatsächlich erreichten Winkel sowie die Standardabweichungen der Messungen pro Rotationsart sind in \autoref{tab:measurements-dezibot-angle-avg-dev} dargestellt.
 
@@ -310,7 +316,7 @@ In der zweiten Messstudie wurde eine Infrarot"=basierte Links"= bzw. Rechts"=Rot
     \label{tab:measurements-dezibot-angle-avg-dev}
 \end{table}
 
-Als Lösungsansatz für dieses Problem wäre hier denkbar, die Abweichungen in die Berechnung einfließen zu lassen. Dies könnte durch Anpassung der zugrundeliegenden Trigonometrie geschehen. Weiterhin könnten die Fehler durch eine Messstudie mit einem hinreichend großen Stichprobenumfang gemessen und ausgewertet werden, um die Bestimmung zu generalisieren.
+Aus \autoref{fig:ir-signal-diff} sowie \autoref{tab:measurements-dezibot-angle} wird erkenntlich, dass die Messungen sowie Rotationen sehr unregelmäßig schwanken. In \autoref{sec:ir-rotation-improvements} wird auf einige weitere Versuche zur Verbesserung eingegangen.
 
 % Problem: andere IR-Quellen
 
@@ -360,6 +366,54 @@ Eine Selbstortung wäre durch mindestens drei weitere Beacon"=Dezibots denkbar, 
 % Zusammenfassung
 
 Zusammenfassend unterscheiden sich die genannten Ansätze in ihrer Komplexität. In der begrenzten Projektzeit war es nicht möglich, diese weiter zu verfolgen, weshalb sie Forschungsgegenstand zukünftiger Projekte sein könnten.
+
+
+\subsubsection{Verbesserungsansätze}
+\label{sec:ir-rotation-improvements}
+
+In diesem Abschnitt werden weitere Versuche zur Verbesserung der Winkelmessung erläutert. Dabei handelt es sich einerseits um den Versuch, die Trigonometrie entsprechend der Winkel der Sensoren anzupassen. Andererseits wurden verschiedene Künstliche Neuronale Netze (\emph{Multi"=Layered"=Perceptron}, MLP) trainiert.
+
+% Trigonometrie
+
+Als erstes wurde versucht, die Trigonometrie, mit der die Winkel aus den Infrarot"=Sensordaten bestimmt werden, anzupassen. Somit sollte das Problem der Sensorplatzierung der Nord"= sowie Süd"=Sensoren entgegengewirkt werden. Daher wurde ein Vorfaktor für die Nord"= und Südwerte bestimmt, welche die Vektoren der Messung in die Richtung der Sensoren ausrichtet. Hintergründe dazu können \autoref{sec:angle-determination-adjustment} kurz nachgelesen werden.
+
+Insgesamt ist dieser Versuch allerdings gescheitert, da die Sensoren zwar nicht auf der $y$-Achse platziert sind. Jedoch sind die dennoch in die korrekte Richtung, d.h. Norden bzw. Süden, ausgerichtet. Somit sind die angepassten Werte, v.a. in Süd"=Richtung, um bis zu 30° abgewichen.
+
+Aus diesem Ergebnis konnte jedoch die Erkenntnis gezogen werden, dass vermutlich nicht die Platzierung der Sensoren, sondern vielmehr die Beine des Dezibots das wahre Problem darstellen, da diese das Sichtfeld der Sensoren beinschränken. Dies ist ein weiteres Problem, dessen Lösung in zukünftigen Arbeiten betrachtet werden kann.
+
+% MLP Regressor
+
+Im Weiteren wurde versucht, ein MLP zu trainieren. Die Eingangsdaten basieren auf den Messungen aus \autoref{sec:measurements-dezibot-angle}, wobei die normalisierten Sensordaten als Feature $\mathbf{X}$ und die erwarteten Winkel als Label $\mathbf{y}$ verwendet.
+
+\begin{equation*}
+    \mathbf{X} = \begin{bmatrix}
+        n_{1,\text{norm}} & e_{1,\text{norm}} & s_{1,\text{norm}} & w_{1,\text{norm}} \\
+        \vdots & \vdots & \vdots & \vdots \\
+        n_{n,\text{norm}} & e_{n,\text{norm}} & s_{n,\text{norm}} & w_{n,\text{norm}}
+    \end{bmatrix},
+    \quad \mathbf{y} = \begin{bmatrix}
+        \alpha_1 \\ \vdots \\ \alpha_n
+    \end{bmatrix}
+\end{equation*}
+
+Das Training wurde mit der Python"=Library \texttt{scikit-learn}\footnote{\url{https://scikit-learn.org/1.6/}} umgesetzt. Dafür wurde ein \texttt{MLP"-Regressor} als Regressionsmodell ausgewählt. Dieses erlaubt unter anderem das überwachte Lernen von nicht"=-linearen Zusammenhängen, wie sie aus den Daten von \autoref{sec:measurements-dezibot-angle} angedeutet sind. Weiterhin ist es durch die Anzahl von versteckten Schichten (\emph{Hidden Layer}) anpassbar~\cite{scikit-learndevelopers117NeuralNetwork2025}. Diese wurde nach ein paar Experimenten auf $(20,20)$ festgesetzt, d.h. jeweils 20~Neuronen in der ersten und zweiten Schicht mit insgesamt zwei versteckten Schichten.
+
+Nach einer zufälligen Aufteilung der Daten in Test"= und Trainingsdaten mit einer Aufteilung von 1:5 wurde das Modell trainiert. Nach verschiedenen Anläufen kamen die in \autoref{fig:cnn-mlp-diff} dargestellten Ergebnisse zustande.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../plot/angle_adjustment/mlp_sensor_diff.pdf}
+    \caption{Diagramm der Differenz $\Delta\alpha$ zwischen vorhergesagten Winkeln vom MLP"=Regressor $\alpha_p$ und dem tatsächlichen Winkel $\alpha_r$ bezüglich des echten Winkels mit $\Delta\alpha = \alpha_p - \alpha_m$.}
+    \label{fig:cnn-mlp-diff}
+\end{figure}
+
+Vor allem im Vergleich zu \autoref{fig:ir-signal-diff} ist zu erkennen, dass die Differenzen nun statt zwischen ungefähr -10° bis 10° zwischen -7,5° und 7,5° schwanken. Somit ist das Schwankungsintervall kleiner geworden. Da dieser Ansatz allerdings keine ausreichend gute Verbesserung brachte, wurde dieses Modell nicht in das Projekt integriert. Allerdings könnten weiterführende Experimente, bspw. an der Einstellung der Hyperparameter oder Wahl anderer Regressionsmodelle, durchgeführt werden.
+
+Das trainierte Modell wurde gespeichert und kann auf GitHub\footnote{\url{https://github.com/embedded-chess/doc/blob/main/plot/mlp_regressor_model_sensor_data.onnx}} abgerufen werden. Dieses ist im Standard von \emph{Open Neural Network Exchange} (ONNX)\footnote{\url{https://onnx.ai}} abgespeichert, welches in andere gängige Formate, wie bspw. von TensorFlow (Lite)~\cite{hyodoToolsConvertONNX2025, internationalbusinessmachinescorporationOnnxOnnxtensorflow2022}, umgewandelt werden kann. Somit kann es in Python, aber auch in C++ auf dem Dezibot verwendet werden~\cite{espressifsystemsEspressifEsptflitemicro2025,thetensorflowauthorsTanakamasayukiArduino_TensorFlowLite_ESP322022}, wie bspw. in~\citeauthor{antonovSnskorpion2DezibotLabyrinthSolver2025}~\cite{antonovSnskorpion2DezibotLabyrinthSolver2025}.
+
+Ein weiterer Versuch bestand darin, statt eine MLP"=Regressors eine Support"=Vektor"=Maschine (SVM) als Regressor (\emph{Support Vector Regression}, \texttt{SVR}) zu verwenden. Die Ergebnisse waren jedoch schlechter als die bereits vorhande Implementierung (vgl. \autoref{sec:angle-determination}), weshalb dieser Ansatz verworfen wurde.
+
+Ferner wurden die bestimmten Winkel vom Dezibot als Feature und die tatsächlichen Winkel als Label verwendet. Dieser Ansatz führte allerdings zu sehr ähnlichen Schwankungen wie in \autoref{sec:angle-determination}. Eine Ursache könnten die begrenzten Trainingsdaten sein. Insgesamt wurde sich daher entschieden, diesen Ansatz nicht weiter zu verfolgen.
 
 
 \subsection{Iteration 5: Kalibrierung der Farben}
