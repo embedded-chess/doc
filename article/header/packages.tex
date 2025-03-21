@@ -48,6 +48,7 @@
 \usepackage[final]{microtype}
 \usepackage{xurl}
 
+% \usepackage[hidelinks]{hyperref}
 \usepackage{hyperref}
 \addto\extrasngerman{
     \let\subsectionautorefname\sectionautorefname
@@ -67,3 +68,7 @@
 \usepackage{lipsum}
 
 \AddToHook{cmd/section/before}{\clearpage}
+
+\usepackage{footmisc}
+\renewcommand{\footnotelayout}{\hspace{0.5em}}
+\renewcommand{\hangfootparindent}{0.5em}
