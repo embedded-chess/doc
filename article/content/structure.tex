@@ -1,43 +1,12 @@
 % !TeX root = ../main.tex
 
 \section{Projektstruktur}
-
-In diesem Abschnitt wird die finale Projektstruktur erläutert, sowie ein verworfener Ansatz, welcher einer Package-artigen Struktur folgt.
-
-
-\subsection{Finale Projektstruktur}
 \label{sec:final-project-structure}
 
 Unser Beitrag in diesem Projekt besteht einerseits in der Änderung und Ergänzung der bereits vorhandenen \texttt{dezibot}-Library~\cite{dezibotteamDezibotDezibot2025}, sowie dem Hinzufügen unseres \texttt{EmbeddedChessPieces}-Packages. Letzteres befindet sich nach Vorgabe der Dozenten unter \texttt{example/EmbeddedChessPieces}.
 
 Die Business"=Logic ist im \texttt{src}-Verzeichnis des Projektes abgelegt. Darin sind die Strukturen und die Logik (siehe \autoref{sec:chess-logic}), welche dieses Projekt ermöglichen, abgelegt.
 
-Unter \texttt{examples} befinden sich verschiedene Arduino-Sketches, u.a. zum Testen einzelner Funktionen. Außerdem sind dort die zwei wichtigen Sketches, welche für die finale Vorführung notwendig sind, abgelegt. Dabei handelt es sich um einen Infrarot-Emitter, welcher in \autoref{sec:movement-ir} erläutert wird, sowie um einen Sketch, der auf dem Dezibot läuft, welcher schlussendlich die Schachfigur simuliert.
+Unter \texttt{examples} befinden sich verschiedene Arduino-Sketches, u.a. zum Testen einzelner Funktionen. Außerdem sind dort die zwei wichtigen Sketches, welche für die finale Vorführung (\texttt{showcase}\footnote{\url{https://github.com/nicosrm/24-emb-chess/tree/main/example/EmbeddedChessPieces/examples/showcase}}) notwendig sind, abgelegt. Dabei handelt es sich um einen Infrarot-Emitter, welcher in \autoref{sec:movement-ir} erläutert wird, sowie um einen Sketch, der auf dem Dezibot läuft, welcher schlussendlich die Schachfigur simuliert. Zum Ausprobieren wurde weiterhin ein \texttt{playground}"=Sketch\footnote{\url{https://github.com/nicosrm/24-emb-chess/blob/main/example/EmbeddedChessPieces/examples/playground/playground.ino}} als Schritt"=für"=Schritt"=Anleitung hinzugefügt, mit welchem verschiedene implementierte Funktionen ausprobiert werden können.
 
 Für die Einrichtung muss müssen alle notwendigen Third-Party-Packages manuell installiert werden, welche für das \texttt{dezibot}-Package notwendig sind. Diese sind in der README unseres Projektes aufgelistet. Die Einrichtung der Arduino-IDE ändert sich durch dieses Projekt nicht. Zusätzlich muss ein symbolischer Link vom Projekt-Repository sowie \texttt{example/EmbeddedChessPieces} in das Arduino-Library-Verzeichnis gelegt werden.
-
-
-\subsection{Package-Struktur}
-
-Zu Beginn der Projektarbeit wurde im Gespräch der Dozenten der Wunsch geäußert, die Third"=Party"=Packages automatisch bei Installation des \texttt{dezibot}"=Packages zu laden. Daher änderten wir die Struktur des geforkten Dezibot-Projektes wie vereinfacht in \autoref{fig:project-structure} dargestellt.
-
-\begin{figure}[h]
-\centering
-\begin{cminted}{text}
-    +-- libraries
-    |   +-- Dezibot
-    |   +-- EmbeddedChessPieces
-    |   `-- VEML6040
-    `-- src
-        +-- colour_detection
-        `-- embedded_chess_pieces
-\end{cminted}
-\caption{Vereinfachte Package-Struktur zum Projektanfang}
-\label{fig:project-structure}
-\end{figure}
-
-Dabei sind alle benötigten Third-Party-Libraries im \texttt{libraries}"=Verzeichnis als Submodule inkludiert. Dadurch wird deren Installation vereinfacht, da nur ein rekursiver Klon des Repositories notwendig ist. Der Code des \texttt{dezibot}- sowie des \texttt{EmbeddedChessPieces}"=Packages war dabei in \texttt{libraries} direkt enthalten.
-
-Hier ist vorstellbar gewesen, einen Fork vom \texttt{dezibot}"=Package zu erstellen, welche unsere Änderungen an diesem enthält. Das \texttt{EmbeddedChessPieces}-Package wäre wiederum ein separates Repository gewesen. In einem weiteren Repository könnten die Packages als Submodules integriert und um die notwendigen Arduino"=Sketches für die Ausführung des Projektes erweitert werden. Die Sketches wären in \texttt{src} abgelegt worden. Letzteres Repository wäre in der Arduino IDE als Sketchbook-Location eingetragen worden.
-
-Nachdem wir die Struktur aufbauten und diese in einer Konsultation zeigten, wurde uns vermittelt, dass die Struktur nicht abgeändert werden dürfe und wir dies rückgängig machen sollen. Daher mussten wir mehrere Stunden an Planung und Refactoring zurückbauen und erneut mehrere Stunden investieren, um die geforderte Struktur zu implementieren und erneut zu testen. Dies wäre durch eine frühzeitige Kommunikation der Anforderungen und Rahmenbedingungen vermeidbar gewesen.
