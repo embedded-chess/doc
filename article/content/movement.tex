@@ -12,7 +12,7 @@ In diesem Abschnitt geht es um die Bewegung des Dezibots auf dem Schachbrett. Da
 Die erste Iteration diente der grundlegenden Bewegung des Dezibots auf dem Schachfeld, d.h. dem geradeaus Laufen und Rotieren um 90°. Hierzu wurde zunächst mit den bereits in der \texttt{dezibot}"=Library liegenden Funktionen experimentiert und aus den Erkenntnissen daraus die schlussendlichen Bewegungen implementiert. 
 
 \subsubsection{Farberkennung}
-\label{sec:color-detection}
+\label{sec:colour-detection}
 
 Damit der Dezibot sich eine bestimmte Anzahl an Feldern nach vorne bewegen kann, müssen die Felder auf dem Schachbrett erkannt werden. Dies wurde mithilfe des RGBW"=Farbsensors auf der Unterseite des Dezibots angegangen. Dabei handelt es sich um einen \texttt{VEML6040}"=Farbsensor.
 
@@ -37,7 +37,7 @@ Dazu wurden in der Funktion \texttt{Color"-Sensor::""calculate"-Brightness} die 
     \label{code:is-white-field}
 \end{listing}
 
-Diese Lösung erfordert weitere Anpassungen im Laufe des Projekts, da zunächst der Schwellwert kalibriert werden muss. Außerdem liegt der Farbsensor nicht in der Mitte des Dezibots, weshalb der hellste und der dunkelste gemessene Farbwert erreicht werden, wenn der Sensor in der Mitte eines Feldes ist und nicht, wenn der gesamte Dezibot auf dem Feld steht. Die Kalibrierung der Farberkennung wurde in der fünften Iteration angegangen (vgl. \autoref{sec:color-calibration}).
+Diese Lösung erfordert weitere Anpassungen im Laufe des Projekts, da zunächst der Schwellwert kalibriert werden muss. Außerdem liegt der Farbsensor nicht in der Mitte des Dezibots, weshalb der hellste und der dunkelste gemessene Farbwert erreicht werden, wenn der Sensor in der Mitte eines Feldes ist und nicht, wenn der gesamte Dezibot auf dem Feld steht. Die Kalibrierung der Farberkennung wurde in der fünften Iteration angegangen (vgl. \autoref{sec:colour-calibration}).
 
 
 \subsubsection{Vorwärtsbewegung}
@@ -50,7 +50,7 @@ Problematisch ist dabei, dass sich der Dezibot nicht zuverlässig geradeaus bewe
 
 Für die Schach"=spezifischen Bewegungen wurde die \texttt{ECP"-Movement}"=Klasse erstellt. Ein Dezibot wird allgemein mit der Funktion \texttt{ECP"-Movement::""move(uint number"-Of"-Fields)} eine bestimmte, übergebene Anzahl an Feldern nach vorne bewegt. Intern wird die \texttt{ECP"-Movement::""move"-To"-Next"-Field}"=Funktion entsprechend häufig aufgerufen.
 
-Zunächst wird für das Laufen eines Feldes die Farbe des aktuellen Feldes, erkannt durch die in durch die in \autoref{sec:color-detection} erläuterte Methode, gespeichert. Anschließend wird iterativ für eine, in der Konstante \texttt{ECP"-Movement::""FORWARD\_TIME} festgelegten Zeit die Funktion \texttt{ECP"-Movement::""move"-Forward} aufgerufen, welche den Dezibot vorwärts bewegt. Anschließend wird erneut die Farbe des aktuellen Feldes bestimmt. Falls die Farbe nicht mit der Farbe übereinstimmt, welche am Anfang der Bewegung gemessen wurde, ist die Bewegung um ein Feld abgeschlossenen. Konkret ist die Funktion in \autoref{code:move-to-next-field} dargestellt.
+Zunächst wird für das Laufen eines Feldes die Farbe des aktuellen Feldes, erkannt durch die in durch die in \autoref{sec:colour-detection} erläuterte Methode, gespeichert. Anschließend wird iterativ für eine, in der Konstante \texttt{ECP"-Movement::""FORWARD\_TIME} festgelegten Zeit die Funktion \texttt{ECP"-Movement::""move"-Forward} aufgerufen, welche den Dezibot vorwärts bewegt. Anschließend wird erneut die Farbe des aktuellen Feldes bestimmt. Falls die Farbe nicht mit der Farbe übereinstimmt, welche am Anfang der Bewegung gemessen wurde, ist die Bewegung um ein Feld abgeschlossenen. Konkret ist die Funktion in \autoref{code:move-to-next-field} dargestellt.
 
 \begin{listing}[h]
     \inputminted{cpp}{../assets/code/ECPMovement-moveToNextField.cpp}
@@ -58,22 +58,18 @@ Zunächst wird für das Laufen eines Feldes die Farbe des aktuellen Feldes, erka
     \label{code:move-to-next-field}
 \end{listing}
 
-Wie bereits im Abschnitt zur Farberkennung festgehalten, sorgt die Position des Farbsensors dafür, dass ein neues Feld erkannt wird, sobald die Helligkeit den Schwellwert über- oder unterschreitet.
-% TODO: folgenden Satz umformulieren, ggf. aufteilen
-Die Kalibrierung dafür, dass dies gleichmäßig, egal ob von schwarz nach weiß oder vice versa, erkannt wird, sowie der nächste Schritt, dass in der Feldmitte gehalten wird, sind nicht trivial und wurde in einer späteren Iteration \autoref{sec:color-calibration} erneut aufgegriffen. 
+Wie bereits im Abschnitt zur Farberkennung festgehalten, sorgt die Position des Farbsensors dafür, dass ein neues Feld erkannt wird, sobald die Helligkeit den Schwellwert über- oder unterschreitet. Je nachdem wie der Schwellwert festgelegt ist, kann es sein, dass ein weißes Feld erkannt wird, wenn der Dezibot fast vollständig auf dem Feld steht, aber ein schwarzes Feld wahrnehmen, wenn nur das vordere Bein auf dem Feld steht. Damit die Felder möglichst gleichmäßig erkannt werden, muss der Schwellwert an die aktuellen Lichtverhältnisse angepasst werden. Das Kalibrieren der Farberkennung und die Berechnung des Schwellwertes wurde in einer späteren Iteration \autoref{sec:colour-calibration} erneut aufgegriffen. 
 
-% TODO: Verbesserungen
+% Verbesserungen
+Eine Idee zur Verbesserung des Laufens war es, Linien auf dem Schachbrett zu zeichnen und an andere Projekte anzuknüpfen, welche eine Linienverfolgung beinhalten, wie bspw.~\cite{antonovSnskorpion2DezibotLabyrinthSolver2025}. Im Gespräch mit den Dozenten wurde diese Idee jedoch aufgrund von zu starker Änderung des Schachbretts und daraus resultierendem Verlust des Wiedererkennungswertes abgelehnt. 
 
 
 \subsubsection{90°-Drehung}
 \label{sec:turn-90}
 
-Für eine Rotation wird nur jeweils nur ein Motor des Dezibots aktiviert. In der ersten Iteration wurde, wie bei der Vorwärtsbewegung (vgl. \autoref{sec:move-straight}), zunächst zeitgesteuert vorgegangen. Für die Aktivierung des Motors wurden die Funktionen \texttt{ECP"-Movement::""turn"-Left} bzw. \texttt{ECP"-Movement::""turn"-Right} implementiert, welche die Motoren über die \texttt{dezibot}"=Library mit \texttt{motion->""left.""set"-Speed} bzw. \texttt{motion->""right.""set"-Speed} direkt ansprechen.
-% TODO: erwähnen, dass jeweils gegenüberliegende Motoren angesprochen werden?
-Die Funktionen \texttt{motion::""rotate"-Clock"-wise} bzw. \texttt{motion::""rotate"-Anti"-Clock"-wise} aus der Library wurden nicht verwendet, da deren Implementierung einer zeitgesteuerten Drehung fehlerhaft ist.
+Für eine Rotation wird nur jeweils nur ein Motor des Dezibots aktiviert. In der ersten Iteration wurde, wie bei der Vorwärtsbewegung (vgl. \autoref{sec:move-straight}), zunächst zeitgesteuert vorgegangen. Für die Aktivierung des Motors wurden die Funktionen \texttt{ECP"-Movement::""turn"-Left} bzw. \texttt{ECP"-Movement::""turn"-Right} implementiert, welche die Motoren über die \texttt{dezibot}"=Library mit \texttt{motion->""left.""set"-Speed} bzw. \texttt{motion->""right.""set"-Speed} direkt ansprechen. So wird die Drehung mit dem entgegengesetzten Motor erreicht, also für eine Drehung nach links bzw. entgegen dem Uhrzeigersinn wird der rechte Motor verwendet. Die Funktionen \texttt{motion::""rotate"-Clock"-wise} bzw. \texttt{motion::""rotate"-Anti"-Clock"-wise} aus der Library wurden nicht verwendet, da deren Implementierung einer zeitgesteuerten Drehung fehlerhaft ist.
 
-Problematisch ist weiterhin fehlender Determinismus bei der Bewegung des Dezibots. Mittels Kalibrierungsoptionen kann die Zeit für eine Links- bzw. Rechts"=Rotation angepasst werden, bleibt aber ungenau und unzuverlässig.
-% TODO: "Kalibrierungsoptionen" erläutern
+Problematisch ist weiterhin fehlender Determinismus bei der Bewegung des Dezibots. Mittels der Argumente \texttt{rotation"-Time"-Left} und \texttt{rotation"-Time"-Right} kann die Zeit für eine Links- bzw. Rechts"=Rotation bei der Konstruktion der \texttt{ECP"-Movement}"=Instanz angepasst werden, bleibt aber ungenau und unzuverlässig.
 
 Ebenfalls dreht sich der Dezibot nicht genau auf der Stelle. So kann es sein, dass das aktuelle Feld während der Drehung verlassen wird. In \autoref{fig:dezibot-rotation-position-offset} ist dieses Problem beispielhaft dargestellt. Bei einer rein zeitgesteuerten Drehung besteht zudem keine Möglichkeit die Position, also Richtung und Feld, des Dezibots zu bestimmen. Mit der Verbesserung der Drehung wurde sich in späteren Iteration beschäftigt (vgl. \autoref{sec:plausibility-check-rotation} und \autoref{sec:movement-ir}).
 
@@ -159,9 +155,7 @@ Mit dieser Verbesserung kann ebenfalls nicht überprüft werden, ob eine intendi
 
 Zur Verbesserung der Rotation wogen wir einige Ideen ab. Einerseits bauten wir bereits die im vorherigen Abschnitt erläuterte Plausibilitätsprüfung der Rotation ein. Eine zusätzliche Idee war es, ein Regelsystem für die Rotation zu entwerfen und zu implementieren. Die Farbe bzw. das Licht vom Untergrund wird bereits die Plausibilitätsprüfung betrachtet. Insgesamt war der Wunsch, eine zweite physikalisch Größen einzubeziehen.
 
-Der Beschleunigungssensor (\emph{Inertial Measurement Unit}, IMU) entfiel dabei als mögliche Option, da dieser aktuell nur im Ansatz von der existierenden \texttt{dezibot}"=Library unterstützt wird und viel Low"=Level"=Code notwendig wäre. Während den Lehrveranstaltungen wurde jedoch von große Problemen mit der Genauigkeit beschrieben.
-
-Eine weitere Idee war es, Linien auf dem Schachbrett zu zeichnen und an andere Projekte anzuknüpfen, welche eine Linienverfolgung beinhalten, wie bspw.~\cite{antonovSnskorpion2DezibotLabyrinthSolver2025}. Im Gespräch mit den Dozenten wurde diese Idee jedoch aufgrund von zu starker Änderung des Schachbretts und daraus resultierendem Verlust des Wiedererkennungswertes abgelehnt. Daher wurde sich für den folgenden, anderen Ansatz entschieden.
+Der Beschleunigungssensor (\emph{Inertial Measurement Unit}, IMU) entfiel dabei als mögliche Option, da dieser aktuell nur im Ansatz von der existierenden \texttt{dezibot}"=Library unterstützt wird und viel Low"=Level"=Code notwendig wäre. Während den Lehrveranstaltungen wurde jedoch von große Problemen mit der Genauigkeit beschrieben. Daher wurde sich für den folgenden, anderen Ansatz entschieden.
 
 Diese basiert auf einer zusätzlichen Signalquelle (\emph{Beacon}), aus welcher die relative Ausrichtung des Dezibots trigonometrisch approximiert werden kann. Vorstellbar sind hier WLAN- oder Bluetooth"=Signale, oder auch Infrarot"=Licht. Schlussendlich entschieden wir uns durch die Abwägung von Kosten und Nutzen für die Infrarot"=LED eines Dezibots als Beacon sowie die seitlichen "=Sensoren zur Messung. Diese sind in \autoref{fig:dezibot-bottom} hervorgehoben.
 
@@ -424,4 +418,26 @@ Ferner wurden die bestimmten Winkel vom Dezibot als Feature und die tatsächlich
 
 
 \subsection{Iteration 5: Kalibrierung der Farben}
-\label{sec:color-calibration}
+\label{sec:colour-calibration}
+
+Das erkennen von Feldern anhand der Farbe ist verzahnt mit der Bewegung: eine Bewegung benötigt die Farberkennung, um ausgeführt zu werden wie bspw. das Vorwärtsbewegen um ein Feld. Die Farberkennung kann aber auch nur so weit die Bewegung unterstützten, wie diese ordentlich funktioniert. So ist es in diesem Fall nicht vorteilshaft eine Farberkennung zu haben, welche dem Dezibot genau dann die Rückmeldung gibt, dass die Mitte des nächsten Feldes erreicht ist, da eine leichte Abweichung dafür sorgt, dass der Dezibot über das Feld hinauszieht, obwohl er angemessen, aber nicht genau mittig, auf dem Feld stand. Dementsprechend ist wichtig für die Farberkennung eine Balance zu finden, welche die Bewegung bestmöglich unterstützt, aber die Bewegung nicht beeinträchtigt.
+
+\subsubsection{Farbsensor}
+\label{sec:colour-calibration-colour-sensor}
+
+Für die Verbesserung der Farberkennung war zunächst der Ansatz eine Kalibrierung der Farben durchzuführen, um die aktuellen Lichtverhältnisse einzubeziehen. Der Dezibot wird dafür am Start auf ein weißes und ein schwarzes Feld gesetzt werden und anhand der gemessenen Werte der Schwellwert angepasst. Die Kalibrierung wird mit der Funktion \texttt{ECP"-Color"-Detection::""calibrate"-Field"-Color} umgesetzt. In dieser wird mit \texttt{ECP"-Color"-Detection::""calibrate"-Color} jeweils die Aufforderung auf das Display gedruckt und die Helligkeit gemessen.
+
+Insgesamt wird an fünf Positionen auf dem Schachbrett werden für beide Farben jeweils die durchschnittliche Helligkeit anhand von drei Durchläufen gemessen. Der Schwellwert für eine Farbe wird für Weiß durch die niedrigste Messung und Schwarz die höchste sowie jeweils einem Offset berechnet.
+
+Durch die zwei Schwellwerte ergibt sich ein weiterer Zustand, \emph{unambiguous}, welcher bei der Bestimmung der aktuellen Feldfarbe auftreten kann. So wird das Problem angesprochen, dass sowohl weiße als auch schwarze Felder erst wahrgenommen werden, wenn der Dezibot weitestgehend auf dem Feld steht. Diese Addition führt dazu, dass die Funktion \texttt{ECP"-Color"-Detection::""is"-White"-Field} nicht mehr Wahrheitswerte ausgeben kann und wurde dementsprechend zu \texttt{ECP"-Color"-Detection::""get"-Field"-Color} umgeändert.
+
+Die Bestimmung der gesuchten Feldfarbe benötigt eine weitere Funktion \texttt{ECP"-Color"-Detection::""get"-Likely"-Field"-Color} für den Fall, dass \emph{unambiguous} die aktuell bestimmte Farbe ist. Diese Funktion bestimmt an welchem Schwellwert die aktuelle Helligkeit näher ist.
+
+Das Problem, dass der Dezibot weiterhin wird eine Farbe bereits erkennt, auch wenn er sich nicht vollständig auf dem Feld befindet, wurde experimentell versucht durch das Hinzunehmen zwei weiterer Zustände anzusprechen. Dabei wurde neben der Helligkeit wenn der Dezibot auf dem Feld steht auch der hellste bzw. dunkelste Wert gemessen, wenn der Farbsensor in der Mitte des Feldes steht. Die Idee war es, dass zunächst der Schwellwert für diesen Status erreicht werden muss bevor die eigentliche Feldfarbe angenommen wird.
+
+Dafür wurde \texttt{Field"-Color} um \texttt{UNAMBIGUOUS\_BLACK\_TO\_WHITE}~(UBW) und \texttt{UNAMBIGUOUS\_WHITE\_TO\_BLACK}~(UWB) erweitert. Durch diese Zustände ist auch für die Vorwärtsbewegen eine Plausibilitätsprüfung umsetzbar: wenn nach erreichen der Übergangszustände UBW und UWB ein anderer Zustand als \texttt{WHITE\_FIELD} oder \texttt{BLACK\_FIELD} erreicht wird, ist der Dezibot wahrscheinlich von dem Feld wieder abgekommen. Der Unterschied zwischen der Mitte eines Feldes und einem Punkt werter außen ist aber meistens zu gering und daher ist der Ansatz nicht leistungsfähig. Eine Plausibilitätsprüfung wird für die Vorwärtsbewegung um ein Feld dennoch durchgeführt. Bei dieser wird die Anzahl der Bewegungen beschränkt. Wenn also innerhalb von zehn Versuchen nicht die gesuchte Feldfarbe erreicht wird, ist der Dezibot wahrscheinlich über das Feld hinaus und nicht gerade gelaufen.
+
+Auch das Licht zur Ausbesserung schlechter Lichtverhältnisse wurde in der Iteration angepasst. Da dieses nur für die Messungen relevant ist wird die Verwendung über die Flag \texttt{ECP"-Color"-Detection::""turn"-On"-Color"-Correction"-Light} geregelt. Wenn diese Flag auf \texttt{true} gesetzt ist, wird vor der Bestimmung der Helligkeit die LED mit einer Verzögerung für eine ordentliche Messung angemacht und anschließend wieder ausgestellt. Auf diese Weise ist erkenntlich wann die Farbe gemessen wird und spart Energie. Ebenso besteht keine Notwendigkeit außerhalb der \texttt{ECP"-Color"-Detection}"=Klasse mit dem Licht zu interagieren.
+
+\subsubsection{Infrarot Farberkennung}
+\label{sec:colour-calibration-ir}
