@@ -3,13 +3,13 @@
 \section{Ausblick}
 \label{sec:perspective}
 
-\lipsum[1]
+Dieses Projekt, Embedded Chess Pieces, bietet noch viele Weitere Aspekte, welche in zukünftigen Arbeiten aufgegriffen werden könnten. Auf manche davon wird in dem folgenden Abschnitt kurz eingegangen.
 
-% kommunikation
-%   untereinander oder
-%   zentrale einheit
-% weiterhin verbesserung bewegung
-% spiel elemente
-%   turm-könig tausch
-%   bauer zu beliebig
-% feld verlassen wenn geschlagen
+% Kommunikation
+In dieser Arbeit wurde der Schwerpunkt auf \emph{einen} Dezibot gelegt, weshalb keine Logik für das komplette Schachbrett implementiert wurde. Ebenfalls war die Kommunikation mit dem Dezibot und von Dezibots untereinander nicht Teil der Arbeit. Dies könnte in Rahmen einer weiteren Instanz dieses Projektes hinzugefügt werden. Mit dessen Grundlage ist es möglich weitere Schachlogik umzusetzen.
+
+% Schachlogik
+Besondere Schachzüge wie \emph{en passant} und \emph{Rochade} benötigen eine zentrale Instanz, welche einen Überblick über das gesamte Spielgeschehen besitzt oder gegenseitige Kommunikation um den Standort auf dem Feld und damit die Gültigkeit zu verifizieren. Ebenfalls kann die Bauernumwandlung~(\emph{Promotion}) implementiert werden. Grundlegend ist auch das Schlagen von Figuren umzusetzen und allgemein die Bewegung mit anderen Figuren als Hindernisse auf dem Schachbrett.
+
+% Bewegung
+Die Bewegung allgemein kann weiter verbessert werden. Dabei ist das größte Problem das geradeaus Laufen des Dezibots. Was die Rotation und die Verwendung von einem oder mehreren Beacons betrifft, so können diese mithilfe von Kommunikation neu angegangen werden: dem Beacon kann kommuniziert, wann es das Infrarot Licht anschalten soll ohne andere zu beeinträchtigen, ebenso ist es denkbar anstelle von zusätzlichen Beacons andere Figuren als Stütze zu verwenden. 
