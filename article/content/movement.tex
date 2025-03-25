@@ -490,4 +490,28 @@ So kann es durch die Perioden dazu führen, dass die Rotation länger dauert, da
 
 % TODO: ggf. Video erläutern
 
-% TODO: neuer Ansatz: Nutzerausgabe
+% Ansatz: manuelle Nutzerintervention
+
+Aufgrund der Unzuverlässigkeit des An- und Ausschaltens der Infrarot"=LEDs sowie Problemen ab einer bestimmten Distanz, wurde ein weiterer Ansatz implementiert. Dieser besteht darin, vor der eigentlichen Messung, störende Infrarot"=Signale zu erkennen. Falls solche gemessen werden, wird eine Ausgabe auf das Display gedruckt, welche dazu auffordert, diese zu entfernen. Diese ist in \autoref{fig:display-interfering-ir} dargestellt.
+
+\begin{figure}[h]
+\centering
+\begin{cminted}{text}
++----------------+
+|Interfering IR  |
+|signal!         |
+|Trying again... |
+|                |
+|                |
+|                |
+|                |
+|                |
++----------------+
+\end{cminted}
+\caption{Aufforderung zur Entfernung störender Infra\-rot-Signal\-quellen vor Infrarot"=Farbmessung}
+\label{fig:display-interfering-ir}
+\end{figure}
+
+Die Ausgabe bleibt, analog zu \autoref{sec:angle-determination}, so lange bestehen, bis keine störende Signale mehr messbar sind, um die Farbmessung nicht zu verfälschen.
+
+Innerhalb des Rahmens unseres Projektes konnte somit eine zufriedenstellende Zwischenlösung gefunden werden. Der manuelle Eingriff kann in Zukunft durch eine drahtlose Verbindung ersetzt werden.
