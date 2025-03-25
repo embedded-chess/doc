@@ -7,7 +7,7 @@ on:
 env:
   # without extension
   # see env.OUTPUT_NAME in `build.yaml`
-  ARTIFACT_NAME_ARTICLE: 24_emb_article
+  ARTIFACT_NAME_ARTICLE: 24-emb-documentation
   ARTIFACT_NAME_PRESENTATION: 24-emb-presentation
 
 jobs:
@@ -29,6 +29,6 @@ jobs:
         - name: Create release
           uses: ncipollo/release-action@v1.14.0
           with:
-            artifacts: ${{ env.ARTIFACT_NAME_ARTICLE }}/*, ${{ env.ARTIFACT_NAME_PRESENTATION }}/*
+            artifacts: ${{ env.ARTIFACT_NAME_ARTICLE }}/* #, ${{ env.ARTIFACT_NAME_PRESENTATION }}/*
             body: "Release of version ${{ github.ref_name }}"
             allowUpdates: true

@@ -23,4 +23,4 @@ jobs:
     with:
       tex-workdir: article
       tex-file: main
-      output-name: 24_emb_article
+      output-name: 24-emb-documentation
