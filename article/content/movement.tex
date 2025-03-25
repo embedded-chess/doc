@@ -195,26 +195,25 @@ An diesem Punkt sind die zwei wichtigen Größen bekannt: einerseits der initial
     \label{fig:dezibot-rotation-angles}
 \end{figure}
 
-Mit diesen beiden Werten wird die \texttt{ECPMove"-ment"-::"-rotate"-To"-Angle}"=Funktion aufgerufen. Diese rotiert den Dezibot inkrementell vom übergebenen initialen Winkel zum Ziel"=Winkel. Dabei wird innerhalb einer Schleife basierend auf der normalisierten Differenz $\Delta\theta_{\text{norm}}$ bestimmt, ob der Dezibot am effizientesten nach links oder rechts rotieren muss, um $\alpha'$ zu erreichen. Dies wird in \autoref{sec:rotation-direction-determination} genauer erläutert. Anschließend wird die benötigte Rotationszeit approximiert.
+Mit diesen beiden Werten wird die \texttt{ECPMove"-ment"-::"-rotate"-To"-Angle}"=Funktion aufgerufen. Diese rotiert den Dezibot inkrementell vom übergebenen initialen Winkel zum Ziel"=Winkel. Dabei wird innerhalb einer Schleife basierend auf der normalisierten Differenz $\Delta\alpha_{\text{norm}}$ bestimmt, ob der Dezibot am effizientesten nach links oder rechts rotieren muss, um $\alpha'$ zu erreichen. Dies wird in \autoref{sec:rotation-direction-determination} genauer erläutert. Anschließend wird die benötigte Rotationszeit approximiert.
 
-Die Approximation basiert auf Experimenten aus \autoref{sec:move-straight-turn}, welche ergeben haben, dass eine Rotation um 180° etwa 5 Sekunden benötigt. Basierend auf der absoluten normalisiert Differenz $\vert\Delta\theta_{\text{norm}}\vert$ wird der folgende angenommene Approximation verwendet:
+Die Approximation basiert auf Experimenten aus \autoref{sec:move-straight-turn}, welche ergeben haben, dass eine Rotation um 180° etwa 5 Sekunden benötigt. Dabei wird ein wenig abgezogen, um ein Übersteuern zu vermeiden. Basierend auf der absoluten normalisiert Differenz $\vert\Delta\alpha_{\text{norm}}\vert$ wird der folgende angenommene Approximation verwendet:
 
-% TODO: update factor
 \begin{equation*}
-    180\degree \cdot 28~\frac{\text{ms}}{\degree} = 5040~\text{ms} \approx 5000~\text{ms}
+    180\degree \cdot 25~\frac{\text{ms}}{\degree} = 4500~\text{ms} < 5000~\text{ms}
 \end{equation*}
 
 Dementsprechend ergibt sich die approximierte Rotationszeit $t_{\text{r}}$ wie folgt:
 
 \begin{equation*}
-    t_{\text{r}} \approx \vert\Delta\theta{\text{norm}}\vert \cdot 28~\frac{\text{ms}}{\degree}
+    t_{\text{r}} \approx \vert\Delta\alpha_{\text{norm}}\vert \cdot 25~\frac{\text{ms}}{\degree}
 \end{equation*}
 
 Dementsprechend wird die approximierte Rotationszeit geringer, je kleiner die normalisierte Differenz wird. Das heißt, je näher sich der Dezibot am gewünschten Ziel"=Winkel $\alpha'$ ausgerichtet ist, desto kürzer wird rotiert. Anschließend wird der Dezibot, je nach kürzester Rotationsrichtung, in die entsprechende Richtung für $t_{\text{r}}$ rotiert.
 
 Nach dem Rotationsinkrement wird der neue relative Winkel des Dezibots erneut gemessen, d.h. $\alpha$ aktualisiert, und das Verfahren von vorn durchgeführt. Die Rotationsrichtung und "=zeit werden erneut berechnet, wodurch ein Gegensteuern möglich ist, falls sich der Dezibot zu weit bewegt hat. Eine Rotation wird außerdem als erfolgreich bewertet, wenn der neue Winkel $\alpha$ innerhalb einer festgelegten Toleranz -- aktuell 3° -- befindet. Diese Toleranz ist in der Konstante \texttt{ECPMove"-ment::""ROTA"-TION\_TOLER"-ANCE} definiert.
 
-Falls innerhalb von 20 Iterationen der Ziel"=Winkel nicht erreicht werden konnte, wird analog zu \autoref{sec:plausibility-check-rotation} eine Aufforderung zur manuellen Korrektur durch die Spielenden aufgefordert.
+Falls innerhalb von 10 Iterationen der Ziel"=Winkel nicht erreicht werden konnte, wird analog zu \autoref{sec:plausibility-check-rotation} eine Aufforderung zur manuellen Korrektur durch die Spielenden aufgefordert (siehe \autoref{fig:display-rotation-correction-request}).
 
 
 \subsubsection{Bestimmung der Winkel}
@@ -273,24 +272,24 @@ Anschließend wird in \texttt{ECPSignal"-Detec"-tion::""measure"-Dezi"-bot"-Angl
 \subsubsection{Bestimmung der Rotationsrichtung}
 \label{sec:rotation-direction-determination}
 
-Im folgenden Abschnitt wird erläutert, wie der kürzeste Weg, um den gewünschten Ziel"=Winkel~$\alpha'$ vom initialen Dezibot"=Winkel $\alpha$ zu erreichen, errechnet wird -- das heißt, ob es effizienter ist, den Dezibot nach links oder rechts zu rotieren. Dafür wird zunächst die Differenz beider Winkel~$\Delta\theta$ gebildet und normiert zu~$\Delta\theta_{\text{norm}}$.
+Im folgenden Abschnitt wird erläutert, wie der kürzeste Weg, um den gewünschten Ziel"=Winkel~$\alpha'$ vom initialen Dezibot"=Winkel $\alpha$ zu erreichen, errechnet wird -- das heißt, ob es effizienter ist, den Dezibot nach links oder rechts zu rotieren. Dafür wird zunächst die Differenz beider Winkel~$\Delta\alpha$ gebildet und normiert zu~$\Delta\alpha_{\text{norm}}$.
 
 \vspace{-1em}
 \begin{equation*}
 \begin{aligned}
-    \Delta\theta &= \alpha' - \alpha \\
-    \Delta\theta_{\text{norm}} &= \big( (\Delta\theta + 180\degree) \operatorname{mod} 360\degree \big) - 180\degree
+    \Delta\alpha &= \alpha' - \alpha \\
+    \Delta\alpha_{\text{norm}} &= \big( (\Delta\alpha + 180\degree) \operatorname{mod} 360\degree \big) - 180\degree
 \end{aligned}
 \end{equation*}
 
-Basierend auf $\Delta\theta_{\text{norm}}$ kann wie folgt entschieden werden, in welche Richtung am effizientesten rotiert werden muss:
+Basierend auf $\Delta\alpha_{\text{norm}}$ kann wie folgt entschieden werden, in welche Richtung am effizientesten rotiert werden muss:
 
 \vspace{-1em}
 \begin{equation*}
 \begin{aligned}
-    \Delta\theta_{\text{norm}} < 0\degree &\Rightarrow \text{Links-Rotation} ~(\circlearrowleft)\\
-    \Delta\theta_{\text{norm}} > 0\degree &\Rightarrow \text{Rechts-Rotation} ~(\circlearrowright)\\
-    \Delta\theta_{\text{norm}} \in \lbrace 0\degree, 180\degree \rbrace &\Rightarrow \text{egal} \leadsto \text{Links-Rotation} ~(\circlearrowleft)
+    \Delta\alpha_{\text{norm}} < 0\degree &\Rightarrow \text{Links-Rotation} ~(\circlearrowleft)\\
+    \Delta\alpha_{\text{norm}} > 0\degree &\Rightarrow \text{Rechts-Rotation} ~(\circlearrowright)\\
+    \Delta\alpha_{\text{norm}} \in \lbrace 0\degree, 180\degree \rbrace &\Rightarrow \text{egal} \leadsto \text{Links-Rotation} ~(\circlearrowleft)
 \end{aligned}
 \end{equation*}
 
