@@ -2,9 +2,6 @@
 
 In diesem Repository sind die Dokumentation sowie die Folien für das Kolloquium zum Projekt *Embedded Chess Pieces* enthalten. Das zugehörige Projekt kann unter [embedded-chess/embedded-chess-pieces](https://github.com/embedded-chess/embedded-chess-pieces) eingesehen werden.
 
-> [!IMPORTANT]
-> Die Dokumentation befindet sich noch in Entwicklung. Nach der Fertigstellung wird dieser Hinweis entfernt.
-
 
 ## Kontext
 
