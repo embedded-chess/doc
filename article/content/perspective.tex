@@ -1,15 +1,30 @@
-% !TeX root = ../../slides/main.tex
+% !TeX root = ../main.tex
 
 \section{Ausblick}
 \label{sec:perspective}
 
-Dieses Projekt, Embedded Chess Pieces, bietet noch viele Weitere Aspekte, welche in zukünftigen Arbeiten aufgegriffen werden könnten. Auf manche davon wird in dem folgenden Abschnitt kurz eingegangen.
+Dieses Projekt, Embedded Chess Pieces, bietet noch viele weitere Aspekte, welche in zukünftigen Arbeiten aufgegriffen werden könnten. Auf einige davon wird im folgenden Abschnitt eingegangen.
 
-% Kommunikation
-In dieser Arbeit wurde der Schwerpunkt auf \emph{einen} Dezibot gelegt, weshalb keine Logik für das komplette Schachbrett implementiert wurde. Ebenfalls war die Kommunikation mit dem Dezibot und von Dezibots untereinander nicht Teil der Arbeit. Dies könnte in Rahmen einer weiteren Instanz dieses Projektes hinzugefügt werden. Mit dessen Grundlage ist es möglich weitere Schachlogik umzusetzen.
+% Schachbrett
+
+In dieser Arbeit wurde der Schwerpunkt auf \emph{einen} Dezibot gelegt, weshalb keine Logik für das komplette Schachbrett implementiert wurde, sondern sich auf die Grundlagen einer Schachfigur konzentriert wurde (vgl.~\autoref{sec:chess-logic}).
+
+% Kommunikation --> Schachlogik
+
+Ebenfalls war die Kommunikation mit dem Dezibot und von Dezibots untereinander nicht Teil der Arbeit. Dies könnte im Rahmen weiterer Arbeiten zur Weiterentwicklung dieses Projektes hinzugefügt werden. Somit könnten weitere Schachlogik implementiert werden.
 
 % Schachlogik
-Besondere Schachzüge wie \emph{en passant} und \emph{Rochade} benötigen eine zentrale Instanz, welche einen Überblick über das gesamte Spielgeschehen besitzt oder gegenseitige Kommunikation um den Standort auf dem Feld und damit die Gültigkeit zu verifizieren. Ebenfalls kann die Bauernumwandlung~(\emph{Promotion}) implementiert werden. Grundlegend ist auch das Schlagen von Figuren umzusetzen und allgemein die Bewegung mit anderen Figuren als Hindernisse auf dem Schachbrett.
+
+Besondere Schachzüge wie Schlagen im Vorbeigehen (\emph{en passant}) und \emph{Rochade} (\emph{Castling})~\cite{justUSChessFederations2019} benötigen eine zentrale Instanz, welche einen Überblick über das gesamte Spielgeschehen besitzt, oder eine gegenseitige Kommunikation, um den Standort auf dem Feld und damit die Gültigkeit zu verifizieren. Ebenfalls kann die Bauernumwandlung (\emph{Pawn Promotion})~\cite{justUSChessFederations2019} implementiert werden. Grundlegend ist auch das Schlagen von Figuren und die Bewegung mit anderen Figuren als Hindernisse auf dem Schachbrett umzusetzen.
 
 % Bewegung
-Die Bewegung allgemein kann weiter verbessert werden. Dabei ist das größte Problem das geradeaus Laufen des Dezibots. Was die Rotation und die Verwendung von einem oder mehreren Beacons betrifft, so können diese mithilfe von Kommunikation neu angegangen werden: dem Beacon kann kommuniziert, wann es das Infrarot Licht anschalten soll ohne andere zu beeinträchtigen, ebenso ist es denkbar anstelle von zusätzlichen Beacons andere Figuren als Stütze zu verwenden. 
+
+Weiterhin kann die Bewegung allgemein weiter verbessert werden. Dabei besteht ein großes Problem im Geradeaus"=Laufen des Dezibots. Wie bereits in \autoref{sec:ir-rotation-improvements} erläutert, gibt es ausreichend Potenzial, um die Rotation weiter zu verbessern. Auch für die Farberkennung von Feldern mittels Infrarot wäre eine Kommunikation hilfreich (siehe \autoref{sec:colour-calibration-ir}). So könnte jenen mitgeteilt werden, wann das Infrarot"=Signal an- bzw. ausgeschaltet werden soll, ohne dass eine manuelle Intervention der Spielenden notwendig ist. Ebenso ist es denkbar, anstelle von zusätzlichen Beacons, andere Figuren als Stütze zu verwenden.
+
+% Kommunikation --> Mittelung von Zügen
+
+Aufgrund der fehlenden Kommunikation müssen die zu simulierende Figur sowie die auszuführenden Schachzüge beim Kompilieren und Laden auf den Dezibot festgelegt werden. Wünschenswerte wäre, diese drahtlos über einen zentralen Server während der Laufzeit an den entsprechenden Dezibot zu übermitteln.
+
+% andere Projekte
+
+Insgesamt können Ansätze aus parallel laufenden Projekten in Embedded Chess Pieces integriert werden. So könnte beispielsweise die Linienverfolgung oder der Einsatz von Künstlicher Intelligenz aus~\cite{antonovSnskorpion2DezibotLabyrinthSolver2025} zur Verbesserung der Bewegung integriert werden. Weiterhin könnten drahtlose Kommunikationsmöglichkeiten zwischen Server und Dezibot oder zwischen verschiedenen Dezibots aus \mbox{\cite{bruderMoseschmiedelDezibot2025,dietrichTimDietrichDezibotlogging2025,richterCurvesHubDezibotDebugInterface2025}} integriert werden.
