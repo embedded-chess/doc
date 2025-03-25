@@ -3,8 +3,22 @@
 \section{Fazit}
 \label{sec:conclusion}
 
-% Grundlage, Iterationen, Ansätze
-Mit dieser Arbeit haben wird die Grundlage für das Projekt Embedded Chess Pieces erarbeitet. Über das Semester hinweg wurde die Struktur erarbeitet, die Logik implementiert und über mehrere Iterationen an der Bewegung des Dezibots auf dem Schachbrett gearbeitet. Besonders die Bewegung wurde nach dem grundlegenden Ansatz in der ersten Iteration stetig verbessert und Ansätze für weitere Verbesserungen und Erweiterungen in dieser Arbeit erarbeitet.
+In dieser Arbeit wurde die Grundlagen für das Projekt \emph{Embedded Chess Pieces} geschaffen. Im Verlauf des Semesters wurde die Schachlogik sowie -strukturen implementiert, sodass eine Schachfigur auf einem Schachbrett simuliert werden kann. Dabei kann aus allen gängigen Schachfiguren ausgewählt werden. Die Züge werden validiert und nur durchgeführt, falls diese nach den gängigen Regeln~\cite{justUSChessFederations2019} erlaubt sind. Die Validität eines Zuges wird dabei über ein Farbsignal angezeigt.
 
-% Tests, PR, Pairprogramming, Style
-Bei der Implementierung wurde stets auf eine hohe Qualität und Dokumentation geachtet und Beispiele zum Testen der Logik erstellt. Neben viel Pair"=Programming wurden neue Funktionalitäten stets in einer Pull"=Request betrachtet und ausgebessert. 
+% Herausforderung: Bewegung
+Anhand einer gegeben Feld"=Reihenfolge bewegt sich der Dezibot zum gewünschten Feld. Die Bewegung stellte eine besonders große Herausforderung dar, welche in mehreren Iterationen kontinuierlich verbessert wurde.
+
+% Bewegung Iterationen
+So wurde zunächst die Erkennung der Farbe eines Schachfeldes implementiert, welche die Basis für die Vorwärtsbewegung um jeweils ein Feld bildete. Anschließend wurde eine 90°-Drehung implementiert, welche dem Dezibot erlaubt, sich in alle Richtungen zu bewegen. Diese wurden in der allgemeinen Move"=Funktion zusammengefasst, sodass der Dezibot eigenständig bestimmt, wie diese beiden Komponenten zusammengesetzt werden können, um ein gewünschtes Feld zu erreichen. Anschließend wurde eine Plausibilitätsprüfung für die Rotation hinzugefügt, welche etwaige Fehler bei der Rotation bemerkt. Anschließend wurde ein Regelsystem für die Rotation eingeführt, welche auf den Infrarot"=Signalen eines weiteren \emph{Beacon}"=Dezibots basiert. Ferner wurde eine Kalibrierung der Farberkennung implementiert sowie ein neuer Infrarot"=basierter Ansatz zur Erkennung der Feldfarbe erarbeitet. Weitere Verbesserungsvorschläge wurden im Rahmen dieser Arbeit ausführlich diskutiert.
+
+% Ausschluss: Kommunikation
+Eine Kommunikation zu einem Server oder anderen Dezibot wurde im Rahmen des Projektes bewusst ausgeschlossen. In diesem Projekt wurde sich vielmehr auf die Grundlagenlegung für eine Schachfigur konzentriert. Daher bieten sich hier verschiedene Ansatzpunkte für die Integration anderer Projekte sowie für weitere Arbeiten.
+
+% Ausblick
+Verschiedene Ansätze dazu sowie zu anderen Themen wurden diskutiert. Ein Ausblick wurde im vorherigen Kapitel aufgestellt.
+
+% Tests, PR, Pair-Programming, Style
+Bei der Implementierung wurde stets auf eine hohe Qualität und Dokumentation geachtet sowie Beispiele zum Testen der Logik erstellt. Neben viel Pair"=Programming wurden neue Funktionalitäten stets in einer Pull"=Request betrachtet und mittels Code"=Reviews ausgebessert.
+
+% Code-Umfang + investierte Zeit
+Insgesamt wurden deutlich über 4.500 neue Code"=Zeilen zur ursprünglichen \texttt{dezibot}"=Library hinzugefügt und mehr als 300 Stunden an Arbeit investiert. Somit konnte eine solide Grundlage für das Projekt entwickelt werden, welche getestet und auf ca. 50 Seiten ausführlich dokumentiert ist.
