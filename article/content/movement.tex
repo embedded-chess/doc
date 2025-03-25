@@ -448,15 +448,19 @@ Für die Verbesserung der Farberkennung war zunächst der Ansatz, eine Kalibrier
 \label{fig:colour-calibration-display-print}
 \end{figure}
 
-Insgesamt werden an je fünf Positionen auf dem Schachbrett für beide Farben die durchschnittlichen Helligkeitswerte aus jeweils drei Messungen ermittelt. Der Schwellwert für die Farbe weiß wird anhand der niedrigsten Messung und für schwarz anhand der höchsten Messung sowie einem entsprechenden Offset berechnet.
+Insgesamt werden an je fünf Positionen auf dem Schachbrett für beide Farben die durchschnittlichen Helligkeitswerte aus jeweils drei Messungen ermittelt. Der Schwellwert für die Farbe weiß wird anhand der niedrigsten Messung und für schwarz anhand der höchsten Messung sowie einem entsprechenden Offset berechnet. Die Implementierung ist in \autoref{code:calibrate-field-color} dargestellt.
 
-% TODO: Formel oder Code hinzufügen für bessere Verständlichkeit
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPColorDetection-calibrateFieldColor.cpp}
+    \caption{Code"=Ausschnitt zur \texttt{ECP"-Color"-Detection::""calibrate\-Field\-Color}"=Funktion.}
+    \label{code:calibrate-field-color}
+\end{listing}
 
-Durch die zwei Schwellwerte ergibt sich ein weiterer Zustand, uneindeutig~(\emph{ambiguous}), welcher bei der Bestimmung der aktuellen Feldfarbe auftreten kann. So wird das Problem angesprochen, dass sowohl weiße als auch schwarze Felder erst wahrgenommen werden, wenn der Dezibot weitestgehend auf jenem Feld steht. Durch den neuen Zustand kann die Funktion \texttt{ECP"-Color"-Detection::""is"-White"-Field} nicht mehr nur einen Wahrheitswert zurückgeben und wurde daher durch \texttt{ECP"-Color"-Detection::""get"-Field"-Color} ersetzt.
+Durch die zwei Schwellwerte ergibt sich ein weiterer Zustand, uneindeutig~(\emph{ambiguous}), welcher bei der Bestimmung der aktuellen Feldfarbe auftreten kann. So werden sowohl weiße als auch schwarze Felder erst wahrgenommen, wenn der Dezibot weitestgehend auf jenem Feld steht. Durch den neuen Zustand kann die Funktion \texttt{ECP"-Color"-Detection::""is"-White"-Field} nicht mehr nur einen Wahrheitswert zurückgeben und wurde daher durch \texttt{ECP"-Color"-Detection::""get"-Field"-Color} ersetzt.
 
 Zu Beginn einer Vorwärtsbewegung wird bestimmt, auf welcher Feldfarbe sich der Dezibot befindet. Da \texttt{get\-Field\-Color} jedoch auch \texttt{AMBIGUOUS} zurückgeben kann, muss eine weiter Funktion implementiert werden, welche die wahrscheinlichste Farbe zurückgibt. Dies wird durch \texttt{ECP\-Color\-Detection::""get\-Likely\-Field\-Color} umgesetzt, welche die Farbe zurückgibt, für die die gemessene Helligkeit näher am entsprechenden Schwellwert liegt.
 
-Das Problem, dass der Dezibot eine Farbe erkennt, obwohl er sich nicht vollständig auf dem Feld befindet, wurde experimentell durch die Einführung von zwei zusätzlichen Zuständen behandelt. Dabei wurde neben der Helligkeit, wenn der Dezibot auf dem Feld steht, auch der hellste bzw. dunkelste Wert gemessen, während der Farbsensor in der Mitte des Feldes positioniert ist. Die Idee war, dass zunächst der Schwellwert für diesen Zustand erreicht werden muss, bevor die tatsächliche Feldfarbe angenommen wird.
+Das Problem, dass der Dezibot eine Farbe erkennt, obwohl er sich nicht vollständig auf dem Feld befindet, wurde experimentell durch die Einführung von zwei zusätzlichen Zuständen behandelt. Dabei wurde neben der Helligkeit, wenn der Dezibot vollständig auf dem Feld steht, auch der hellste bzw. dunkelste Wert gemessen, während der Farbsensor in der Mitte des Feldes positioniert ist. Die Idee war, dass zunächst der Schwellwert für diesen Zustand erreicht werden muss, bevor die tatsächliche Feldfarbe angenommen wird.
 
 Dafür wurde \texttt{Field\-Color} um \texttt{AMBIGUOUS\_BLACK\_TO\_WHITE}~(ABW) sowie \texttt{AMBIGUOUS\_WHITE\_TO\_BLACK}~(AWB) erweitert. Durch diese Zustände ist auch für die Vorwärtsbewegung eine Plausibilitätsprüfung umsetzbar. Wenn nach Erreichen der Übergangszustände ABW und AWB ein anderer Zustand als \texttt{WHITE\_FIELD} oder \texttt{BLACK\_FIELD} erreicht wird, ist der Dezibot wahrscheinlich wieder vom Feld heruntergelaufen. Der Unterschied zwischen der Mitte eines Feldes und einem Punkt weiter außen ist jedoch meistens zu gering, weshalb der Ansatz nicht leistungsfähig ist. 
 
@@ -470,13 +474,23 @@ Auch das Licht zur Ausbesserung schlechter Lichtverhältnisse wurde in dieser It
 
 Alternativ zur Verwendung des Farbsensors wurde der Idee nachgegangen, die Farbe eines Feldes mithilfe von Infrarot zu bestimmen. Schwarze Felder absorbieren Infrarot"=Licht, während weiße Felder es reflektieren. Anhand der Infrarot"=Sensoren kann überprüft werden, wie viel des ausgesendeten Lichts reflektiert wird. Dafür wird die Infrarot"=LED, welche zentral auf der Unterseite platziert ist, verwendet. Aufgrund der Position dieser kann nach den durchgeführten Experimenten das Verhältnis von schwarzem zu weißem Untergrund bestimmt und somit die Mitte eines Feldes bestimmt werden.
 
-Die Farberkennung verläuft ähnlich zum Ansatz mittels Farbsensor (vgl.~\autoref{sec:colour-calibration-colour-sensor}). Zunächst wird für die Berechnung der Schwellwerte eine Kalibrierung durchgeführt.
-% TODO: unklar, Formel angeben
-Die Schwellwerte berechnen sich mit einem Offset aus 20\% der Differenz.
-Vor der Messung wird die LED mit anschließender Verzögerung in der Funktion \texttt{ECP\-Signal\-Detection::""cumulate\-Infrared\-Values} angeschaltet. Ohne die Verzögerung kann es passieren, dass die LED noch nicht leuchtet. Für die Bestimmung  der Feldfarbe sind die einzelnen Infrarot"=Werte nicht relevant, weshalb diese addiert werden. Somit kann die aktuelle Feldfarbe anhand der Summe in der Funktion \texttt{ECP\-Color\-Detection::""measure\-Infrared\-Field\-Color} bestimmt werden. Anschließend wird die LED (ebenfalls mit einer Verzögerung) abgeschaltet, damit sichergestellt ist, dass die LED tatsächlich aus ist. Auch wird mit \texttt{ECP\-Color\-Detection::""calculate\-Likely\-Infrared\-Field\-Color} bestimmt, welcher Schwellwert näher an der aktuellen Farbe liegt. 
+Die Farberkennung verläuft ähnlich zum Ansatz mittels Farbsensor (vgl.~\autoref{sec:colour-calibration-colour-sensor}). Zunächst wird für die Berechnung der Schwellwerte eine Kalibrierung durchgeführt. Die Implementierung is in \autoref{code:calibrate-ir-field-color} dargestellt.Die Schwellwerte berechnen sich mit einem Offset aus 20\% der Differenz. 
 
-% TODO: kurze Formeln angeben
-% TODO: erwähnen, warum Verzögerung notwendig ist, d.h. Fehler in der Dezibot-Library
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPColorDetection-calibrateIRFieldColor.cpp}
+    \caption{Code"=Ausschnitt zur \texttt{ECP"-Color"-Detection::""calibrate\-IR\-Field\-Color}"=Funktion.}
+    \label{code:calibrate-ir-field-color}
+\end{listing}
+
+Vor der Messung wird die LED mit anschließender Verzögerung in der Funktion \texttt{ECP\-Signal\-Detection::""cumulate\-Infrared\-Values} angeschaltet. Ohne die Verzögerung kann es passieren, dass die LED noch nicht leuchtet. Für die Bestimmung der Feldfarbe sind die einzelnen Infrarot"=Werte nicht relevant, weshalb diese addiert werden. Somit kann die aktuelle Feldfarbe anhand der Summe in der Funktion \texttt{ECP\-Color\-Detection::""measure\-Infrared\-Field\-Color} bestimmt werden. Anschließend wird die LED (ebenfalls mit einer Verzögerung) abgeschaltet, damit sichergestellt ist, dass die LED tatsächlich aus ist. \autoref{code:cumulate-ir-values} zeigt die verkürzte Implementierung. Auch wird mit \texttt{ECP\-Color\-Detection::""calculate\-Likely\-Infrared\-Field\-Color} bestimmt, welcher Schwellwert näher an der aktuellen Farbe liegt.
+
+\begin{listing}[h]
+    \inputminted{cpp}{../assets/code/ECPSignalDetection-cumulateInfraredValues.cpp}
+    \caption{Verkürzter Code"=Ausschnitt zur \texttt{ECP\-Signal\-Detection::""cumulate\-Infrared\-Values}"=Funktion.}
+    \label{code:cumulate-ir-values}
+\end{listing}
+
+Die Verzögerungen bei der Verwendung der Infrarot"=LED stammt aus der Implementierung in der \texttt{dezibot}"=Library, in der festgelegt ist, dass diese für eine bestimmte Zeit leuchtet und nicht spontan ausgeschaltet werden kann. Die Verzögerung sorgt dafür, dass für die nachfolgenden Befehle der erwartete Zustand der Infrarot"=LED auch tatsächlich angenommen wurde.
 
 Zur Klasse \texttt{ECP\-Color\-Detection} wurde im Rahmen dieser Iteration die Flag \texttt{use"-Infrared"-Color"-Detection} hinzugefügt, welche bestimmt, ob der Ansatz mittels Infrarot (\texttt{true}) oder RGB (\texttt{false}) zur Erkennung der Feldfarbe verwendet werden soll. Dies kann mittels \texttt{ECP\-Color\-Detection::""set\-Use\-Infrared\-Color\-Detection} verändert werden. Die Funktionen zur Bestimmung der Feldfarbe verändern sich nach außen nicht, wodurch sich die Verwendung in \texttt{ECP\-Movement} ebenfalls nicht verändert.
 
@@ -484,11 +498,7 @@ Beeinträchtigt wird die Farberkennung durch das Beacon, welches ebenfalls Infra
 
 Dabei wird der nördliche Infrarot"=Sensor des Beacons verwendet, um andere Signale zu messen. Wenn eine bestimmte Stärke erfasst wird, schaltet der Beacon sein Licht aus; sobald kein anderes Infrarot"=Signal wahrgenommen wird, schaltet er es wieder an. Das An- und Ausschalten der LED ist nicht sofort möglich, weshalb auch hier Verzögerungen eingebaut werden mussten, um sicherzustellen, dass die LED den gewollten Status annimmt.
 
-Bei diesem Ansatz ist problematisch, dass das Beacon sein eigenes Infrarot"=Signal wahrnimmt, trotz der Verdeckung durch das vordere Bein, wie es in \autoref{fig:dezibot-bottom} dargestellt ist. Dies führt dazu, dass der Beacon periodisch seine LED an- und wieder ausstellt.
-Dies beeinträchtigt die Funktionalität nur etwas. % TODO: "nur etwas"
-So kann es durch die Perioden dazu führen, dass die Rotation länger dauert, da der Dezibot ggf. warten muss, bis er wieder ein Infrarot"=Signal wahrnimmt. Der Ansatz funktioniert demnach trotzdem, wenn ausreichend lange vor einer Infrarot"=Farbmessung verzögert wird. So hat das Beacon Zeit in einer Phase, in der sein eigenes Licht aus ist, das Infrarot"=Licht vom Dezibot wahrzunehmen. Dies funktioniert jedoch nicht immer, da aus den Experimenten hervorgeht, dass bei einer Distanz, in der das Beacon das Licht für die Farbmessung nicht erfasst, die Messung beeinträchtigt werden kann. Dieser experimentelle Ansatz für das Beacon wurde im Programm \texttt{ir\_emitter\_ir\_color\_detection.ino} sowie in einem Video\footnote{\url{https://github.com/embedded-chess/doc/raw/refs/heads/main/assets/videos/beacon_turns_off_when_dezibot_measures_ir.mp4}} festgehalten.
-
-% TODO: ggf. Video erläutern
+Bei diesem Ansatz ist problematisch, dass das Beacon sein eigenes Infrarot"=Signal wahrnimmt, trotz der Verdeckung durch das vordere Bein, wie es in \autoref{fig:dezibot-bottom} dargestellt ist. Dies führt dazu, dass der Beacon periodisch seine LED an- und wieder ausstellt. So kann es durch die Perioden dazu führen, dass die Rotation länger dauert, da der Dezibot ggf. warten muss, bis er wieder ein Infrarot"=Signal wahrnimmt. Der Ansatz funktioniert demnach trotzdem, wenn ausreichend lange vor einer Infrarot"=Farbmessung verzögert wird. So hat das Beacon Zeit in einer Phase, in der sein eigenes Licht aus ist, das Infrarot"=Licht vom Dezibot wahrzunehmen. Dies funktioniert jedoch nicht immer, da aus den Experimenten hervorgeht, dass bei einer Distanz, in der das Beacon das Licht für die Farbmessung nicht erfasst, die Messung beeinträchtigt werden kann. Dieser experimentelle Ansatz für das Beacon wurde im Programm \texttt{ir\_emitter\_ir\_color\_detection.ino} sowie in einem Video\footnote{\url{https://github.com/embedded-chess/doc/raw/refs/heads/main/assets/videos/beacon_turns_off_when_dezibot_measures_ir.mp4}} festgehalten. In dem Video wird der Fall dargestellt, bei dem das Beacon (links im Bild) in der Aus"-Phase das Infrarot"=Licht vom Dezibot wahrnimmt. So tritt nie der Fall ein, dass zu dem Zeitpunkt, wo der Dezibot die Werte misst -- kurz vor dem Ausschalten des Infrarot"=Lichts -- das Beacon Infrarot"=Licht ausstrahlt.
 
 % Ansatz: manuelle Nutzerintervention
 
