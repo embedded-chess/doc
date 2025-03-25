@@ -19,7 +19,19 @@ Besondere Schachzüge wie Schlagen im Vorbeigehen (\emph{en passant}) und \emph{
 
 % Bewegung
 
-Weiterhin kann die Bewegung allgemein weiter verbessert werden. Dabei besteht ein großes Problem im Geradeaus"=Laufen des Dezibots. Wie bereits in \autoref{sec:ir-rotation-improvements} erläutert, gibt es ausreichend Potenzial, um die Rotation weiter zu verbessern. Auch für die Farberkennung von Feldern mittels Infrarot wäre eine Kommunikation hilfreich (siehe \autoref{sec:colour-calibration-ir}). So könnte jenen mitgeteilt werden, wann das Infrarot"=Signal an- bzw. ausgeschaltet werden soll, ohne dass eine manuelle Intervention der Spielenden notwendig ist. Ebenso ist es denkbar, anstelle von zusätzlichen Beacons, andere Figuren als Stütze zu verwenden.
+Ein große Herausforderung besteht in der unzuverlässigen Bewegung des Dezibots, welche durch den vibrations"=basierten Antriebsmechanismus des Dezibots bedingt ist. Der Dezibot verfügt über drei starre Beine, wobei die hinteren beiden durch Vibrationsmotoren angetrieben werden~\cite{dezibotteamDezibotDezibot2025}.
+
+% Vgl. Hexbug
+
+Das Konzept der Fortbewegung mittels Vibrationsmotoren ist in der Robotik bereits bekannt, wie bspw. der \emph{Hexbug Nano}. Ein entscheidender Unterschied besteht in den flexiblen Beinen, welche borstenartig nach unten und leicht nach hinten gerichtet sind. Somit biegen diese sich bei Belastung in eine bestimmte Richtung, welche der Vorwärtsrichtung entspricht. Die Vibrationsmotoren be- und entlasten die Beine wiederholt, wodurch der Roboter sich in kleinen Sätzen nach vorne bewegt~\cite{normanVehikelInsbesondereSpielzeugRoboter2014}.
+
+% Bewegung: Räder
+
+Konkret könnte analog ein Aufsatz für die Beine des Dezibots entwickelt werden, welche ein ähnliches Vorgehen emulieren. Dadurch wäre es ggf. möglich, eine schnellere und zuverlässigere Vorwärtsbewegung zu erreichen. Andererseits könnten die Motoren ersetzt werden und die Motorwellen über den Rand des Roboters hinaus zu Achsen verlängert werden. Somit wäre es denkbar, Räder zu befestigen, um eine gezielte Steuerung des Dezibots zu ermöglichen. Dies würde ebenso eine Rotation auf der Stelle ermöglichen, welche aktuell nicht umsetzbar ist.
+
+% Bewegung: Verbesserung Iterationen
+
+Insgesamt wurde dieses Projekt mit den auferlegten Constraints umgesetzt, ohne die Hardware des Dezibots zu verändern. Es wurden verschiedene Ansätze in mehreren Iterationen implementiert, welche jedoch weiter verbessert werden können. Wie bereits in \autoref{sec:ir-rotation-improvements} erläutert, gibt es ausreichend Potenzial, um die Rotation weiter zu verbessern. Auch für die Farberkennung von Feldern mittels Infrarot wäre eine Kommunikation hilfreich (siehe \autoref{sec:colour-calibration-ir}). So könnte jenen mitgeteilt werden, wann das Infrarot"=Signal an- bzw. ausgeschaltet werden soll, ohne dass eine manuelle Intervention der Spielenden notwendig ist. Ebenso ist es denkbar, anstelle von zusätzlichen Beacons, andere Figuren als Stütze zu verwenden.
 
 % Kommunikation --> Mittelung von Zügen
 

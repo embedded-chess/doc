@@ -45,8 +45,7 @@ Diese Lösung erfordert weitere Anpassungen im Laufe des Projekts, da zunächst 
 
 Grundsätzlich wird für die Vorwärtsbewegung die \texttt{Motion::""move}"=Funktion verwendet, welche durch den \texttt{baseValue}"=Parameter die Bewegung des Dezibots kalibriert werden kann. Diese bewegt die Motoren des Dezibots bis sie mit der \texttt{Motion::""stop}"=Funktion angehalten werden.
 
-% TODO: Vibrationsmotoren, starre Beine
-Problematisch ist dabei, dass sich der Dezibot nicht zuverlässig geradeaus bewegt. Zudem ist die Bewegung stark abhängig von dem Untergrund und nicht deterministisch. Das Bewegen in kleineren Schritten -- also kein kontinuierliches Laufen, sondern regelmäßiges kurzes Pausieren -- brachte eine leichte Verbesserung. 
+Problematisch ist dabei, dass sich der Dezibot nicht zuverlässig geradeaus bewegt. Dies ist unter anderem aufgrund der Idee der Fortbewegungsart des Dezibots inhärent. Es werden Vibrationsmotoren verwendet, die zwei starre Hinterbeine unabhängig voneinander auf und ab bewegen~\cite{dezibotteamDezibotDezibot2025}. Dabei ist es nicht auszuschließen, dass die Motoren den Dezibot ebenso in andere Richtungen bewegen. Zudem ist die Bewegung stark abhängig von dem Untergrund und nicht deterministisch. Das Bewegen in kleineren Schritten -- also kein kontinuierliches Laufen, sondern regelmäßiges kurzes Pausieren -- brachte eine leichte Verbesserung. 
 
 Für die Schach"=spezifischen Bewegungen wurde die \texttt{ECP"-Movement}"=Klasse erstellt. Ein Dezibot wird allgemein mit der Funktion \texttt{ECP"-Movement::""move(uint number"-Of"-Fields)} eine bestimmte, übergebene Anzahl an Feldern nach vorne bewegt. Intern wird die \texttt{ECP"-Movement::""move"-To"-Next"-Field}"=Funktion entsprechend häufig aufgerufen.
 
