@@ -166,7 +166,7 @@ Diese basiert auf einer zusätzlichen Signalquelle (\emph{Beacon}), aus welcher 
     \label{fig:dezibot-bottom}
 \end{figure}
 
-Dafür wird ein Dezibot, welcher ein Infrarot"=Signal aussendet, neben dem Schachbrett platziert, welches ungefähr in die Mitte des Schachbretts schaut. Dafür wurde das Programm {\texttt{ir\_emitter.ino} geschrieben, welches ebenjene Funktion erfüllt.
+Dafür wird ein Dezibot, welcher ein Infrarot"=Signal aussendet, neben dem Schachbrett platziert, welches ungefähr in die Mitte des Schachbretts schaut. Dafür wurde das Programm \texttt{ir\_emitter.ino} geschrieben, welches ebenjene Funktion erfüllt.
 
 Dieses Signal wird von \texttt{ECP"-Signal"-Detection::""measure"-Signal"-Angle} gemessen. Dabei werden der Werte von allen vier Infrarot"=Sensoren gelesen und verrechnet. Aus dem gemessenen Winkel des Beacon"=Signals wird der Winkel berechnet, in den der Dezibot in Relation zum Beacon ausgerichtet ist (vgl. \texttt{ECPSignal"-Detection::""measure"-Dezi"-bot"-Angle}). Die beiden Winkel sind in \autoref{fig:signal-dezibot-angle} verdeutlicht. Die Bestimmung der Winkel wird in \autoref{sec:angle-determination} genauer erläutert.
 
@@ -199,6 +199,7 @@ Mit diesen beiden Werten wird die \texttt{ECPMove"-ment"-::"-rotate"-To"-Angle}"
 
 Die Approximation basiert auf Experimenten aus \autoref{sec:move-straight-turn}, welche ergeben haben, dass eine Rotation um 180° etwa 5 Sekunden benötigt. Basierend auf der absoluten normalisiert Differenz $\vert\Delta\theta_{\text{norm}}\vert$ wird der folgende angenommene Approximation verwendet:
 
+% TODO: update factor
 \begin{equation*}
     180\degree \cdot 28~\frac{\text{ms}}{\degree} = 5040~\text{ms} \approx 5000~\text{ms}
 \end{equation*}
@@ -221,7 +222,25 @@ Falls innerhalb von 20 Iterationen der Ziel"=Winkel nicht erreicht werden konnte
 
 In diesem Abschnitt wird die Bestimmung des Winkels $\varphi$, in dem das Infrarot"=Signal beim Dezibot eintrifft, sowie wie der Dezibot in Relation dazu ausgerichtet ist $\alpha$ bestimmt wird. Diese Funktionalitäten entsprechen den Funktionen \texttt{measure"-Signal"-Angle} sowie \texttt{measure"-Dezi"-bot"-Angle} aus der Klasse \texttt{ECPSig"-nal"-Detec"-tion}. Die Winkel sind in \autoref{fig:signal-dezibot-angle} skizziert.
  
-Zunächst werden die vier Werte der seitlichen Infrarot"=Sensoren gelesen. Dabei werden jeweils drei Messungen mit einem Abstand von jeweils 30 Millisekunden gemittelt, um die Ergebnisse zu verbessern. Die Ergebnisse liegen auf einer Skala von $[0,4095]$ vor, welche zunächst auf $[0,1] \subset \mathbb{R}$ normalisiert werden, um eine leichtere Weiterverarbeitung zu ermöglichen. Anschließend wird überprüft, ob mindestens ein Messwert über einem festgelegten Schwellwert (0.1, d.h. 10~Prozent) liegt, um eine gewisse Signalstärke vorauszusetzen. Falls dies nicht der Fall ist, wird eine entsprechende Warnung auf das Display gedruckt. Nach einer Sekunde wird erneut versucht, einen gültigen Wert zu lesen. Dies geschieht solange, bis ein signifikanter Wert gemessen werden kann.
+Zunächst werden die vier Werte der seitlichen Infrarot"=Sensoren gelesen. Dabei werden jeweils drei Messungen mit einem Abstand von jeweils 30 Millisekunden gemittelt, um die Ergebnisse zu verbessern. Die Ergebnisse liegen auf einer Skala von $[0,4095]$ vor, welche zunächst auf $[0,1] \subset \mathbb{R}$ normalisiert werden, um eine leichtere Weiterverarbeitung zu ermöglichen. Anschließend wird überprüft, ob mindestens ein Messwert über einem festgelegten Schwellwert (0.1, d.h. 10~Prozent) liegt, um eine gewisse Signalstärke vorauszusetzen. Falls dies nicht der Fall ist, wird eine entsprechende Warnung auf das Display gedruckt, welche in \autoref{fig:display-no-ir-signal} abgebildet ist. Nach einer Sekunde wird erneut versucht, einen gültigen Wert zu lesen. Dies geschieht solange, bis ein signifikanter Wert gemessen werden kann.
+
+\begin{figure}[h]
+\centering
+\begin{cminted}{text}
++----------------+
+| No IR signal!  |
+| Trying again...|
+|                |
+|                |
+|                |
+|                |
+|                |
+|                |
++----------------+
+\end{cminted}
+\caption{Ausgabe auf das Display des Dezibots, falls kein Infrarot"=Signal gemessen werden konnte.}
+\label{fig:display-no-ir-signal}
+\end{figure}
 
 Nachdem hinreichende Signalmessungen vorliegen, kann der Winkel Beacon"=Signals berechnet werden. Dazu werden die Nord"=Süd"= $r_{y}$ sowie Ost"=West"=Resultanten $r_{x}$ des Ergebnisvektors $R$ berechnet. Dabei sind $n,s,e$ und $w$ jeweils die Signalmessungen aus Nord"=, Süd"=, Ost"= bzw. West"=Richtung.
 
