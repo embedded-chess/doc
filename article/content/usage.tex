@@ -7,7 +7,7 @@ Im folgenden Abschnitt wird ein Beispiel erläutert, bei dem die meisten Funktio
 % TODO: Schachfeldgröße überprüfen!
 Zunächst muss ein Schachbrett bereitgestellt werden, bei dem ein Feld jeweils \mbox{$7\times7$~cm} groß ist. Somit wird garantiert, dass sich die Dezibots komfortabel bewegen und rotieren können. Auf dem Dezibot $D$, welcher eine Schachfigur simulieren soll, muss das \texttt{examples/""showcase/""embedded\_""chess\_""piece.ino} Programm $P_D$ installiert werden. Dort können die zu simulierende Figur, die auszuführenden Züge sowie weitere Kalibrierungsoptionen eingestellt werden.
 
-Ein weiterer Dezibot muss als \emph{Beacon} $B$ agieren. Dieser sendet ein Infrarot"=Signal aus, um die Rotation eines Dezibots zu regeln (vgl. \autoref{sec:movement-ir}). Dafür muss auf diesem \texttt{examples/""showcase/""beacon.ino} $P_B$ installiert werden.
+Ein weiterer Dezibot muss als \emph{Beacon} $B$ agieren. Dieser sendet ein Infrarot"=Signal aus, um die Rotation eines Dezibots zu regeln (vgl. \autoref{sec:movement-ir}). Dafür muss auf diesem \texttt{examples/""beacon.ino} $P_B$ installiert werden.
 
 Wie in \autoref{fig:usage} angedeutet ist, muss $B$ außerhalb des Schachbretts platziert und ungefähr in die Mitte des Schachbretts ausgerichtet werden. $D$ muss auf jenem Feld platziert werden, welches in $P_D$ festgelegt wurde. Eine weiße Figur muss dabei in Richtung Norden zeigen, eine schwarze in Richtung Süden. Die Richtungen sind aus dem in \autoref{fig:usage} dargestellten Kompass zu entnehmen.
 
